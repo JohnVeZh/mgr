@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.orders.bookReport.mapper.BookReportMapper">
+
+    <select id="findList" resultType="cn.sparke.modules.orders.bookReport.entity.OrderEntity">
+        SELECT
+        o.id,
+        o.order_status,
+        o.order_code,
+        o.order_trade_no,
+        o.pay_type,
+        o.product_num,
+        o.pay_price,
+        o.order_price,
+        o.create_date,
+        ifnull((SELECT 1 FROM tb_order_evaluate oe WHERE oe.order_id = o.id AND oe.del_flag = 0 LIMIT 1), 0) AS isEvaluate
+        FROM tb_order AS o
+        WHERE
+            o.is_admin_del = 0 AND o.`type` = 2
+            <if test="qOrderCode !=null">
+                AND (o.order_code LIKE CONCAT('%',#{qOrderCode},'%') OR o.order_trade_no LIKE CONCAT('%',#{qOrderCode},'%'))
+            </if>
+            <if test="qPhone !=null and qPhone !=''">
+                AND o.id IN (SELECT order_id FROM tb_order_logistics WHERE receive_mobile LIKE CONCAT('%',#{qPhone},'%'))
+            </if>
+            <if test="qReceiver !=null and qReceiver !=''">
+                AND o.id IN (SELECT order_id FROM tb_order_logistics WHERE receiver LIKE CONCAT('%',#{qReceiver},'%'))
+            </if>
+            <if test="qOrderStatus !=null">
+                AND o.order_status = #{qOrderStatus}
+            </if>
+            <if test="qStartTime !=null and qStartTime !=''">
+                AND o.create_date &gt; #{qStartTime}
+            </if>
+            <if test="qEndTime !=null and qEndTime !=''">
+                AND o.create_date &lt; #{qEndTime}
+            </if>
+        ORDER BY o.sort ASC, o.pay_time DESC, o.create_date DESC
+    </select>
+
+    <select id="getUserByUserId" resultType="cn.sparke.modules.orders.bookReport.entity.UserEntity">
+        SELECT id, phone, nickname FROM tb_user WHERE del_flag = 0 AND id = #{userId} LIMIT 1
+    </select>
+
+    <select id="getOrderLogisticsByOrderId" resultType="cn.sparke.modules.orders.bookReport.entity.OrderLogisticsEntity">
+        SELECT id, receiver, receive_mobile, receive_address FROM tb_order_logistics WHERE order_id = #{orderId} AND del_flag = 0
+    </select>
+
+    <select id="getOrderDetailsListByOrderId" resultType="cn.sparke.modules.orders.bookReport.entity.OrderDetailsEntity">
+        SELECT id, product_name, product_img FROM tb_order_details WHERE order_id = #{orderId} AND del_flag = 0
+    </select>
+
+    <!--<select id="getOrderDetailsListByOrderId" resultType="cn.sparke.modules.orders.bookReport.entity.OrderDetailsEntity">
+        SELECT id, product_id, num, product_name, product_img, product_price, deal_price, has_collection, refund_status
+        FROM tb_order_details WHERE order_id = #{orderId} AND del_flag = 0
+    </select>-->
+
+    <resultMap id="orderUpdateInfoResultMap" type="cn.sparke.modules.orders.bookReport.entity.OrderEntity">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="order_trade_no" property="orderTradeNo"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="pay_price" property="payPrice"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="postage_price" property="postagePrice"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="create_date" property="createDate"/>
+        <result column="pay_type" property="payType"/>
+        <result column="remarks" property="remarks"/>
+        <association property="orderLogistics" javaType="cn.sparke.modules.orders.bookReport.entity.OrderLogisticsEntity">
+            <id column="olId" property="id"/>
+            <result column="olReceiver" property="receiver"/>
+            <result column="olReceiveMobile" property="receiveMobile"/>
+            <result column="olReceiveAddress" property="receiveAddress"/>
+            <result column="olZipcode" property="zipcode"/>
+        </association>
+        <association property="user" javaType="cn.sparke.modules.orders.bookReport.entity.UserEntity">
+            <id column="uId" property="id"/>
+            <result column="uPhone" property="phone"/>
+            <result column="uHeaderImg" property="headerImg"/>
+            <result column="uNickname" property="nickname"/>
+        </association>
+    </resultMap>
+
+    <select id="getOrderUpdateInfoById" resultMap="orderUpdateInfoResultMap">
+        SELECT
+        o.id,
+        o.order_code,
+        o.order_trade_no,
+        o.order_status,
+        o.pay_price,
+        o.order_price,
+        o.postage_price,
+        o.pay_time,
+        o.create_date,
+        o.remarks,
+        ol.id AS olId,
+        ol.receiver AS olReceiver,
+        ol.receive_mobile AS olReceiveMobile,
+        ol.receive_address AS olReceiveAddress,
+        ol.zipcode AS olZipcode,
+        u.id AS uId,
+        u.phone AS uPhone,
+        u.header_img AS uHeaderImg,
+        u.nickname AS uNickname
+        FROM tb_order AS o
+        LEFT JOIN tb_user AS u ON u.id = o.user_id
+        LEFT JOIN tb_order_logistics ol ON ol.order_id = o.id
+        WHERE o.id = #{orderId}
+        LIMIT 1
+    </select>
+
+    <update id="update">
+        UPDATE tb_order
+        SET update_date = now()
+        <if test="orderPrice != null"> ,order_price = #{orderPrice} </if>
+        <if test="postagePrice != null"> ,postage_price = #{postagePrice} </if>
+        <if test="remarks != null"> ,remarks = #{remarks} </if>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateOrderLogistics">
+        UPDATE tb_order_logistics
+        SET update_date = now()
+        <if test="receiver != null"> ,receiver = #{receiver} </if>
+        <if test="zipcode != null"> ,zipcode = #{zipcode} </if>
+        <if test="receiveMobile != null"> ,receive_mobile = #{receiveMobile} </if>
+        <if test="receiveAddress != null"> ,receive_address = #{receiveAddress} </if>
+        WHERE id = #{olId}
+    </update>
+
+    <resultMap id="orderDetailsInfoResultMap" type="cn.sparke.modules.orders.bookReport.entity.OrderEntity">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="order_trade_no" property="orderTradeNo"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="pay_price" property="payPrice"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="postage_price" property="postagePrice"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="is_send" property="isSend"/>
+        <result column="postage_price" property="postagePrice"/>
+        <result column="create_date" property="createDate"/>
+        <result column="pay_type" property="payType"/>
+        <result column="remarks" property="remarks"/>
+        <association property="orderLogistics" javaType="cn.sparke.modules.orders.bookReport.entity.OrderLogisticsEntity">
+            <id column="olId" property="id"/>
+            <result column="olReceiver" property="receiver"/>
+            <result column="olReceiveMobile" property="receiveMobile"/>
+            <result column="olReceiveAddress" property="receiveAddress"/>
+            <result column="olProvinceCityCn" property="provinceCityCn"/>
+            <result column="olZipcode" property="zipcode"/>
+        </association>
+        <association property="user" javaType="cn.sparke.modules.orders.bookReport.entity.UserEntity">
+            <id column="uId" property="id"/>
+            <result column="uPhone" property="phone"/>
+            <result column="uHeaderImg" property="headerImg"/>
+            <result column="uNickname" property="nickname"/>
+        </association>
+        <collection property="orderDetailsList" ofType="cn.sparke.modules.orders.bookReport.entity.OrderDetailsEntity">
+            <id property="id" column="odId" />
+            <result column="odProductId" property="productId" />
+            <result column="odNum" property="num" />
+            <result column="odProductType" property="productType" />
+            <result column="odProductName" property="productName" />
+            <result column="odProductImg" property="productImg" />
+            <result column="odProductPrice" property="productPrice" />
+            <result column="odDealPrice" property="dealPrice" />
+            <result column="odHasCollection" property="hasCollection" />
+            <result column="odRefundStatus" property="refundStatus" />
+        </collection>
+    </resultMap>
+
+    <select id="getOrderDetailsInfoById" resultMap="orderDetailsInfoResultMap">
+        SELECT
+        o.id,
+        o.order_code,
+        o.order_trade_no,
+        o.order_status,
+        o.pay_price,
+        o.order_price,
+        o.postage_price,
+        o.pay_time,
+        o.is_send,
+        o.postage_price,
+        o.create_date,
+        o.remarks,
+        ol.id AS olId,
+        ol.receiver AS olReceiver,
+        ol.receive_mobile AS olReceiveMobile,
+        ol.receive_address AS olReceiveAddress,
+        ol.zipcode AS olZipcode,
+        ol.province_city_cn AS provinceCityCn,
+        u.id AS uId,
+        u.phone AS uPhone,
+        u.header_img AS uHeaderImg,
+        u.nickname AS uNickname,
+        od.id AS odId,
+        od.product_id AS odProductId,
+        od.num AS odNum,
+        od.product_type AS odProductType,
+        od.product_name AS odProductName,
+        od.product_img AS odProductImg,
+        od.product_price AS odProductPrice,
+        od.deal_price AS odDealPrice,
+        od.has_collection AS odHasCollection,
+        od.refund_status AS odRefundStatus
+        FROM tb_order AS o
+        LEFT JOIN tb_order_details AS od ON od.order_id = o.id
+        LEFT JOIN tb_user AS u ON u.id = o.user_id
+        LEFT JOIN tb_order_logistics ol ON ol.order_id = o.id
+        WHERE o.id = #{orderId}
+    </select>
+
+
+    <select id="getOrderStatusInfoById" resultType="cn.sparke.modules.orders.bookReport.entity.OrderEntity">
+        SELECT o.id, o.order_status AS orderStatus FROM tb_order AS o WHERE o.id = #{orderId}
+    </select>
+
+    <update id="updateOrderStatus">
+        UPDATE tb_order SET update_date = now() <if test="orderStatus != null"> ,order_status = #{orderStatus} </if> WHERE id = #{id}
+    </update>
+
+
+</mapper>

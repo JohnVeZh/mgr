@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.qrcode.QrCaptionListening.mapper.QrCaptionListeningMapper">
+    <insert id="insert">
+        INSERT INTO tb_qr_paper_caption_listening
+        (
+            id,
+            caption_listening_id,
+            qr_code,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{captionListeningId},
+               #{qrCode},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+
+         INSERT INTO tb_qr_paper_caption_listening
+        (
+            id,
+            caption_listening_id,
+            qr_code,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.captionListeningId},
+            #{item.qrCode},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.sort},
+            #{item.delFlag}
+            )
+
+        </foreach>
+
+    </insert>
+
+    <update id="update">
+        update tb_qr_paper_caption_listening
+        set
+                id = #{id}
+                <if test="captionListeningId!=null">
+                   ,caption_listening_id = #{captionListeningId}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.qrcode.QrCaptionListening.entity.QrCaptionListeningEntity">
+        select
+              a.id,
+              a.caption_listening_id,
+              a.qr_code,
+              a.create_date,
+              a.create_by,
+              a.update_date,
+              a.update_by,
+              a.sort,
+              a.del_flag,
+              b.paper_id,
+              b.audio_url,
+              b.subtitle_url,
+              b.audio_size,
+              b.subtitle_size,
+              c.content_type
+         from tb_paper c,tb_qr_paper_caption_listening a RIGHT  JOIN tb_paper_caption_listening b ON (a.caption_listening_id = b.id and a.del_flag=0)
+        where 1=1
+        AND   c.id = b.paper_id
+            <if test="id!=null and id!=''">
+              and  a.id = #{id}
+            </if>
+        <if test="paperId!=null and paperId!=''">
+            and  b.paper_id = #{paperId}
+        </if>
+            <if test="captionListeningId!=null and captionListeningId!=''">
+              and  a.caption_listening_id = #{captionListeningId}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  a.qr_code = #{qrCode}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  a.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  a.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  a.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  a.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  a.sort = #{sort}
+            </if>
+
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.qrcode.QrCaptionListening.entity.QrCaptionListeningEntity">
+        select
+              a.id,
+              a.caption_listening_id,
+              a.qr_code,
+              a.create_date,
+              a.create_by,
+              a.update_date,
+              a.update_by,
+              a.sort,
+              a.del_flag,
+              b.paper_id,
+              b.audio_url,
+              b.subtitle_url,
+              b.audio_size,
+              b.subtitle_size
+        from tb_qr_paper_caption_listening a RIGHT  JOIN tb_paper_caption_listening b ON (a.caption_listening_id = b.id and a.del_flag=0)
+        where  a.id = #{id}
+
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.qrcode.QrCaptionListening.entity.QrCaptionListeningEntity">
+        select
+              a.id,
+              a.caption_listening_id,
+              a.qr_code,
+              a.create_date,
+              a.create_by,
+              a.update_date,
+              a.update_by,
+              a.sort,
+              a.del_flag,
+              b.paper_id,
+              b.audio_url,
+              b.subtitle_url,
+              b.audio_size,
+              b.subtitle_size
+        from tb_qr_paper_caption_listening a RIGHT  JOIN tb_paper_caption_listening b ON (a.caption_listening_id = b.id )
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  a.id = #{id}
+            </if>
+            <if test="captionListeningId!=null and captionListeningId!=''">
+                and  a.caption_listening_id = #{captionListeningId}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  a.qr_code = #{qrCode}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  a.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  a.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  a.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  a.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  a.sort = #{sort}
+            </if>
+            and  a.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            DELETE  FROM  tb_qr_paper_caption_listening
+            where id = #{id}
+      </update>
+    <update id="deleteByQrcode">
+        update tb_qr_paper_caption_listening
+        set del_flag = 1
+        where qr_code = #{qrCode}
+    </update>
+
+</mapper>

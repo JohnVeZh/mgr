@@ -1,0 +1,63 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="couponCodeForm">
+
+            <#input id="codeNum" name="优惠码数量"   underline="true" value=""  />
+
+            <#input id="usedNum" name="已兑换次数"  readonly="true"  underline="true" value="0"  />
+
+            <#input id="maxNum" name="最大可兑换次数"   underline="true" value="0"  />
+
+
+            <#TimeCon2 id="effectDate" name="生效时间" underline="true" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+            <#TimeCon2 id="invalidDate" name="失效时间" underline="true" isTime="true" pattern="YYYY-MM-DD hh:mm:ss"/>
+
+            <#select id="status" name="状态" underline="true">
+                <option value="0">禁用</option>
+                <option value="1">正常</option>
+            </#select>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CouponCodeInfoDlg.batchAddSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CouponCodeInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/couponCode/couponCode_info.js"></script>
+<script type="application/javascript">
+    /**
+     * 收集数据
+     */
+    CouponCodeInfoDlg.collectBatchData = function() {
+        this.set('codeNum');
+        this.set('usedNum',0);
+        this.set('maxNum');
+        this.set('effectDate');
+        this.set('invalidDate');
+        this.set('status');
+    };
+
+    CouponCodeInfoDlg.batchAddSubmit = function () {
+        this.clearData();
+        this.collectBatchData();
+        if (!this.validate()) {
+            return;
+        }
+        //提交信息
+        var ajax = new $ax(Feng.ctxPath + "/couponCode/batch/add", function(data){
+            Feng.success("添加成功!");
+            window.parent.CouponCode.table.refresh();
+            CouponCodeInfoDlg.close();
+        },function(data){
+            Feng.error("添加失败!" + data.responseJSON.message + "!");
+        },'json');
+        ajax.setData(this.couponCodeInfoData);
+        ajax.start();
+    }
+</script>
+@}

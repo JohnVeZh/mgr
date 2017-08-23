@@ -1,0 +1,19 @@
+@layout("/common/_container.html"){
+
+        <input type="hidden" id="structureId" value="${id}">
+        <input type="hidden" id="contenName" value="${name}">
+
+
+                    <div style="border: 1px">
+                        <div  id="Question_listeningTableToolbar" role="group">
+                                <#button id="add" name="添加" icon="fa-plus" clickFun="Question_listening.openAddQuestion_listening()"/>
+                                <#button id="update" name="修改" icon="fa-pencil" clickFun="Question_listening.openQuestion_listeningDetail()" space="true"/>
+                                <#button id="delete" name="删除" icon="fa-trash" clickFun="Question_listening.delete()" space="true"/>
+                        </div>
+                        <#table id="Question_listeningTable"/>
+                    </div>
+
+
+
+<script src="${ctxPath}/static/modules/questionbank/question_listening/question_listening.js"></script>
+@}

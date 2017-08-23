@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.orders.refund.mapper.RefundMapper">
+
+
+    <!--退单列表-->
+    <select id="findList" parameterType="cn.sparke.modules.orders.refund.entity.RefundEntity" resultType="cn.sparke.modules.orders.refund.entity.RefundEntity">
+      SELECT
+            a.id,
+            a.order_code orderCode,
+            a.order_detail_id AS oid,
+            a.user_id userId,
+            a.reason reason,
+            a.money money,
+            a.status status,
+            a.type type,
+            a.user_receive_status userReceiveStatus,
+            a.imgs imgs,
+            a.play_count playCount,
+            a.finish_date finishDate,
+            a.remarks remarks,
+            a.create_date createDate,
+            a.update_by updateBy,
+            b.product_name productName,
+            b.product_type productType,
+            c.phone phone
+        FROM
+            tb_order_refund a
+        LEFT JOIN tb_order_details b ON a.order_detail_id=b.id
+        LEFT JOIN  tb_user c ON a.user_id=b.id
+        WHERE 1=1 AND a.del_flag=0
+        <if test="queryName !=null and queryName !=''"> AND b.product_name LIKE CONCAT('%',#{queryName},'%') </if>
+        <if test="queryOrderCode !=null and queryOrderCode !=''"> AND a.order_code LIKE CONCAT('%',#{queryOrderCode},'%') </if>
+        <if test="queryPhone !=null and queryPhone !=''"> AND c.phone LIKE CONCAT('%',#{queryPhone},'%') </if>
+        <if test="QueryStatus !=null and QueryStatus !=''"> AND a.status = #{QueryStatus} </if>
+        <if test="queryProductType !=null and queryProductType !=''"> AND b.product_type = #{queryProductType} </if>
+        <if test="queryStartTime !=null and queryStartTime !=''"> AND a.create_date &gt; #{queryStartTime}</if>
+        <if test="queryEndTime !=null and queryEndTime !=''"> AND a.create_date &lt; #{queryEndTime}</if>
+        order by a.create_date DESC
+    </select>
+    <select id="getById" resultType="cn.sparke.modules.orders.refund.entity.RefundDetailsEntity">
+        SELECT
+            a.id as id,
+            a.order_code as orderCode,
+            a.reason as reason,
+            a.money as money,
+            a.type  as type,
+            a.`status` as status,
+            a.user_receive_status as userReceiveStatus,
+            a.imgs as imgs,
+            a.play_count as playCount,
+            a.finish_date as finishDate,
+            a.remarks AS remarks,
+            a.create_date as createDate,
+            a.update_date as updateDate,
+            b.product_name as  productName,
+            b.product_type as productType,
+            c.phone  as phone,
+            c.real_name as  realName,
+            c.nickname  as nickName,
+            d.nickname as updateBy,
+            e.province_city_cn as ProvinceCityCn,
+            e.receive_address as receiveAddress,
+            e.receiver as receiver,
+            e.receive_mobile as receiveMobile,
+            e.express_name  as expressName ,
+            e.logistics_code as logisticsCode,
+            e.receive_time as receiveTime,
+            e.delivery_time as deliveryTime
+        FROM  tb_order_refund a
+        LEFT JOIN tb_order_details b ON a.order_detail_id = b.id
+        LEFT JOIN tb_user c ON a.user_id = c.id
+        LEFT JOIN tb_user d ON a.update_by = d.id
+        LEFT JOIN tb_order_logistics e ON a.order_id = e.order_id
+        WHERE 1 = 1 AND a.del_flag = 0 AND a.id = #{refundId}
+    </select>
+</mapper>

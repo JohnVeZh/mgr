@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.business.message.mapper.MessageMapper">
+    <insert id="insert">
+        INSERT INTO tb_message
+        (
+        id,
+        title,
+        content,
+        intro,
+        target_type,
+        img,
+        jump_type,
+        content_id,
+        url,
+        push_status,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        sort,
+        del_flag
+        )
+        VALUES
+        (
+        #{id},
+        #{title},
+        #{content},
+        #{intro},
+        #{targetType},
+        #{img},
+        #{jumpType},
+        #{contentId},
+        #{url},
+        #{pushStatus},
+        #{createDate},
+        #{createBy},
+        #{updateDate},
+        #{updateBy},
+        #{sort},
+        #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_message
+        set
+        id = #{id}
+        <if test="title!=null">
+            ,title = #{title}
+        </if>
+        <if test="content!=null">
+            ,content = #{content}
+        </if>
+        <if test="intro!=null">
+            ,intro = #{intro}
+        </if>
+        <if test="targetType!=null">
+            ,target_type = #{targetType}
+        </if>
+        <if test="img!=null">
+            ,img = #{img}
+        </if>
+        <if test="jumpType!=null">
+            ,jump_type = #{jumpType}
+        </if>
+        <if test="contentId!=null">
+            ,content_id = #{contentId}
+        </if>
+        <if test="url!=null">
+            ,url = #{url}
+        </if>
+        <if test="pushStatus!=null">
+            ,push_status = #{pushStatus}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="sort!=null">
+            ,sort = #{sort}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.business.message.entity.MessageEntity">
+        select
+        tb_message.id,
+        tb_message.title,
+        tb_message.content,
+        tb_message.intro,
+        tb_message.target_type,
+        tb_message.img,
+        tb_message.jump_type,
+        tb_message.content_id,
+        tb_message.url,
+        tb_message.push_status,
+        tb_message.create_date,
+        tb_message.create_by,
+        tb_message.update_date,
+        tb_message.update_by,
+        tb_message.sort,
+        tb_message.del_flag
+        from tb_message
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_message.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_message.title = #{title}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_message.content = #{content}
+        </if>
+        <if test="intro!=null and intro!=''">
+            and  tb_message.intro = #{intro}
+        </if>
+        <if test="targetType!=null and targetType!=''">
+            and  tb_message.target_type = #{targetType}
+        </if>
+        <if test="img!=null and img!=''">
+            and  tb_message.img = #{img}
+        </if>
+        <if test="jumpType!=null and jumpType!=''">
+            and  tb_message.jump_type = #{jumpType}
+        </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_message.content_id = #{contentId}
+        </if>
+        <if test="url!=null and url!=''">
+            and  tb_message.url = #{url}
+        </if>
+        <if test="pushStatus!=null and pushStatus!=''">
+            and  tb_message.push_status = #{pushStatus}
+        </if>
+        <if test="btTime!=null and btTime!=''">
+            and  tb_message.create_date &gt;= #{btTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and  tb_message.create_date &lt;= #{endTime}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_message.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_message.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_message.update_by = #{updateBy}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and  tb_message.sort = #{sort}
+        </if>
+        and  tb_message.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.business.message.entity.MessageEntity">
+        select
+        tb_message.id,
+        tb_message.title,
+        tb_message.content,
+        tb_message.intro,
+        tb_message.target_type,
+        tb_message.img,
+        tb_message.jump_type,
+        tb_message.content_id,
+        tb_message.url,
+        tb_message.push_status,
+        tb_message.create_date,
+        tb_message.create_by,
+        tb_message.update_date,
+        tb_message.update_by,
+        tb_message.sort,
+        tb_message.del_flag
+        from tb_message
+        where id = #{id}
+        and  tb_message.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.business.message.entity.MessageEntity">
+        select
+        tb_message.id,
+        tb_message.title,
+        tb_message.content,
+        tb_message.intro,
+        tb_message.target_type,
+        tb_message.img,
+        tb_message.jump_type,
+        tb_message.content_id,
+        tb_message.url,
+        tb_message.push_status,
+        tb_message.create_date,
+        tb_message.create_by,
+        tb_message.update_date,
+        tb_message.update_by,
+        tb_message.sort,
+        tb_message.del_flag
+        from tb_message
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_message.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_message.title = #{title}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_message.content = #{content}
+        </if>
+        <if test="intro!=null and intro!=''">
+            and  tb_message.intro = #{intro}
+        </if>
+        <if test="targetType!=null and targetType!=''">
+            and  tb_message.target_type = #{targetType}
+        </if>
+        <if test="img!=null and img!=''">
+            and  tb_message.img = #{img}
+        </if>
+        <if test="jumpType!=null and jumpType!=''">
+            and  tb_message.jump_type = #{jumpType}
+        </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_message.content_id = #{contentId}
+        </if>
+        <if test="url!=null and url!=''">
+            and  tb_message.url = #{url}
+        </if>
+        <if test="pushStatus!=null and pushStatus!=''">
+            and  tb_message.push_status = #{pushStatus}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_message.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_message.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_message.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_message.update_by = #{updateBy}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and  tb_message.sort = #{sort}
+        </if>
+        and  tb_message.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_message
+        set del_flag = 1
+        where id = #{id}
+    </update>
+</mapper>

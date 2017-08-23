@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>流量统计管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#TimeCon id="btTime" name="开始时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#TimeCon id="endTime" name="结束时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            <div class="col-sm-4">
+                                <#button name="搜索" icon="fa-search" clickFun="TrafficStatistic.search()"/>| <span style="color: #f9170c;">PS：默认查询当天流量</span>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="TrafficStatisticTableToolbar" role="group">
+                            @if(shiro.hasPermission("/channel")){
+                                <#button name="渠道管理" icon="fa-plus" clickFun="TrafficStatistic.openChannel()"/>
+                            @}
+                        </div>
+                        <div id="TrafficStatisticTable">
+
+                        </div>
+                        <!--<#table id="TrafficStatisticTable"/>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/reportStatistics/trafficStatistic/trafficStatistic.js"></script>
+@}

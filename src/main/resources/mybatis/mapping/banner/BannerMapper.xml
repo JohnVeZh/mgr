@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.banner.mapper.BannerMapper">
+    <insert id="insert">
+        INSERT INTO tb_banner
+        (
+        id,
+        title,
+        img,
+        terminal_type,
+        module_type,
+        section_code,
+        jump_type,
+        url,
+        content_id,
+        content,
+        sort,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        del_flag
+        )
+        VALUES
+        (
+        #{id},
+        #{title},
+        #{img},
+        #{terminalType},
+        #{moduleType},
+        #{sectionCode},
+        #{jumpType},
+        #{url},
+        #{contentId},
+        #{content},
+        #{sort},
+        #{createDate},
+        #{createBy},
+        #{updateDate},
+        #{updateBy},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_banner
+        set
+        id = #{id}
+        <if test="title!=null">
+            ,title = #{title}
+        </if>
+        <if test="img!=null">
+            ,img = #{img}
+        </if>
+        <if test="terminalType!=null">
+            ,terminal_type = #{terminalType}
+        </if>
+        <if test="moduleType!=null">
+            ,module_type = #{moduleType}
+        </if>
+        <if test="sectionCode!=null">
+            ,section_code = #{sectionCode}
+        </if>
+        <if test="jumpType!=null">
+            ,jump_type = #{jumpType}
+        </if>
+        <!--<if test="url!=null">-->
+            ,url = #{url}
+        <!--</if>-->
+        <!--<if test="contentId!=null">-->
+            ,content_id = #{contentId}
+        <!--</if>-->
+        <!--<if test="content!=null">-->
+            ,content = #{content}
+        <!--</if>-->
+        <if test="sort!=null">
+            ,sort = #{sort}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null">
+            ,remarks = #{remarks}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <resultMap id="bannerMap" type="cn.sparke.modules.banner.entity.BannerEntity">
+        <id  property="id"  column="id"/>
+        <result  property="title"  column="title"/>
+        <result  property="img"  column="img"/>
+        <result  property="terminalType"  column="terminal_type"/>
+        <result  property="moduleType"  column="module_type"/>
+        <result  property="sectionCode"  column="section_code"/>
+        <result  property="jumpType"  column="jump_type"/>
+        <result  property="url"  column="url"/>
+        <result  property="contentId"  column="content_id"/>
+        <result  property="content"  column="content"/>
+        <result  property="sort"  column="sort"/>
+        <association property="contentTitle"  column="{contentId=content_id,jumpType=jump_type}"
+                     javaType="java.lang.String" select="getTitle"/>
+    </resultMap>
+
+    <select id="findList" resultMap="bannerMap">
+        select
+        tb_banner.id,
+        tb_banner.title,
+        tb_banner.img,
+        tb_banner.terminal_type,
+        tb_banner.module_type,
+        tb_banner.section_code,
+        tb_banner.jump_type,
+        tb_banner.url,
+        tb_banner.content_id,
+        tb_banner.content,
+        tb_banner.sort,
+        tb_banner.create_date,
+        tb_banner.create_by,
+        tb_banner.update_date,
+        tb_banner.update_by,
+        tb_banner.remarks,
+        tb_banner.del_flag
+        from tb_banner
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_banner.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  instr(tb_banner.title,#{title}) > 0
+        </if>
+        <if test="img!=null and img!=''">
+            and  tb_banner.img = #{img}
+        </if>
+        <if test="terminalType!=null and terminalType!=''">
+            and  tb_banner.terminal_type = #{terminalType}
+        </if>
+        <if test="moduleType!=null and moduleType!=''">
+            and  tb_banner.module_type = #{moduleType}
+        </if>
+        <if test="sectionCode!=null and sectionCode!=''">
+            and  tb_banner.section_code = #{sectionCode}
+        </if>
+        <if test="jumpType!=null ">
+            and  tb_banner.jump_type = #{jumpType}
+        </if>
+        <if test="url!=null and url!=''">
+            and  tb_banner.url = #{url}
+         </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_banner.content_id = #{contentId}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_banner.content = #{content}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and  tb_banner.sort = #{sort}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_banner.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_banner.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_banner.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_banner.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_banner.remarks = #{remarks}
+        </if>
+        and  tb_banner.del_flag = 0 ORDER BY tb_banner.terminal_type,tb_banner.module_type, tb_banner.sort
+    </select>
+    <select id="getTitle" resultType="java.lang.String">
+        <if test="jumpType != 3 and jumpType != 4 and jumpType != 5 and jumpType != 6 ">
+            SELECT '';
+        </if>
+        <if test="jumpType == 3">
+            SELECT `title`  FROM tb_community_activity  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 4">
+            SELECT `title`  FROM tb_community_news  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 5">
+            SELECT `name` FROM tb_product  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 6">
+            SELECT `name`  FROM tb_product  WHERE id = #{contentId};
+        </if>
+    </select>
+
+    <select id="getById" resultMap="bannerMap" >
+        select
+        tb_banner.id,
+        tb_banner.title,
+        tb_banner.img,
+        tb_banner.terminal_type,
+        tb_banner.module_type,
+        tb_banner.section_code,
+        tb_banner.jump_type,
+        tb_banner.url,
+        tb_banner.content_id,
+        tb_banner.content,
+        tb_banner.sort,
+        tb_banner.create_date,
+        tb_banner.create_by,
+        tb_banner.update_date,
+        tb_banner.update_by,
+        tb_banner.remarks,
+        tb_banner.del_flag
+        from tb_banner
+        where id = #{id}
+        and  tb_banner.del_flag = 0
+    </select>
+
+    <select id="get" resultMap="bannerMap" >
+        select
+        tb_banner.id,
+        tb_banner.title,
+        tb_banner.img,
+        tb_banner.terminal_type,
+        tb_banner.module_type,
+        tb_banner.section_code,
+        tb_banner.jump_type,
+        tb_banner.url,
+        tb_banner.content_id,
+        tb_banner.content,
+        tb_banner.sort,
+        tb_banner.create_date,
+        tb_banner.create_by,
+        tb_banner.update_date,
+        tb_banner.update_by,
+        tb_banner.remarks,
+        tb_banner.del_flag
+        from tb_banner
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_banner.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_banner.title = #{title}
+        </if>
+        <if test="img!=null and img!=''">
+            and  tb_banner.img = #{img}
+        </if>
+        <if test="terminalType!=null and terminalType!=''">
+            and  tb_banner.terminal_type = #{terminalType}
+        </if>
+        <if test="moduleType!=null and moduleType!=''">
+            and  tb_banner.module_type = #{moduleType}
+        </if>
+        <if test="sectionCode!=null and sectionCode!=''">
+            and  tb_banner.section_code = #{sectionCode}
+        </if>
+        <if test="jumpType!=null and jumpType!=''">
+            and  tb_banner.jump_type = #{jumpType}
+        </if>
+        <if test="url!=null and url!=''">
+            and  tb_banner.url = #{url}
+        </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_banner.content_id = #{contentId}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_banner.content = #{content}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and  tb_banner.sort = #{sort}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_banner.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_banner.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_banner.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_banner.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_banner.remarks = #{remarks}
+        </if>
+        and  tb_banner.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_banner
+        set del_flag = 1
+        where id = #{id}
+    </update>
+</mapper>

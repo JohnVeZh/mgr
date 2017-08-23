@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.commonQuestion.mapper.CommonQuestionMapper">
+    <insert id="insert">
+        INSERT INTO tb_common_question
+        (
+            id,
+            title,
+            content,
+            create_date,
+            sort,
+            create_by,
+            update_date,
+            update_by,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{content},
+               #{createDate},
+               #{sort},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_common_question
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.commonQuestion.entity.CommonQuestionEntity">
+        select
+              tb_common_question.id,
+              tb_common_question.title,
+              tb_common_question.content,
+              tb_common_question.create_date,
+              tb_common_question.sort,
+              tb_common_question.create_by,
+              tb_common_question.update_date,
+              tb_common_question.update_by,
+              tb_common_question.del_flag
+         from tb_common_question
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_common_question.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+              and  instr(tb_common_question.title, #{title})>0
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_common_question.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_common_question.create_date = #{createDate}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_common_question.sort = #{sort}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_common_question.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_common_question.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_common_question.update_by = #{updateBy}
+            </if>
+                and  tb_common_question.del_flag = 0
+        ORDER BY  sort asc
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.commonQuestion.entity.CommonQuestionEntity">
+        select
+              tb_common_question.id,
+              tb_common_question.title,
+              tb_common_question.content,
+              tb_common_question.create_date,
+              tb_common_question.sort,
+              tb_common_question.create_by,
+              tb_common_question.update_date,
+              tb_common_question.update_by,
+              tb_common_question.del_flag
+        from tb_common_question
+        where id = #{id}
+            and  tb_common_question.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.commonQuestion.entity.CommonQuestionEntity">
+        select
+              tb_common_question.id,
+              tb_common_question.title,
+              tb_common_question.content,
+              tb_common_question.create_date,
+              tb_common_question.sort,
+              tb_common_question.create_by,
+              tb_common_question.update_date,
+              tb_common_question.update_by,
+              tb_common_question.del_flag
+        from tb_common_question
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_common_question.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_common_question.title = #{title}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_common_question.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_common_question.create_date = #{createDate}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_common_question.sort = #{sort}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_common_question.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_common_question.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_common_question.update_by = #{updateBy}
+            </if>
+            and  tb_common_question.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_common_question
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

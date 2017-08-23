@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.coupon.couponCode.mapper.CouponCodeMapper">
+    <insert id="insert">
+        INSERT INTO tb_coupon_code
+        (
+            id,
+            code,
+            used_num,
+            max_num,
+            effect_date,
+            invalid_date,
+            status,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{code},
+               #{usedNum},
+               #{maxNum},
+               #{effectDate},
+               #{invalidDate},
+               #{status},
+               #{createBy},
+               #{createDate},
+               #{updateBy},
+               #{updateDate},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="insertList">
+        INSERT INTO tb_coupon_code
+        (
+            id,
+            code,
+            used_num,
+            max_num,
+            effect_date,
+            invalid_date,
+            status,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES
+            <foreach collection="couponCodeEntityList" item="couponCodeEntity" open="" separator=" , " close="">
+            (
+                #{couponCodeEntity.id},
+                #{couponCodeEntity.code},
+                #{couponCodeEntity.usedNum},
+                #{couponCodeEntity.maxNum},
+                #{couponCodeEntity.effectDate},
+                #{couponCodeEntity.invalidDate},
+                #{couponCodeEntity.status},
+                #{couponCodeEntity.createBy},
+                #{couponCodeEntity.createDate},
+                #{couponCodeEntity.updateBy},
+                #{couponCodeEntity.updateDate},
+                #{couponCodeEntity.remarks},
+                #{couponCodeEntity.delFlag}
+            )
+            </foreach>
+    </insert>
+    <update id="update">
+        update tb_coupon_code
+        set
+                id = #{id}
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="usedNum!=null">
+                   ,used_num = #{usedNum}
+                </if>
+                <if test="maxNum!=null">
+                   ,max_num = #{maxNum}
+                </if>
+                <if test="effectDate!=null">
+                   ,effect_date = #{effectDate}
+                </if>
+                <if test="invalidDate!=null">
+                   ,invalid_date = #{invalidDate}
+                </if>
+                <if test="status!=null">
+                   ,status = #{status}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.coupon.couponCode.entity.CouponCodeEntity">
+        select
+              tb_coupon_code.id,
+              tb_coupon_code.code,
+              tb_coupon_code.used_num,
+              tb_coupon_code.max_num,
+              tb_coupon_code.effect_date,
+              tb_coupon_code.invalid_date,
+              tb_coupon_code.status,
+              tb_coupon_code.create_by,
+              tb_coupon_code.create_date,
+              tb_coupon_code.update_by,
+              tb_coupon_code.update_date,
+              tb_coupon_code.remarks,
+              tb_coupon_code.del_flag
+         from tb_coupon_code
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_coupon_code.id = #{id}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_coupon_code.code = #{code}
+            </if>
+            <if test="usedNum!=null">
+              and  tb_coupon_code.used_num = #{usedNum}
+            </if>
+            <if test="maxNum!=null">
+              and  tb_coupon_code.max_num = #{maxNum}
+            </if>
+            <if test="effectDate!=null">
+              and  tb_coupon_code.effect_date = #{effectDate}
+            </if>
+            <if test="invalidDate!=null">
+              and  tb_coupon_code.invalid_date = #{invalidDate}
+            </if>
+            <if test="status!=null">
+              and  tb_coupon_code.status = #{status}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_coupon_code.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null">
+              and  tb_coupon_code.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_coupon_code.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null">
+              and  tb_coupon_code.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_coupon_code.remarks = #{remarks}
+            </if>
+                and  tb_coupon_code.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.coupon.couponCode.entity.CouponCodeEntity">
+        select
+              tb_coupon_code.id,
+              tb_coupon_code.code,
+              tb_coupon_code.used_num,
+              tb_coupon_code.max_num,
+              tb_coupon_code.effect_date,
+              tb_coupon_code.invalid_date,
+              tb_coupon_code.status,
+              tb_coupon_code.create_by,
+              tb_coupon_code.create_date,
+              tb_coupon_code.update_by,
+              tb_coupon_code.update_date,
+              tb_coupon_code.remarks,
+              tb_coupon_code.del_flag
+        from tb_coupon_code
+        where id = #{id}
+            and  tb_coupon_code.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.coupon.couponCode.entity.CouponCodeEntity">
+        select
+              tb_coupon_code.id,
+              tb_coupon_code.code,
+              tb_coupon_code.used_num,
+              tb_coupon_code.max_num,
+              tb_coupon_code.effect_date,
+              tb_coupon_code.invalid_date,
+              tb_coupon_code.status,
+              tb_coupon_code.create_by,
+              tb_coupon_code.create_date,
+              tb_coupon_code.update_by,
+              tb_coupon_code.update_date,
+              tb_coupon_code.remarks,
+              tb_coupon_code.del_flag
+        from tb_coupon_code
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_coupon_code.id = #{id}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_coupon_code.code = #{code}
+            </if>
+            <if test="usedNum!=null and usedNum!=''">
+                and  tb_coupon_code.used_num = #{usedNum}
+            </if>
+            <if test="maxNum!=null and maxNum!=''">
+                and  tb_coupon_code.max_num = #{maxNum}
+            </if>
+            <if test="effectDate!=null and effectDate!=''">
+                and  tb_coupon_code.effect_date = #{effectDate}
+            </if>
+            <if test="invalidDate!=null and invalidDate!=''">
+                and  tb_coupon_code.invalid_date = #{invalidDate}
+            </if>
+            <if test="status!=null and status!=''">
+                and  tb_coupon_code.status = #{status}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_coupon_code.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_coupon_code.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_coupon_code.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_coupon_code.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_coupon_code.remarks = #{remarks}
+            </if>
+            and  tb_coupon_code.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_coupon_code
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

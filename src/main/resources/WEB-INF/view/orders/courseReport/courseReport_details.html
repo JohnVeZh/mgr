@@ -1,0 +1,174 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${order.id!}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="nickname" name="用户昵称" readonly="readonly" underline="false" value="${order.user.nickname!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="orderCode" name="订单号" readonly="readonly" underline="false" value="${order.orderCode!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiver" name="收货人" readonly="readonly" underline="false" value="${order.orderLogistics.receiver!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="receiveMobile" name="收货人电话" readonly="readonly" underline="false" value="${order.orderLogistics.receiveMobile!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="isSend" name="是否包邮" readonly="readonly" underline="false" value="${order.isSend==1?'是':'否'}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="postagePrice" name="邮费" readonly="readonly" underline="false" value="${order.postagePrice!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="orderStatus" name="订单状态" disabled="disabled">
+                        <option ${order.orderStatus==1?"selected='selected'":""}>待支付</option>
+                        <option ${order.orderStatus==2?"selected='selected'":""}>待发货</option>
+                        <option ${order.orderStatus==3?"selected='selected'":""}>待收货</option>
+                        <option ${order.orderStatus==4?"selected='selected'":""}>待评论</option>
+                        <option ${order.orderStatus==5?"selected='selected'":""}>已完成</option>
+                        <option ${order.orderStatus==6?"selected='selected'":""}>已取消</option>
+                    </#select>
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payPrice" name="订单/实付金额" readonly="readonly" underline="false" value="${order.orderPrice!} / ${order.payPrice!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiveAddress" name="详细地址" readonly="readonly" underline="false" value="${order.orderLogistics.receiveAddress!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="provinceCityCn" name="省-市-区/县" readonly="readonly" underline="false" value="${order.orderLogistics.provinceCityCn!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="createDate" name="下单时间" readonly="readonly" underline="false" value="${order.createDate!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payTime" name="付款时间" readonly="readonly" underline="false" value="${order.payTime!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="remarks" name="订单备注" readonly="readonly" underline="true" value="${order.remarks!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="zipcode" name="邮编" readonly="readonly" underline="true" value="${order.orderLogistics.zipcode!}" />
+                </div>
+
+            </div>
+
+            @ if(order.orderDetailsList != null) {
+            <div class="row">
+                <div class="fixed-table-header" style="margin-right: 0px; width: 100%;">
+                    <table class="table table-hover table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; width: 40px; ">
+                                    <div class="th-inner ">序号</div><div class="fht-cell" style="width: 40px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; width: 85px; ">
+                                    <div class="th-inner ">商品图片</div><div class="fht-cell" style="width: 85px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; ">
+                                    <div class="th-inner ">商品名称</div><div class="fht-cell"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">商品类型</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: left; vertical-align: middle; width: 60px; ">
+                                    <div class="th-inner ">商品金额</div><div class="fht-cell" style="width: 60px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: left; vertical-align: middle; width: 60px; ">
+                                    <div class="th-inner ">实付金额</div><div class="fht-cell" style="width: 60px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">是否搭配套餐</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">商品数量</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: left; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">退款状态</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @ for(orderDetails in order.orderDetailsList!) {
+                            <tr class="selected" data-index="0">
+                                <td style="text-align: center; vertical-align: middle; width: 40px; ">
+                                    ${orderDetailsLP.index!}
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; width: 90px; ">
+                                    <img src="${orderDetails.productImg!}" width="82px" height="82px" style="border:1px solid #ccc;padding:5px;">
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; ">
+                                    ${orderDetails.productName!}
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    @ if(orderDetails != null && orderDetails.productType==1){
+                                        网课
+                                    @ } else if(orderDetails != null && orderDetails.productType==2){
+                                        图书
+                                    @ } else {
+                                        -
+                                    @ }
+                                </td>
+                                <td style="text-align: right; vertical-align: middle; width: 60px; ">
+                                    ${orderDetails.productPrice!}
+                                </td>
+                                <td style="text-align: right; vertical-align: middle; width: 60px; ">
+                                    ${orderDetails.dealPrice!}
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    @ if(orderDetails != null && orderDetails.hasCollection==1){
+                                        是
+                                    @ } else if(orderDetails != null && orderDetails.hasCollection==0){
+                                        否
+                                    @ } else {
+                                        -
+                                    @ }
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    ${orderDetails.num!}
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; width: 80px; ">
+                                    @ if(orderDetails.refundStatus == 1){
+                                            退款中
+                                    @ }else if(orderDetails.refundStatus == 2){
+                                            拒绝退款
+                                    @ }else if(orderDetails.refundStatus == 3){
+                                            完成退款
+                                    @ }else{
+                                            未退款
+                                    @ }
+                                </td>
+                            </tr>
+                        @ }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @ }
+
+            <div class="row btn-group-m-t">
+                <#button btnCss="danger" name="关闭" id="cancel" icon="fa-close" clickFun="CourseReportInfoDlg.close()"/>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/courseReport/courseReport_info.js"></script>
+@}

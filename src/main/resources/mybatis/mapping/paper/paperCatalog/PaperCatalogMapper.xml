@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperCatalog.mapper.PaperCatalogMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_catalog
+        (
+            id,
+            name,
+            type,
+            section_code,
+            qr_code,
+            parent_id,
+            level,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{type},
+               #{sectionCode},
+               #{qrCode},
+               #{parentId},
+               #{level},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_paper_catalog
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="parentId!=null">
+                   ,parent_id = #{parentId}
+                </if>
+                <if test="level!=null">
+                   ,level = #{level}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperCatalog.entity.PaperCatalogEntity">
+        select
+              tb_paper_catalog.id,
+              tb_paper_catalog.name,
+              tb_paper_catalog.type,
+              tb_paper_catalog.section_code,
+              tb_paper_catalog.qr_code,
+              tb_paper_catalog.parent_id,
+              tb_paper_catalog.level,
+              tb_paper_catalog.create_date,
+              tb_paper_catalog.create_by,
+              tb_paper_catalog.update_date,
+              tb_paper_catalog.update_by,
+              tb_paper_catalog.remarks,
+              tb_paper_catalog.sort,
+              tb_paper_catalog.del_flag
+         from tb_paper_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_paper_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_paper_catalog.name = #{name}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_paper_catalog.type = #{type}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_paper_catalog.section_code = #{sectionCode}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  tb_paper_catalog.qr_code = #{qrCode}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+              and  tb_paper_catalog.parent_id = #{parentId}
+            </if>
+            <if test="level!=null and level!=''">
+              and  tb_paper_catalog.level = #{level}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_paper_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_paper_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_paper_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_paper_catalog.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_paper_catalog.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_paper_catalog.sort = #{sort}
+            </if>
+            <if test="typeList!=null">
+                and  tb_paper_catalog.type in (
+                <foreach collection="typeList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+                and  tb_paper_catalog.del_flag = 0
+        ORDER BY
+        tb_paper_catalog.sort ASC
+    </select>
+
+    <select id="treeList" resultType="cn.sparke.core.common.entity.ZTreeNode" parameterType="java.lang.Integer">
+        SELECT
+        m1.id AS id,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS NULL)
+        THEN
+        '0'
+        ELSE
+        m2.id
+        END
+        )     AS pId,
+        m1.NAME
+        AS NAME,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS NULL)
+        THEN
+        'true'
+        ELSE
+        'false'
+        END
+        )     AS isOpen
+        FROM
+        tb_paper_catalog m1
+        LEFT JOIN tb_paper_catalog m2 ON (m2.del_flag IS NULL OR (m1.parent_id = m2.id AND m2.del_flag = 0))
+        WHERE m1.del_flag = 0
+        <if test="list!=null">
+            AND m1.type in (
+            <foreach collection="list" index="index" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+        ORDER BY
+        m1.sort ASC
+    </select>
+
+    <select id="sectionTreeList" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        select ts.id as id,'0' as pId,ts.name as name,'true' as isOpen from tb_section ts
+        UNION ALL
+        select * from (
+            SELECT
+                m1.id AS id,
+                (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                THEN
+                    (select id from tb_section where code = m1.section_code)
+                ELSE
+                m2.id
+                END
+                )     AS pId,
+                m1.NAME
+                AS NAME,
+                (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                THEN
+                'true'
+                ELSE
+                'false'
+                END
+                )     AS isOpen
+                FROM
+                tb_paper_catalog m1
+                LEFT JOIN tb_paper_catalog m2 ON (m2.del_flag IS NULL OR (m1.parent_id = m2.id AND m2.del_flag = 0))
+                WHERE m1.del_flag = 0
+                <if test="list!=null">
+                    AND m1.type in (
+                    <foreach collection="list" index="index" item="item" separator=",">
+                        #{item}
+                    </foreach>
+                    )
+                </if>
+                ORDER BY
+                m1.sort ASC
+        ) m
+    </select>
+
+    <select id="catalogTreeList" resultType="cn.sparke.modules.paper.paperCatalog.entity.CatalogTreeNode">
+        SELECT
+            m1.id AS id,
+            (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL) THEN
+                    0
+                ELSE
+                    m2.id
+                END
+            ) AS pId,
+            m1.NAME AS NAME,
+            'false' AS isOpen,
+            m1.type,m1.section_code
+        FROM
+            tb_paper_catalog m1
+        LEFT JOIN tb_paper_catalog m2 ON (
+            m2.del_flag IS NULL
+            OR (
+                m1.parent_id = m2.id
+                AND m2.del_flag = 0
+            )
+        )
+        WHERE
+            m1.del_flag = 0
+        <if test="list!=null">
+            AND m1.type in (
+            <foreach collection="list" index="index" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+        ORDER BY
+            m1.sort ASC
+    </select>
+
+    <select id="catalogTree" resultType="cn.sparke.modules.paper.paperCatalog.entity.CatalogTreeNode">
+        SELECT
+            m1.id AS id,
+            (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL) THEN
+                    0
+                ELSE
+                    m2.id
+                END
+            ) AS pId,
+            m1.NAME AS NAME,
+            'false' AS isOpen,
+            m1.type,m1.section_code
+        FROM
+            tb_paper_catalog m1
+        LEFT JOIN tb_paper_catalog m2 ON (
+            m2.del_flag IS NULL
+            OR (
+                m1.parent_id = m2.id
+                AND m2.del_flag = 0
+            )
+        )
+        WHERE
+            m1.del_flag = 0
+        <if test="type!=null and type!=''">
+            AND m1.type = #{type}
+        </if>
+        ORDER BY
+            m1.sort ASC
+    </select>
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paperCatalog.entity.PaperCatalogEntity">
+        select
+              tb_paper_catalog.id,
+              tb_paper_catalog.name,
+              tb_paper_catalog.type,
+              tb_paper_catalog.section_code,
+              tb_paper_catalog.qr_code,
+              tb_paper_catalog.parent_id,
+              tb_paper_catalog.level,
+              tb_paper_catalog.create_date,
+              tb_paper_catalog.create_by,
+              tb_paper_catalog.update_date,
+              tb_paper_catalog.update_by,
+              tb_paper_catalog.remarks,
+              tb_paper_catalog.sort,
+              tb_paper_catalog.del_flag
+        from tb_paper_catalog
+        where id = #{id}
+            and  tb_paper_catalog.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperCatalog.entity.PaperCatalogEntity">
+        select
+              tb_paper_catalog.id,
+              tb_paper_catalog.name,
+              tb_paper_catalog.type,
+              tb_paper_catalog.section_code,
+              tb_paper_catalog.qr_code,
+              tb_paper_catalog.parent_id,
+              tb_paper_catalog.level,
+              tb_paper_catalog.create_date,
+              tb_paper_catalog.create_by,
+              tb_paper_catalog.update_date,
+              tb_paper_catalog.update_by,
+              tb_paper_catalog.remarks,
+              tb_paper_catalog.sort,
+              tb_paper_catalog.del_flag
+        from tb_paper_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_paper_catalog.name = #{name}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_paper_catalog.type = #{type}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_paper_catalog.section_code = #{sectionCode}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  tb_paper_catalog.qr_code = #{qrCode}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and  tb_paper_catalog.parent_id = #{parentId}
+            </if>
+            <if test="level!=null and level!=''">
+                and  tb_paper_catalog.level = #{level}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_paper_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_paper_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_paper_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_paper_catalog.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_paper_catalog.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_paper_catalog.sort = #{sort}
+            </if>
+            and  tb_paper_catalog.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_paper_catalog
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

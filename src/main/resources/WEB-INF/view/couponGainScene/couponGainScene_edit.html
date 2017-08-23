@@ -1,0 +1,60 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="couponGainSceneForm">
+
+            <input type="hidden" id="id" value="${couponGainScene.id}">
+
+            <input type="hidden" id="ruleId" value="${couponGainScene.ruleId}">
+
+
+            <#input id="ruleName" name="规则名称" readonly="true" underline="true" value="${couponGainScene.ruleName}" />
+            <#select id="type" name="场景类型" underline="true" changeFun="CouponGainSceneInfoDlg.changeType()">
+                <option value="1"
+                        @if(couponGainScene.type == "1" ){
+                        selected = "selected"
+                        @}
+                >商品</option>
+                <option value="2"
+                        @if(couponGainScene.type == "2"){
+                        selected = "selected"
+                        @}
+                >优惠码</option>
+                <option value="3"
+                        @if(couponGainScene.type == "3"){
+                        selected = "selected"
+                        @}
+                >活动</option>
+                <option value="4"
+                        @if(couponGainScene.type == "4"){
+                        selected = "selected"
+                        @}
+                >首页banner</option>
+            </#select>
+
+            <input type="hidden" readonly id="contentId" value="${couponGainScene.contentId}">
+
+            <#input id="contentName" name="场景名称" readonly="true" underline="true" value="${couponGainScene.contentName}"
+                    hidden="pId" readonly="readonly"
+                    clickFun="CouponGainSceneInfoDlg.selectContent(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;" />
+            <input type="hidden" readonly id="productId" value="${couponGainScene.productId}">
+            <#input id="productName" name="商品名称" readonly="true" underline="true" value="${couponGainScene.productName}"
+                    hidden="pId" readonly="readonly"
+                    clickFun="CouponGainSceneInfoDlg.selectLayer('1'); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CouponGainSceneInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CouponGainSceneInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/couponGainScene/couponGainScene_info.js"></script>
+
+@}

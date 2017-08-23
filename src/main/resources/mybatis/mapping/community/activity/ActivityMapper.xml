@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.community.activity.mapper.ActivityMapper">
+    <insert id="insert">
+        insert into tb_community_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="brief != null">
+                brief,
+            </if>
+            <if test="imgList != null">
+                img_list,
+            </if>
+            <if test="isTop != null">
+                is_top,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="topTime != null">
+                top_time,
+            </if>
+            <if test="isRecommend != null">
+                is_recommend,
+            </if>
+            <if test="recommendTime != null">
+                recommend_time,
+            </if>
+            <if test="commentNum != null">
+                comment_num,
+            </if>
+            <if test="likeNum != null">
+                like_num,
+            </if>
+            <if test="readNum != null">
+                read_num,
+            </if>
+            <if test="serviceStatus != null">
+                service_status,
+            </if>
+            <if test="attentionNum != null">
+                attention_num,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="brief != null">
+                #{brief,jdbcType=VARCHAR},
+            </if>
+            <if test="imgList != null">
+                #{imgList,jdbcType=VARCHAR},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=TINYINT},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="topTime != null">
+                #{topTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isRecommend != null">
+                #{isRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="recommendTime != null">
+                #{recommendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentNum != null">
+                #{commentNum,jdbcType=INTEGER},
+            </if>
+            <if test="likeNum != null">
+                #{likeNum,jdbcType=INTEGER},
+            </if>
+            <if test="readNum != null">
+                #{readNum,jdbcType=INTEGER},
+            </if>
+            <if test="serviceStatus != null">
+                #{serviceStatus,jdbcType=TINYINT},
+            </if>
+            <if test="attentionNum != null">
+                #{attentionNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update tb_community_activity
+        set
+        id = #{id}
+        <if test="title!=null">
+            ,title = #{title}
+        </if>
+        <if test="brief!=null">
+            ,brief = #{brief}
+        </if>
+        <if test="imgList!=null">
+            ,img_list = #{imgList}
+        </if>
+        <if test="content!=null">
+            ,content = #{content}
+        </if>
+        <if test="isTop!=null">
+            ,is_top = #{isTop}
+        </if>
+        <if test="isShow != null">
+            ,is_show = #{isShow}
+        </if>
+        <if test="topTime!=null">
+            ,top_time = #{topTime}
+        </if>
+        <if test="isRecommend!=null">
+            ,is_recommend = #{isRecommend}
+        </if>
+        <if test="recommendTime!=null">
+            ,recommend_time = #{recommendTime}
+        </if>
+        <if test="commentNum!=null">
+            ,comment_num = #{commentNum}
+        </if>
+        <if test="likeNum!=null">
+            ,like_num = #{likeNum}
+        </if>
+        <if test="readNum!=null">
+            ,read_num = #{readNum}
+        </if>
+        <if test="serviceStatus!=null">
+            ,service_status = #{serviceStatus}
+        </if>
+        <if test="attentionNum!=null">
+            ,attention_num = #{attentionNum}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null">
+            ,remarks = #{remarks}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+    <select id="findListWithoutContent" resultType="cn.sparke.modules.community.activity.entity.ActivityEntity">
+        select
+        tb_community_activity.id,
+        tb_community_activity.title,
+        tb_community_activity.brief,
+        tb_community_activity.img_list,
+        tb_community_activity.is_top,
+        tb_community_activity.is_show,
+        tb_community_activity.top_time,
+        tb_community_activity.is_recommend,
+        tb_community_activity.recommend_time,
+        tb_community_activity.comment_num,
+        tb_community_activity.like_num,
+        tb_community_activity.read_num,
+        tb_community_activity.service_status,
+        tb_community_activity.attention_num,
+        tb_community_activity.create_date,
+        tb_community_activity.create_by,
+        tb_community_activity.update_date,
+        tb_community_activity.update_by,
+        tb_community_activity.remarks,
+        tb_community_activity.del_flag
+        from tb_community_activity
+        where 1=1
+        <include refid="findListCondition"></include>
+        and  tb_community_activity.del_flag = 0
+        order by tb_community_activity.is_top desc,tb_community_activity.top_time desc,tb_community_activity.is_recommend desc,tb_community_activity.recommend_time desc
+    </select>
+
+
+    <select id="findList" resultType="cn.sparke.modules.community.activity.entity.ActivityEntity">
+        select
+        tb_community_activity.id,
+        tb_community_activity.title,
+        tb_community_activity.brief,
+        tb_community_activity.img_list,
+        tb_community_activity.content,
+        tb_community_activity.is_top,
+        tb_community_activity.is_show,
+        tb_community_activity.top_time,
+        tb_community_activity.is_recommend,
+        tb_community_activity.recommend_time,
+        tb_community_activity.comment_num,
+        tb_community_activity.like_num,
+        tb_community_activity.read_num,
+        tb_community_activity.service_status,
+        tb_community_activity.attention_num,
+        tb_community_activity.create_date,
+        tb_community_activity.create_by,
+        tb_community_activity.update_date,
+        tb_community_activity.update_by,
+        tb_community_activity.remarks,
+        tb_community_activity.del_flag
+        from tb_community_activity
+        where 1=1
+        <include refid="findListCondition"></include>
+        and  tb_community_activity.del_flag = 0
+        order by tb_community_activity.is_top desc,tb_community_activity.top_time desc,tb_community_activity.is_recommend desc,tb_community_activity.recommend_time desc
+    </select>
+
+    <sql id="findListCondition"  >
+        <if test="id!=null and id!=''">
+            and  tb_community_activity.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_community_activity.title like CONCAT('%',#{title},'%')
+        </if>
+        <if test="isShow !=null">
+            and  tb_community_activity.is_show = #{isShow}
+        </if>
+        <if test="brief!=null and brief!=''">
+            and  tb_community_activity.brief = #{brief}
+        </if>
+        <if test="imgList!=null and imgList!=''">
+            and  tb_community_activity.img_list = #{imgList}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_community_activity.content = #{content}
+        </if>
+        <if test="isTop!=null">
+            and  tb_community_activity.is_top = #{isTop}
+        </if>
+        <if test="topTime!=null">
+            and  tb_community_activity.top_time = #{topTime}
+        </if>
+        <if test="isRecommend!=null">
+            and  tb_community_activity.is_recommend = #{isRecommend}
+        </if>
+        <if test="recommendTime!=null">
+            and  tb_community_activity.recommend_time = #{recommendTime}
+        </if>
+        <if test="commentNum!=null">
+            and  tb_community_activity.comment_num = #{commentNum}
+        </if>
+        <if test="likeNum!=null">
+            and  tb_community_activity.like_num = #{likeNum}
+        </if>
+        <if test="readNum!=null">
+            and  tb_community_activity.read_num = #{readNum}
+        </if>
+        <if test="serviceStatus!=null and serviceStatus!=''">
+            and  tb_community_activity.service_status = #{serviceStatus}
+        </if>
+        <if test="attentionNum!=null and attentionNum!=''">
+            and  tb_community_activity.attention_num = #{attentionNum}
+        </if>
+        <if test="createDate!=null">
+            and  tb_community_activity.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_community_activity.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            and  tb_community_activity.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_community_activity.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_community_activity.remarks = #{remarks}
+        </if>
+    </sql>
+<!--order by tb_community_activity.is_top desc,tb_community_activity.is_recommend desc,tb_community_activity.top_time desc,tb_community_activity.recommend_time desc-->
+
+    <select id="getById" resultType="cn.sparke.modules.community.activity.entity.ActivityEntity">
+        select
+        tb_community_activity.id,
+        tb_community_activity.title,
+        tb_community_activity.brief,
+        tb_community_activity.img_list,
+        tb_community_activity.content,
+        tb_community_activity.is_top,
+            tb_community_activity.is_show,
+        tb_community_activity.top_time,
+        tb_community_activity.is_recommend,
+        tb_community_activity.recommend_time,
+        tb_community_activity.comment_num,
+        tb_community_activity.like_num,
+        tb_community_activity.read_num,
+        tb_community_activity.service_status,
+        tb_community_activity.attention_num,
+        tb_community_activity.create_date,
+        tb_community_activity.create_by,
+        tb_community_activity.update_date,
+        tb_community_activity.update_by,
+        tb_community_activity.remarks,
+        tb_community_activity.del_flag
+        from tb_community_activity
+        where id = #{id}
+        and  tb_community_activity.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.community.activity.entity.ActivityEntity">
+        select
+        tb_community_activity.id,
+        tb_community_activity.title,
+        tb_community_activity.brief,
+        tb_community_activity.img_list,
+        tb_community_activity.content,
+        tb_community_activity.is_top,
+        tb_community_activity.is_show,
+        tb_community_activity.top_time,
+        tb_community_activity.is_recommend,
+        tb_community_activity.recommend_time,
+        tb_community_activity.comment_num,
+        tb_community_activity.like_num,
+        tb_community_activity.read_num,
+        tb_community_activity.service_status,
+        tb_community_activity.attention_num,
+        tb_community_activity.create_date,
+        tb_community_activity.create_by,
+        tb_community_activity.update_date,
+        tb_community_activity.update_by,
+        tb_community_activity.remarks,
+        tb_community_activity.del_flag
+        from tb_community_activity
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_community_activity.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_community_activity.title = #{title}
+        </if>
+        <if test="brief!=null and brief!=''">
+            and  tb_community_activity.brief = #{brief}
+        </if>
+        <if test="imgList!=null and imgList!=''">
+            and  tb_community_activity.img_list = #{imgList}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_community_activity.content = #{content}
+        </if>
+        <if test="isTop!=null and isTop!=''">
+            and  tb_community_activity.is_top = #{isTop}
+        </if>
+        <if test="isShow != null and isShow != ''">
+            and  tb_community_activity.is_show = #{isShow}
+        </if>
+        <if test="topTime!=null and topTime!=''">
+            and  tb_community_activity.top_time = #{topTime}
+        </if>
+        <if test="isRecommend!=null and isRecommend!=''">
+            and  tb_community_activity.is_recommend = #{isRecommend}
+        </if>
+        <if test="recommendTime!=null and recommendTime!=''">
+            and  tb_community_activity.recommend_time = #{recommendTime}
+        </if>
+        <if test="commentNum!=null and commentNum!=''">
+            and  tb_community_activity.comment_num = #{commentNum}
+        </if>
+        <if test="likeNum!=null and likeNum!=''">
+            and  tb_community_activity.like_num = #{likeNum}
+        </if>
+        <if test="readNum!=null and readNum!=''">
+            and  tb_community_activity.read_num = #{readNum}
+        </if>
+        <if test="serviceStatus!=null and serviceStatus!=''">
+            and  tb_community_activity.service_status = #{serviceStatus}
+        </if>
+        <if test="attentionNum!=null and attentionNum!=''">
+            and  tb_community_activity.attention_num = #{attentionNum}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_community_activity.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_community_activity.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_community_activity.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_community_activity.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_community_activity.remarks = #{remarks}
+        </if>
+        and  tb_community_activity.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_community_activity
+        set del_flag = 1
+        where id = #{id}
+    </update>
+</mapper>

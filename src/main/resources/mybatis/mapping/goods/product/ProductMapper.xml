@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.product.mapper.ProductMapper">
+    <insert id="insert" >
+        INSERT INTO tb_product
+        (
+            id,
+            name,
+            brief,
+            content,
+            type,
+            list_img,
+            cover_img,
+            content_imgs,
+            section_code,
+            present_price,
+            original_price,
+        <if test="isShow!=null">
+            is_show,
+        </if>
+        <if test="isSend!=null">
+            is_send,
+        </if>
+        <if test="isPostage!=null">
+            is_postage,
+        </if>
+        <if test="isPromotion!=null">
+            is_promotion,
+        </if>
+        <if test="postage!=null">
+            postage,
+        </if>
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{brief},
+               #{content},
+               #{type},
+               #{listImg},
+               #{coverImg},
+               #{contentImgs},
+               #{sectionCode},
+               #{presentPrice},
+               #{originalPrice},
+        <if test="isShow!=null">
+            #{isShow},
+        </if>
+        <if test="isSend!=null">
+            #{isSend},
+        </if>
+        <if test="isPostage!=null">
+            #{isPostage},
+        </if>
+        <if test="isPromotion!=null">
+            #{isPromotion},
+        </if>
+        <if test="postage!=null">
+            #{postage},
+        </if>
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort}
+        )
+    </insert>
+    <update id="update">
+        update tb_product
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="brief!=null">
+                   ,brief = #{brief}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="listImg!=null">
+                   ,list_img = #{listImg}
+                </if>
+                <if test="coverImg!=null">
+                   ,cover_img = #{coverImg}
+                </if>
+                <if test="contentImgs!=null">
+                   ,content_imgs = #{contentImgs}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="presentPrice!=null">
+                   ,present_price = #{presentPrice}
+                </if>
+                <if test="originalPrice!=null">
+                   ,original_price = #{originalPrice}
+                </if>
+                <if test="saleNum!=null">
+                   ,sale_num = #{saleNum}
+                </if>
+                <if test="evaluateStar!=null">
+                   ,evaluate_star = #{evaluateStar}
+                </if>
+                <if test="evaluateNum!=null">
+                   ,evaluate_num = #{evaluateNum}
+                </if>
+                <if test="isShow!=null">
+                   ,is_show = #{isShow}
+                </if>
+                <if test="isSend!=null">
+                   ,is_send = #{isSend}
+                </if>
+                <if test="isPostage!=null">
+                   ,is_postage = #{isPostage}
+                </if>
+                <if test="isPromotion!=null">
+                   ,is_promotion = #{isPromotion}
+                </if>
+                <if test="postage!=null">
+                   ,postage = #{postage}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.product.entity.ProductEntity">
+        select
+              tb_product.id,
+              tb_product.name,
+              tb_product.brief,
+              tb_product.content,
+              tb_product.type,
+              tb_product.list_img,
+              tb_product.cover_img,
+              tb_product.content_imgs,
+              tb_product.section_code,
+              tb_product.present_price,
+              tb_product.original_price,
+              tb_product.sale_num,
+              tb_product.evaluate_star,
+              tb_product.evaluate_num,
+              tb_product.is_show,
+              tb_product.is_send,
+              tb_product.is_postage,
+              tb_product.is_promotion,
+              tb_product.postage,
+              tb_product.create_date,
+              tb_product.create_by,
+              tb_product.update_date,
+              tb_product.update_by,
+              tb_product.remarks,
+              tb_product.sort,
+              tb_product.del_flag
+         from tb_product
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_product.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_product.name like concat('%',#{name},'%')
+            </if>
+            <if test="brief!=null and brief!=''">
+              and  tb_product.brief = #{brief}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_product.content = #{content}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_product.type = #{type}
+            </if>
+            <if test="listImg!=null and listImg!=''">
+              and  tb_product.list_img = #{listImg}
+            </if>
+            <if test="coverImg!=null and coverImg!=''">
+              and  tb_product.cover_img = #{coverImg}
+            </if>
+            <if test="contentImgs!=null and contentImgs!=''">
+              and  tb_product.content_imgs = #{contentImgs}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_product.section_code = #{sectionCode}
+            </if>
+            <if test="presentPrice!=null and presentPrice!=''">
+              and  tb_product.present_price = #{presentPrice}
+            </if>
+            <if test="originalPrice!=null and originalPrice!=''">
+              and  tb_product.original_price = #{originalPrice}
+            </if>
+            <if test="saleNum!=null and saleNum!=''">
+              and  tb_product.sale_num = #{saleNum}
+            </if>
+            <if test="evaluateStar!=null and evaluateStar!=''">
+              and  tb_product.evaluate_star = #{evaluateStar}
+            </if>
+            <if test="evaluateNum!=null and evaluateNum!=''">
+              and  tb_product.evaluate_num = #{evaluateNum}
+            </if>
+            <if test="isShow!=null and isShow!=''">
+              and  tb_product.is_show = #{isShow}
+            </if>
+            <if test="isSend!=null and isSend!=''">
+              and  tb_product.is_send = #{isSend}
+            </if>
+            <if test="isPostage!=null and isPostage!=''">
+              and  tb_product.is_postage = #{isPostage}
+            </if>
+            <if test="isPromotion!=null and isPromotion!=''">
+              and  tb_product.is_promotion = #{isPromotion}
+            </if>
+            <if test="postage!=null and postage!=''">
+              and  tb_product.postage = #{postage}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_product.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_product.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_product.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_product.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_product.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_product.sort = #{sort}
+            </if>
+                and  tb_product.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.product.entity.ProductEntity">
+        select
+              tb_product.id,
+              tb_product.name,
+              tb_product.brief,
+              tb_product.content,
+              tb_product.type,
+              tb_product.list_img,
+              tb_product.cover_img,
+              tb_product.content_imgs,
+              tb_product.section_code,
+              tb_product.present_price,
+              tb_product.original_price,
+              tb_product.sale_num,
+              tb_product.evaluate_star,
+              tb_product.evaluate_num,
+              tb_product.is_show,
+              tb_product.is_send,
+              tb_product.is_postage,
+              tb_product.is_promotion,
+              tb_product.postage,
+              tb_product.create_date,
+              tb_product.create_by,
+              tb_product.update_date,
+              tb_product.update_by,
+              tb_product.remarks,
+              tb_product.sort,
+              tb_product.del_flag
+        from tb_product
+        where id = #{id}
+            and  tb_product.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.product.entity.ProductEntity">
+        select
+              tb_product.id,
+              tb_product.name,
+              tb_product.brief,
+              tb_product.content,
+              tb_product.type,
+              tb_product.list_img,
+              tb_product.cover_img,
+              tb_product.content_imgs,
+              tb_product.section_code,
+              tb_product.present_price,
+              tb_product.original_price,
+              tb_product.sale_num,
+              tb_product.evaluate_star,
+              tb_product.evaluate_num,
+              tb_product.is_show,
+              tb_product.is_send,
+              tb_product.is_postage,
+              tb_product.is_promotion,
+              tb_product.postage,
+              tb_product.create_date,
+              tb_product.create_by,
+              tb_product.update_date,
+              tb_product.update_by,
+              tb_product.remarks,
+              tb_product.sort,
+              tb_product.del_flag
+        from tb_product
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_product.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_product.name = #{name}
+            </if>
+            <if test="brief!=null and brief!=''">
+                and  tb_product.brief = #{brief}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_product.content = #{content}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_product.type = #{type}
+            </if>
+            <if test="listImg!=null and listImg!=''">
+                and  tb_product.list_img = #{listImg}
+            </if>
+            <if test="coverImg!=null and coverImg!=''">
+                and  tb_product.cover_img = #{coverImg}
+            </if>
+            <if test="contentImgs!=null and contentImgs!=''">
+                and  tb_product.content_imgs = #{contentImgs}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_product.section_code = #{sectionCode}
+            </if>
+            <if test="presentPrice!=null and presentPrice!=''">
+                and  tb_product.present_price = #{presentPrice}
+            </if>
+            <if test="originalPrice!=null and originalPrice!=''">
+                and  tb_product.original_price = #{originalPrice}
+            </if>
+            <if test="saleNum!=null and saleNum!=''">
+                and  tb_product.sale_num = #{saleNum}
+            </if>
+            <if test="evaluateStar!=null and evaluateStar!=''">
+                and  tb_product.evaluate_star = #{evaluateStar}
+            </if>
+            <if test="evaluateNum!=null and evaluateNum!=''">
+                and  tb_product.evaluate_num = #{evaluateNum}
+            </if>
+            <if test="isShow!=null and isShow!=''">
+                and  tb_product.is_show = #{isShow}
+            </if>
+            <if test="isSend!=null and isSend!=''">
+                and  tb_product.is_send = #{isSend}
+            </if>
+            <if test="isPostage!=null and isPostage!=''">
+                and  tb_product.is_postage = #{isPostage}
+            </if>
+            <if test="isPromotion!=null and isPromotion!=''">
+                and  tb_product.is_promotion = #{isPromotion}
+            </if>
+            <if test="postage!=null and postage!=''">
+                and  tb_product.postage = #{postage}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_product.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_product.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_product.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_product.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_product.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_product.sort = #{sort}
+            </if>
+            and  tb_product.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_product
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

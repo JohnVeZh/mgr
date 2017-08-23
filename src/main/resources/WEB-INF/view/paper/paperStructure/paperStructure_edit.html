@@ -1,0 +1,48 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="paperId" value="${paperStructureEntity.paperId}">
+            <input type="hidden" id="id" value="${paperStructureEntity.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="name" name="名称" underline="true" value="${paperStructureEntity.name}" />
+                    <#input id="parentName" name="所属父结构" underline="true" value="${paperStructureEntity.parentName}"
+                            hidden="parentId" readonly="readonly" hiddenValue="${paperStructureEntity.parentId}"
+                            clickFun="PaperStructureInfoDlg.showMenuSelectTree(); return false;"
+                            style="background-color: #ffffff !important;"
+                            selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+                    <#input id="alias" name="别名" underline="true"  value="${paperStructureEntity.alias}"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="contentType" name="题目类型" underline="true">
+                        <option value="1">听力</option>
+                        <option value="2">阅读</option>
+                        <option value="3">翻译</option>
+                        <option value="4">写作</option>
+                    </#select>
+
+                    <#input id="sort" name="排序" underline="true" value="${paperStructureEntity.sort}" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" id="contentDiv">
+                        <#wangEditor id="content" name="描述" height="300px" content="${paperStructureEntity.content}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PaperStructureInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PaperStructureInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paperStructure/paperStructure_info.js"></script>
+@}

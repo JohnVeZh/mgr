@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.gift.exercise.mapper.GiftExerciseMapper">
+    <insert id="insert">
+        INSERT INTO tb_gift_exercise
+        (
+            id,
+            section_code,
+            question_type,
+            recommend_id,
+            network_course_video_id,
+            paper_id,
+            structure_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{sectionCode},
+               #{questionType},
+               #{recommendId},
+               #{networkCourseVideoId},
+               #{paperId},
+               #{structureId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_gift_exercise
+        set
+                id = #{id}
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="questionType!=null">
+                   ,question_type = #{questionType}
+                </if>
+                <if test="recommendId!=null">
+                   ,recommend_id = #{recommendId}
+                </if>
+                <if test="networkCourseVideoId!=null">
+                   ,network_course_video_id = #{networkCourseVideoId}
+                </if>
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="structureId!=null">
+                   ,structure_id = #{structureId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.gift.exercise.entity.GiftExerciseEntity">
+        select
+              tb_gift_exercise.id,
+              tb_gift_exercise.section_code,
+              tb_gift_exercise.question_type,
+              tb_gift_exercise.recommend_id,
+              tb_gift_exercise.network_course_video_id,
+              tb_gift_exercise.paper_id,
+              tb_gift_exercise.structure_id,
+              tb_gift_exercise.create_date,
+              tb_gift_exercise.create_by,
+              tb_gift_exercise.update_date,
+              tb_gift_exercise.update_by,
+              tb_gift_exercise.remarks,
+              tb_gift_exercise.sort,
+              tb_gift_exercise.del_flag
+         from tb_gift_exercise
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_gift_exercise.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_gift_exercise.section_code = #{sectionCode}
+            </if>
+            <if test="questionType!=null and questionType!=''">
+              and  tb_gift_exercise.question_type = #{questionType}
+            </if>
+            <if test="recommendId!=null and recommendId!=''">
+              and  tb_gift_exercise.recommend_id = #{recommendId}
+            </if>
+            <if test="networkCourseVideoId!=null and networkCourseVideoId!=''">
+              and  tb_gift_exercise.network_course_video_id = #{networkCourseVideoId}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+              and  tb_gift_exercise.paper_id = #{paperId}
+            </if>
+            <if test="structureId!=null and structureId!=''">
+              and  tb_gift_exercise.structure_id = #{structureId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_gift_exercise.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_gift_exercise.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_gift_exercise.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_gift_exercise.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_gift_exercise.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_gift_exercise.sort = #{sort}
+            </if>
+                and  tb_gift_exercise.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.gift.exercise.entity.GiftExerciseEntity">
+        select
+              tb_gift_exercise.id,
+              tb_gift_exercise.section_code,
+              tb_gift_exercise.question_type,
+              tb_gift_exercise.recommend_id,
+              tb_gift_exercise.network_course_video_id,
+              tb_gift_exercise.paper_id,
+              tb_gift_exercise.structure_id,
+              tb_gift_exercise.create_date,
+              tb_gift_exercise.create_by,
+              tb_gift_exercise.update_date,
+              tb_gift_exercise.update_by,
+              tb_gift_exercise.remarks,
+              tb_gift_exercise.sort,
+              tb_gift_exercise.del_flag
+        from tb_gift_exercise
+        where id = #{id}
+            and  tb_gift_exercise.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.gift.exercise.entity.GiftExerciseEntity">
+        select
+              tb_gift_exercise.id,
+              tb_gift_exercise.section_code,
+              tb_gift_exercise.question_type,
+              tb_gift_exercise.recommend_id,
+              tb_gift_exercise.network_course_video_id,
+              tb_gift_exercise.paper_id,
+              tb_gift_exercise.structure_id,
+              tb_gift_exercise.create_date,
+              tb_gift_exercise.create_by,
+              tb_gift_exercise.update_date,
+              tb_gift_exercise.update_by,
+              tb_gift_exercise.remarks,
+              tb_gift_exercise.sort,
+              tb_gift_exercise.del_flag
+        from tb_gift_exercise
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_gift_exercise.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_gift_exercise.section_code = #{sectionCode}
+            </if>
+            <if test="questionType!=null and questionType!=''">
+                and  tb_gift_exercise.question_type = #{questionType}
+            </if>
+            <if test="recommendId!=null and recommendId!=''">
+                and  tb_gift_exercise.recommend_id = #{recommendId}
+            </if>
+            <if test="networkCourseVideoId!=null and networkCourseVideoId!=''">
+                and  tb_gift_exercise.network_course_video_id = #{networkCourseVideoId}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_gift_exercise.paper_id = #{paperId}
+            </if>
+            <if test="structureId!=null and structureId!=''">
+                and  tb_gift_exercise.structure_id = #{structureId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_gift_exercise.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_gift_exercise.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_gift_exercise.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_gift_exercise.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_gift_exercise.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_gift_exercise.sort = #{sort}
+            </if>
+            and  tb_gift_exercise.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_gift_exercise
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

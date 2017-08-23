@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.business.version.mapper.VersionMapper">
+    <insert id="insert">
+        INSERT INTO tb_version
+        (
+        id,
+        title,
+        code,
+        version,
+        summary,
+        download_url,
+        type,
+        is_force,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        del_flag
+        )
+        VALUES
+        (
+        #{id},
+        #{title},
+        #{code},
+        #{version},
+        #{summary},
+        #{downloadUrl},
+        #{type},
+        #{isForce},
+        #{createBy},
+        #{createDate},
+        #{updateBy},
+        #{updateDate},
+        #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_version
+        set
+        id = #{id}
+        <if test="title!=null">
+            ,title = #{title}
+        </if>
+        <if test="code!=null">
+            ,code = #{code}
+        </if>
+        <if test="version!=null">
+            ,version = #{version}
+        </if>
+        <if test="summary!=null">
+            ,summary = #{summary}
+        </if>
+        <if test="downloadUrl!=null">
+            ,download_url = #{downloadUrl}
+        </if>
+        <if test="type!=null">
+            ,type = #{type}
+        </if>
+        <if test="isForce!=null">
+            ,is_force = #{isForce}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.business.version.entity.VersionEntity">
+        select
+        tb_version.id,
+        tb_version.title,
+        tb_version.code,
+        tb_version.version,
+        tb_version.summary,
+        tb_version.download_url,
+        tb_version.type,
+        tb_version.is_force,
+        tb_version.create_by,
+        tb_version.create_date,
+        tb_version.update_by,
+        tb_version.update_date,
+        tb_version.del_flag
+        from tb_version
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_version.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_version.title = #{title}
+        </if>
+        <if test="code!=null and code!=''">
+            and  tb_version.code = #{code}
+        </if>
+        <if test="version!=null and version!=''">
+            and  tb_version.version = #{version}
+        </if>
+        <if test="summary!=null and summary!=''">
+            and  tb_version.summary = #{summary}
+        </if>
+        <if test="downloadUrl!=null and downloadUrl!=''">
+            and  tb_version.download_url = #{downloadUrl}
+        </if>
+        <if test="type!=null and type!=''">
+            and  tb_version.type = #{type}
+        </if>
+        <if test="isForce!=null and isForce!=''">
+            and  tb_version.is_force = #{isForce}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_version.create_by = #{createBy}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_version.create_date = #{createDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_version.update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_version.update_date = #{updateDate}
+        </if>
+        and  tb_version.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.business.version.entity.VersionEntity">
+        select
+        tb_version.id,
+        tb_version.title,
+        tb_version.code,
+        tb_version.version,
+        tb_version.summary,
+        tb_version.download_url,
+        tb_version.type,
+        tb_version.is_force,
+        tb_version.create_by,
+        tb_version.create_date,
+        tb_version.update_by,
+        tb_version.update_date,
+        tb_version.del_flag
+        from tb_version
+        where id = #{id}
+        and  tb_version.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.business.version.entity.VersionEntity">
+        select
+        tb_version.id,
+        tb_version.title,
+        tb_version.code,
+        tb_version.version,
+        tb_version.summary,
+        tb_version.download_url,
+        tb_version.type,
+        tb_version.is_force,
+        tb_version.create_by,
+        tb_version.create_date,
+        tb_version.update_by,
+        tb_version.update_date,
+        tb_version.del_flag
+        from tb_version
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_version.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_version.title = #{title}
+        </if>
+        <if test="code!=null and code!=''">
+            and  tb_version.code = #{code}
+        </if>
+        <if test="version!=null and version!=''">
+            and  tb_version.version = #{version}
+        </if>
+        <if test="summary!=null and summary!=''">
+            and  tb_version.summary = #{summary}
+        </if>
+        <if test="downloadUrl!=null and downloadUrl!=''">
+            and  tb_version.download_url = #{downloadUrl}
+        </if>
+        <if test="type!=null and type!=''">
+            and  tb_version.type = #{type}
+        </if>
+        <if test="isForce!=null and isForce!=''">
+            and  tb_version.is_force = #{isForce}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_version.create_by = #{createBy}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_version.create_date = #{createDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_version.update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_version.update_date = #{updateDate}
+        </if>
+        and  tb_version.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_version
+        set del_flag = 1
+        where id = #{id}
+    </update>
+</mapper>

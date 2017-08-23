@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.networkCourse.mapper.NetworkCourseMapper">
+    <insert id="insert">
+        INSERT INTO tb_product_network_course
+        (
+            id,
+            product_id,
+            catalog_number,
+            teacher_names,
+            course_type,
+            is_live,
+            is_free,
+            is_limit_free,
+            is_famous_teacher,
+            has_catalog,
+        <if test="status!=null">
+            status,
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            start_time,
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            end_time,
+        </if>
+        <if test="reserveStartTime!=null and reserveStartTime!=''">
+            reserve_start_time,
+        </if>
+            reserve_number,
+            receive_number,
+        <if test="saleStartTime!=null and saleStartTime!=''">
+            sale_start_time,
+        </if>
+        <if test="saleEndTime!=null and saleEndTime!=''">
+            sale_end_time,
+        </if>
+        <if test="shelfOnTime!=null and shelfOnTime!=''">
+            shelf_on_time,
+        </if>
+        <if test="shelfOffTime!=null and shelfOffTime!=''">
+            shelf_off_time,
+        </if>
+            limit_number,
+            qq_group_no,
+        <if test="limitStartTime!=null and limitStartTime!=''">
+            limit_start_time,
+        </if>
+        <if test="limitEndTime!=null and limitEndTime!=''">
+            limit_end_time,
+        </if>
+            preview_cc_id,
+        <if test="commentNum!=null and commentNum!=''">
+            comment_num,
+        </if>
+        live_room_id
+        )
+        VALUES
+        (
+               #{networkCourseId},
+               #{productId},
+               #{catalogNumber},
+               #{teacherNames},
+               #{courseType},
+               #{isLive},
+               #{isFree},
+               #{isLimitFree},
+               #{isFamousTeacher},
+               #{hasCatalog},
+        <if test="status!=null">
+            #{status},
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            #{startTime},
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            #{endTime},
+        </if>
+        <if test="reserveStartTime!=null and reserveStartTime!=''">
+            #{reserveStartTime},
+        </if>
+               #{reserveNumber},
+               #{receiveNumber},
+        <if test="saleStartTime!=null and saleStartTime!=''">
+            #{saleStartTime},
+        </if>
+        <if test="saleEndTime!=null and saleEndTime!=''">
+            #{saleEndTime},
+        </if>
+        <if test="shelfOnTime!=null and shelfOnTime!=''">
+            #{shelfOnTime},
+        </if>
+        <if test="shelfOffTime!=null and shelfOffTime!=''">
+            #{shelfOffTime},
+        </if>
+               #{limitNumber},
+               #{qqGroupNo},
+        <if test="limitStartTime!=null and limitStartTime!=''">
+            #{limitStartTime},
+        </if>
+        <if test="limitEndTime!=null and limitEndTime!=''">
+            #{limitEndTime},
+        </if>
+               #{previewCcId},
+        <if test="commentNum!=null and commentNum!=''">
+            #{commentNum},
+        </if>
+        #{liveRoomId}
+        )
+    </insert>
+    <update id="update">
+        update tb_product_network_course
+        set
+                   product_id = #{id}
+
+                <if test="catalogNumber!=null and catalogNumber!=''">
+                   ,catalog_number = #{catalogNumber}
+                </if>
+                <if test="teacherNames!=null and teacherNames!=''">
+                   ,teacher_names = #{teacherNames}
+                </if>
+                <if test="courseType!=null and courseType!=''">
+                   ,course_type = #{courseType}
+                </if>
+                <if test="isLive!=null and isLive!=''">
+                   ,is_live = #{isLive}
+                </if>
+                <if test="isFree!=null and isFree!=''">
+                   ,is_free = #{isFree}
+                </if>
+                <if test="isLimitFree!=null and isLimitFree!=''">
+                   ,is_limit_free = #{isLimitFree}
+                </if>
+                <if test="isFamousTeacher!=null and isFamousTeacher!=''">
+                   ,is_famous_teacher = #{isFamousTeacher}
+                </if>
+                <if test="hasCatalog!=null and hasCatalog!=''">
+                   ,has_catalog = #{hasCatalog}
+                </if>
+                <if test="status!=null">
+                   ,status = #{status}
+                </if>
+                <if test="startTime!=null and startTime!=''">
+                   ,start_time = #{startTime}
+                </if>
+                <if test="endTime!=null and endTime!=''">
+                   ,end_time = #{endTime}
+                </if>
+                <if test="reserveStartTime!=null and reserveStartTime!=''">
+                   ,reserve_start_time = #{reserveStartTime}
+                </if>
+                <if test="reserveNumber!=null and reserveNumber!=''">
+                   ,reserve_number = #{reserveNumber}
+                </if>
+                <if test="receiveNumber!=null and receiveNumber!=''">
+                   ,receive_number = #{receiveNumber}
+                </if>
+                <if test="saleStartTime!=null and saleStartTime!=''">
+                   ,sale_start_time = #{saleStartTime}
+                </if>
+                <if test="saleEndTime!=null and saleEndTime!=''">
+                   ,sale_end_time = #{saleEndTime}
+                </if>
+                <if test="shelfOnTime!=null and shelfOnTime!=''">
+                   ,shelf_on_time = #{shelfOnTime}
+                </if>
+                <if test="shelfOffTime!=null and shelfOffTime!=''">
+                   ,shelf_off_time = #{shelfOffTime}
+                </if>
+                <if test="limitNumber!=null and limitNumber!=''">
+                   ,limit_number = #{limitNumber}
+                </if>
+                <if test="qqGroupNo!=null and qqGroupNo!=''">
+                   ,qq_group_no = #{qqGroupNo}
+                </if>
+                <if test="limitStartTime!=null and limitStartTime!=''">
+                   ,limit_start_time = #{limitStartTime}
+                </if>
+                <if test="limitEndTime!=null and limitEndTime!=''">
+                   ,limit_end_time = #{limitEndTime}
+                </if>
+                <if test="previewCcId!=null and previewCcId!=''">
+                   ,preview_cc_id = #{previewCcId}
+                </if>
+                <if test="liveRoomId!=null and liveRoomId!=''">
+                   ,live_room_id = #{liveRoomId}
+                </if>
+                <if test="commentNum!=null and commentNum!=''">
+                   ,comment_num = #{commentNum}
+                </if>
+        where product_id = #{id}
+    </update>
+    
+    <update id="updateStatus">
+        update tb_product_network_course
+        set
+        product_id = #{id}
+        <if test="status!=null">
+            ,status = #{status}
+        </if>
+        where product_id = #{id}
+
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.networkCourse.entity.NetworkCourseEntity">
+        select
+              tb_product_network_course.id,
+              tb_product_network_course.product_id,
+              tb_product_network_course.catalog_number,
+              tb_product_network_course.teacher_names,
+              tb_product_network_course.course_type,
+              tb_product_network_course.is_live,
+              tb_product_network_course.is_free,
+              tb_product_network_course.is_limit_free,
+              tb_product_network_course.is_famous_teacher,
+              tb_product_network_course.has_catalog,
+              tb_product_network_course.status,
+              tb_product_network_course.start_time,
+              tb_product_network_course.end_time,
+              tb_product_network_course.reserve_start_time,
+              tb_product_network_course.reserve_number,
+              tb_product_network_course.receive_number,
+              tb_product_network_course.sale_start_time,
+              tb_product_network_course.sale_end_time,
+              tb_product_network_course.shelf_on_time,
+              tb_product_network_course.shelf_off_time,
+              tb_product_network_course.limit_number,
+              tb_product_network_course.qq_group_no,
+              tb_product_network_course.limit_start_time,
+              tb_product_network_course.limit_end_time,
+              tb_product_network_course.preview_cc_id,
+              tb_product_network_course.live_room_id,
+              tb_product_network_course.comment_num
+         from tb_product_network_course
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_product_network_course.id = #{id}
+            </if>
+            <if test="productId!=null and productId!=''">
+              and  tb_product_network_course.product_id = #{productId}
+            </if>
+            <if test="catalogNumber!=null and catalogNumber!=''">
+              and  tb_product_network_course.catalog_number = #{catalogNumber}
+            </if>
+            <if test="teacherNames!=null and teacherNames!=''">
+              and  tb_product_network_course.teacher_names = #{teacherNames}
+            </if>
+            <if test="courseType!=null and courseType!=''">
+              and  tb_product_network_course.course_type = #{courseType}
+            </if>
+            <if test="isLive!=null and isLive!=''">
+              and  tb_product_network_course.is_live = #{isLive}
+            </if>
+            <if test="isFree!=null and isFree!=''">
+              and  tb_product_network_course.is_free = #{isFree}
+            </if>
+            <if test="isLimitFree!=null and isLimitFree!=''">
+              and  tb_product_network_course.is_limit_free = #{isLimitFree}
+            </if>
+            <if test="isFamousTeacher!=null and isFamousTeacher!=''">
+              and  tb_product_network_course.is_famous_teacher = #{isFamousTeacher}
+            </if>
+            <if test="hasCatalog!=null and hasCatalog!=''">
+              and  tb_product_network_course.has_catalog = #{hasCatalog}
+            </if>
+            <if test="status!=null and status!=''">
+              and  tb_product_network_course.status = #{status}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+              and  tb_product_network_course.start_time = #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+              and  tb_product_network_course.end_time = #{endTime}
+            </if>
+            <if test="reserveStartTime!=null and reserveStartTime!=''">
+              and  tb_product_network_course.reserve_start_time = #{reserveStartTime}
+            </if>
+            <if test="reserveNumber!=null and reserveNumber!=''">
+              and  tb_product_network_course.reserve_number = #{reserveNumber}
+            </if>
+            <if test="receiveNumber!=null and receiveNumber!=''">
+              and  tb_product_network_course.receive_number = #{receiveNumber}
+            </if>
+            <if test="saleStartTime!=null and saleStartTime!=''">
+              and  tb_product_network_course.sale_start_time = #{saleStartTime}
+            </if>
+            <if test="saleEndTime!=null and saleEndTime!=''">
+              and  tb_product_network_course.sale_end_time = #{saleEndTime}
+            </if>
+            <if test="shelfOnTime!=null and shelfOnTime!=''">
+              and  tb_product_network_course.shelf_on_time = #{shelfOnTime}
+            </if>
+            <if test="shelfOffTime!=null and shelfOffTime!=''">
+              and  tb_product_network_course.shelf_off_time = #{shelfOffTime}
+            </if>
+            <if test="limitNumber!=null and limitNumber!=''">
+              and  tb_product_network_course.limit_number = #{limitNumber}
+            </if>
+            <if test="qqGroupNo!=null and qqGroupNo!=''">
+              and  tb_product_network_course.qq_group_no = #{qqGroupNo}
+            </if>
+            <if test="limitStartTime!=null and limitStartTime!=''">
+              and  tb_product_network_course.limit_start_time = #{limitStartTime}
+            </if>
+            <if test="limitEndTime!=null and limitEndTime!=''">
+              and  tb_product_network_course.limit_end_time = #{limitEndTime}
+            </if>
+            <if test="previewCcId!=null and previewCcId!=''">
+              and  tb_product_network_course.preview_cc_id = #{previewCcId}
+            </if>
+            <if test="liveRoomId!=null and liveRoomId!=''">
+              and  tb_product_network_course.live_room_id = #{liveRoomId}
+            </if>
+            <if test="commentNum!=null and commentNum!=''">
+              and  tb_product_network_course.comment_num = #{commentNum}
+            </if>
+    </select>
+
+    <select id="queryAllList" resultType="cn.sparke.modules.goods.networkCourse.entity.NetworkCourseEntity">
+        SELECT
+            tpnc.id,
+            tp.id AS productId,
+            tp.cover_img,
+            tp.name,
+            tp.section_code,
+            tpnc.course_type,
+            tp.present_price,
+            tp.sale_num,
+            tp.is_show,
+            tpnc.is_live,
+            tpnc.`status`,
+            tpnc.start_time,
+            tpnc.has_catalog,
+            tpnc.end_time
+        FROM
+            tb_product tp,
+            tb_product_network_course tpnc
+        WHERE
+            tp.id = tpnc.product_id
+            AND tp.type=1
+        <if test="condition!=null and condition!=''">
+            AND  tp.name like CONCAT('%',#{condition},'%')
+        </if>
+        <if test="sectionCode!=null">
+            AND  tp.section_code=#{sectionCode}
+        </if>
+        <if test="courseType!=null">
+            AND  tpnc.course_type=#{courseType}
+        </if>
+        <if test="isLive!=null">
+            AND  tpnc.is_live=#{isLive}
+        </if>
+        <if test="productId!=null and productId!=''">
+            AND  tpnc.product_id=#{productId}
+        </if>
+            AND tp.del_flag=0
+        ORDER BY sort ASC,create_date DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.networkCourse.entity.NetworkCourseEntity">
+        SELECT
+            *
+        FROM
+            tb_product tp,
+            tb_product_network_course tpnc
+        WHERE
+            tp.id = tpnc.product_id
+            AND tp.type = 1
+            AND tpnc.id=#{id}
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.networkCourse.entity.NetworkCourseEntity">
+        select
+              tb_product_network_course.id,
+              tb_product_network_course.product_id,
+              tb_product_network_course.catalog_number,
+              tb_product_network_course.teacher_names,
+              tb_product_network_course.course_type,
+              tb_product_network_course.is_live,
+              tb_product_network_course.is_free,
+              tb_product_network_course.is_limit_free,
+              tb_product_network_course.is_famous_teacher,
+              tb_product_network_course.has_catalog,
+              tb_product_network_course.status,
+              tb_product_network_course.start_time,
+              tb_product_network_course.end_time,
+              tb_product_network_course.reserve_start_time,
+              tb_product_network_course.reserve_number,
+              tb_product_network_course.receive_number,
+              tb_product_network_course.sale_start_time,
+              tb_product_network_course.sale_end_time,
+              tb_product_network_course.shelf_on_time,
+              tb_product_network_course.shelf_off_time,
+              tb_product_network_course.limit_number,
+              tb_product_network_course.qq_group_no,
+              tb_product_network_course.limit_start_time,
+              tb_product_network_course.limit_end_time,
+              tb_product_network_course.preview_cc_id,
+              tb_product_network_course.live_room_id,
+              tb_product_network_course.comment_num
+        from tb_product_network_course
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_product_network_course.id = #{id}
+            </if>
+            <if test="productId!=null and productId!=''">
+                and  tb_product_network_course.product_id = #{productId}
+            </if>
+            <if test="catalogNumber!=null and catalogNumber!=''">
+                and  tb_product_network_course.catalog_number = #{catalogNumber}
+            </if>
+            <if test="teacherNames!=null and teacherNames!=''">
+                and  tb_product_network_course.teacher_names = #{teacherNames}
+            </if>
+            <if test="courseType!=null and courseType!=''">
+                and  tb_product_network_course.course_type = #{courseType}
+            </if>
+            <if test="isLive!=null and isLive!=''">
+                and  tb_product_network_course.is_live = #{isLive}
+            </if>
+            <if test="isFree!=null and isFree!=''">
+                and  tb_product_network_course.is_free = #{isFree}
+            </if>
+            <if test="isLimitFree!=null and isLimitFree!=''">
+                and  tb_product_network_course.is_limit_free = #{isLimitFree}
+            </if>
+            <if test="isFamousTeacher!=null and isFamousTeacher!=''">
+                and  tb_product_network_course.is_famous_teacher = #{isFamousTeacher}
+            </if>
+            <if test="hasCatalog!=null and hasCatalog!=''">
+                and  tb_product_network_course.has_catalog = #{hasCatalog}
+            </if>
+            <if test="status!=null and status!=''">
+                and  tb_product_network_course.status = #{status}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and  tb_product_network_course.start_time = #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and  tb_product_network_course.end_time = #{endTime}
+            </if>
+            <if test="reserveStartTime!=null and reserveStartTime!=''">
+                and  tb_product_network_course.reserve_start_time = #{reserveStartTime}
+            </if>
+            <if test="reserveNumber!=null and reserveNumber!=''">
+                and  tb_product_network_course.reserve_number = #{reserveNumber}
+            </if>
+            <if test="receiveNumber!=null and receiveNumber!=''">
+                and  tb_product_network_course.receive_number = #{receiveNumber}
+            </if>
+            <if test="saleStartTime!=null and saleStartTime!=''">
+                and  tb_product_network_course.sale_start_time = #{saleStartTime}
+            </if>
+            <if test="saleEndTime!=null and saleEndTime!=''">
+                and  tb_product_network_course.sale_end_time = #{saleEndTime}
+            </if>
+            <if test="shelfOnTime!=null and shelfOnTime!=''">
+                and  tb_product_network_course.shelf_on_time = #{shelfOnTime}
+            </if>
+            <if test="shelfOffTime!=null and shelfOffTime!=''">
+                and  tb_product_network_course.shelf_off_time = #{shelfOffTime}
+            </if>
+            <if test="limitNumber!=null and limitNumber!=''">
+                and  tb_product_network_course.limit_number = #{limitNumber}
+            </if>
+            <if test="qqGroupNo!=null and qqGroupNo!=''">
+                and  tb_product_network_course.qq_group_no = #{qqGroupNo}
+            </if>
+            <if test="limitStartTime!=null and limitStartTime!=''">
+                and  tb_product_network_course.limit_start_time = #{limitStartTime}
+            </if>
+            <if test="limitEndTime!=null and limitEndTime!=''">
+                and  tb_product_network_course.limit_end_time = #{limitEndTime}
+            </if>
+            <if test="previewCcId!=null and previewCcId!=''">
+                and  tb_product_network_course.preview_cc_id = #{previewCcId}
+            </if>
+            <if test="liveRoomId!=null and liveRoomId!=''">
+                and  tb_product_network_course.live_room_id = #{liveRoomId}
+            </if>
+            <if test="commentNum!=null and commentNum!=''">
+                and  tb_product_network_course.comment_num = #{commentNum}
+            </if>
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_product_network_course
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

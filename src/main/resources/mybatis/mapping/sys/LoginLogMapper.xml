@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.sparke.modules.system.log.mapper.LoginLogMapper">
+    <insert id="insert">
+        INSERT INTO sys_login_log (id, logname, userid, createtime, succeed, message, ip) VALUES
+            (
+                #{id},
+                #{logname},
+                #{userid},
+                #{createtime},
+                #{succeed},
+                #{message},
+                #{ip}
+            )
+    </insert>
+    <select id="findList" resultType="cn.sparke.modules.system.log.entity.LoginLog">
+        select * from sys_login_log log
+        INNER JOIN sys_user u
+        ON log.userid = u.id
+        <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+            and (createTime between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+        <if test="logname != null and logname !=''">
+            and logname like CONCAT('%',#{logname},'%')
+        </if>
+        ORDER BY createtime DESC
+    </select>
+
+</mapper>

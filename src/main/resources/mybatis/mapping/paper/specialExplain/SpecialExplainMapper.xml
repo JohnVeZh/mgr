@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.specialExplain.mapper.SpecialExplainMapper">
+    <insert id="insert">
+        INSERT INTO tb_special_explain
+        (
+            id,
+            title,
+            type,
+            section_code,
+            content_type,
+            content_id,
+            content,
+            url,
+            visit_num,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{type},
+               #{sectionCode},
+               #{contentType},
+               #{contentId},
+               #{content},
+               #{url},
+               #{visitNum},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_special_explain
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="contentType!=null">
+                   ,content_type = #{contentType}
+                </if>
+                <if test="contentId!=null">
+                   ,content_id = #{contentId}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="url!=null">
+                   ,url = #{url}
+                </if>
+                <if test="visitNum!=null">
+                   ,visit_num = #{visitNum}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.specialExplain.entity.SpecialExplainEntity">
+        select
+              tb_special_explain.id,
+              tb_special_explain.title,
+              tb_special_explain.type,
+              tb_special_explain.section_code,
+              tb_special_explain.content_type,
+              tb_special_explain.content_id,
+              tb_special_explain.content,
+              tb_special_explain.url,
+              tb_special_explain.visit_num,
+              tb_special_explain.create_date,
+              tb_special_explain.create_by,
+              tb_special_explain.update_date,
+              tb_special_explain.update_by,
+              tb_special_explain.remarks,
+              tb_special_explain.sort,
+              tb_special_explain.del_flag
+         from tb_special_explain
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_special_explain.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+              and  tb_special_explain.title = #{title}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_special_explain.type = #{type}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_special_explain.section_code = #{sectionCode}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+              and  tb_special_explain.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+              and  tb_special_explain.content_id = #{contentId}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_special_explain.content = #{content}
+            </if>
+            <if test="url!=null and url!=''">
+              and  tb_special_explain.url = #{url}
+            </if>
+            <if test="visitNum!=null and visitNum!=''">
+              and  tb_special_explain.visit_num = #{visitNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_special_explain.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_special_explain.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_special_explain.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_special_explain.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_special_explain.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_special_explain.sort = #{sort}
+            </if>
+            <if test="queryTitle!=null and queryTitle!=''">
+              and  tb_special_explain.title like CONCAT('%',#{queryTitle},'%')
+            </if>
+                and  tb_special_explain.del_flag = 0
+        ORDER BY tb_special_explain.sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.specialExplain.entity.SpecialExplainEntity">
+        select
+              tb_special_explain.id,
+              tb_special_explain.title,
+              tb_special_explain.type,
+              tb_special_explain.section_code,
+              tb_special_explain.content_type,
+              tb_special_explain.content_id,
+              tb_special_explain.content,
+              tb_special_explain.url,
+              tb_special_explain.visit_num,
+              tb_special_explain.create_date,
+              tb_special_explain.create_by,
+              tb_special_explain.update_date,
+              tb_special_explain.update_by,
+              tb_special_explain.remarks,
+              tb_special_explain.sort,
+              tb_special_explain.del_flag
+        from tb_special_explain
+        where id = #{id}
+            and  tb_special_explain.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.specialExplain.entity.SpecialExplainEntity">
+        select
+              tb_special_explain.id,
+              tb_special_explain.title,
+              tb_special_explain.type,
+              tb_special_explain.section_code,
+              tb_special_explain.content_type,
+              tb_special_explain.content_id,
+              tb_special_explain.content,
+              tb_special_explain.url,
+              tb_special_explain.visit_num,
+              tb_special_explain.create_date,
+              tb_special_explain.create_by,
+              tb_special_explain.update_date,
+              tb_special_explain.update_by,
+              tb_special_explain.remarks,
+              tb_special_explain.sort,
+              tb_special_explain.del_flag
+        from tb_special_explain
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_special_explain.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_special_explain.title = #{title}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_special_explain.type = #{type}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_special_explain.section_code = #{sectionCode}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+                and  tb_special_explain.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+                and  tb_special_explain.content_id = #{contentId}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_special_explain.content = #{content}
+            </if>
+            <if test="url!=null and url!=''">
+                and  tb_special_explain.url = #{url}
+            </if>
+            <if test="visitNum!=null and visitNum!=''">
+                and  tb_special_explain.visit_num = #{visitNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_special_explain.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_special_explain.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_special_explain.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_special_explain.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_special_explain.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_special_explain.sort = #{sort}
+            </if>
+            and  tb_special_explain.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_special_explain
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

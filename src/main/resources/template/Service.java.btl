@@ -1,0 +1,43 @@
+package ${service.packageName}.impl;
+
+<% for(import in service.serviceImports!){ %>
+import ${import};
+<% } %>
+
+/**
+ * ${context.bizChName}Dao
+ *
+ * @author spark
+ * @Date ${tool.currentTime()}
+ */
+@Service
+public class ${context.bizEnBigName}Service{
+    @Autowired
+    private ${context.bizEnBigName}Mapper ${tool.firstLetterToLower(context.bizEnBigName)}Mapper;
+
+    public void save(${context.bizEnBigName}Entity ${tool.firstLetterToLower(context.bizEnBigName)}){
+        ${tool.firstLetterToLower(context.bizEnBigName)}.preInsert();
+        ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.insert(${tool.firstLetterToLower(context.bizEnBigName)});
+    }
+
+    public void update(${context.bizEnBigName}Entity ${tool.firstLetterToLower(context.bizEnBigName)}){
+        ${tool.firstLetterToLower(context.bizEnBigName)}.preUpdate();
+        ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.update(${tool.firstLetterToLower(context.bizEnBigName)});
+    }
+
+    public ${context.bizEnBigName}Entity get(${context.bizEnBigName}Entity ${tool.firstLetterToLower(context.bizEnBigName)}){
+        return ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.get(${tool.firstLetterToLower(context.bizEnBigName)});
+    }
+
+    public ${context.bizEnBigName}Entity getById(String id){
+        return ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.getById(id);
+    }
+    public Page<${context.bizEnBigName}Entity> findList(${context.bizEnBigName}Entity ${tool.firstLetterToLower(context.bizEnBigName)}){
+       return ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.findList(${tool.firstLetterToLower(context.bizEnBigName)});
+    }
+
+    public void deleteById(String id){
+      ${tool.firstLetterToLower(context.bizEnBigName)}Mapper.deleteById(id);
+    }
+
+}

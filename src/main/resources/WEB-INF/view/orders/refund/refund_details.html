@@ -1,0 +1,121 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${refund.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="nickname" name="订单号:" readonly="readonly" underline="false" value="${refund.orderCode}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="nickname" name="商品类型:" readonly="readonly" underline="false" value="${refund.productType=='1'?'网课':'图书'}" />
+
+                </div>
+            </div>
+            <div class="row">
+                <#input id="orderCode" name="商品名称:" readonly="readonly" underline="false" value="${refund.productName}" />
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="orderCode" name="收货状态:" readonly="readonly" underline="false" value="${refund.userReceiveStatus=='0'?'未收到货':'已收到货'}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="orderCode" name="退款金额:" readonly="readonly" underline="false" value="${refund.money}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="nickname" name="购买人:" readonly="readonly" underline="false" value="${refund.realName}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="orderCode" name="购买人手机号:" readonly="readonly" underline="false" value="${refund.phone}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="nickname" name="退款类型" readonly="readonly" underline="false" value="${refund.type=='1'?'仅退款':'退款退货'}" />
+                </div>
+                <div class="col-sm-6">
+                    <#select id="status" name="退单状态" disabled="disabled">
+                        <option ${refund.status==1?"selected='selected'":""}>退款审核中</option>
+                        <option ${refund.status==2?"selected='selected'":""}>审核通过</option>
+                        <option ${refund.status==3?"selected='selected'":""}>拒绝退款</option>
+                        <option ${refund.status==4?"selected='selected'":""}>已完成退款</option>
+                    </#select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiver" name="退款原因" readonly="readonly" underline="false" value="${refund.reason}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="receiveMobile" name="备注" readonly="readonly" underline="false" value="${refund.remarks}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="isSend" name="审核人" readonly="readonly" underline="false" value="${refund.updateBy}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="postagePrice" name="审核时间" readonly="readonly" underline="false" value="${refund.updateDate}"/>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="status" name="审核状态" disabled="disabled">
+                        <option ${refund.status==1?"selected='selected'":""}>退款审核中</option>
+                        <option ${refund.status==2?"selected='selected'":""}>审核通过</option>
+                        <option ${refund.status==3?"selected='selected'":""}>拒绝退款</option>
+                        <option ${refund.status==4?"selected='selected'":""}>已完成退款</option>
+                    </#select>
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payPrice" name="退款金额" readonly="readonly" underline="false" value="" />
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="zipcode" name="物流公司" readonly="readonly" underline="true" value="${refund.expressName}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="remarks" name="物流编号" readonly="readonly" underline="true" value="${refund.logisticsCode}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="createDate" name="收货人" readonly="readonly" underline="false" value="${refund.receiver}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payTime" name="收货人手机号" readonly="readonly" underline="false" value="${refund.receiveMobile}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="createDate" name="发货时间" readonly="readonly" underline="false" value="${refund.deliveryTime}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payTime" name="收货时间" readonly="readonly" underline="false" value="${refund.receiveTime}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="provinceCityCn" name="省-市-区/县" readonly="readonly" underline="false" value="${refund.ProvinceCityCn}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="receiveAddress" name="详细地址" readonly="readonly" underline="false" value="${refund.receiveAddress}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <button class="btn btn-sm btn-danger" type="button" id="btn_close">
+                    <i class="ace-icon fa fa-close bigger-110"></i> 关闭
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/refund/refund.js"></script>
+@}

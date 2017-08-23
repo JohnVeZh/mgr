@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.gift.recommendCourse.mapper.GiftRecommendCourseMapper">
+    <insert id="insert">
+        INSERT INTO tb_gift_recommend_course
+        (
+            id,
+            section_code,
+            network_course_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{sectionCode},
+               #{networkCourseId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_gift_recommend_course
+        set
+                id = #{id}
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="networkCourseId!=null">
+                   ,network_course_id = #{networkCourseId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.gift.recommendCourse.entity.GiftRecommendCourseEntity">
+        select
+          grc.id,
+          grc.section_code,
+          grc.network_course_id,
+          p.name network_course_name,
+          grc.create_date,
+          grc.create_by,
+          grc.update_date,
+          grc.update_by,
+          grc.remarks,
+          grc.sort,
+          grc.del_flag
+        from tb_gift_recommend_course grc,tb_product_network_course pnc,tb_product p
+        where grc.network_course_id = pnc.id and pnc.product_id = p.id and grc.del_flag = 0
+        <if test="id!=null and id!=''">
+          and  grc.id = #{id}
+        </if>
+        <if test="sectionCode!=null and sectionCode!=''">
+          and  grc.section_code = #{sectionCode}
+        </if>
+        <if test="networkCourseId!=null and networkCourseId!=''">
+          and  grc.network_course_id = #{networkCourseId}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+          and  grc.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+          and  grc.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+          and  grc.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+          and  grc.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+          and  grc.remarks = #{remarks}
+        </if>
+        <if test="sort!=null and sort!=''">
+          and  grc.sort = #{sort}
+        </if>
+        <if test="networkCourseName!=null and networkCourseName!=''">
+            and  p.name like CONCAT('%',#{networkCourseName},'%')
+        </if>
+        ORDER BY grc.sort
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.gift.recommendCourse.entity.GiftRecommendCourseEntity">
+        select
+              tb_gift_recommend_course.id,
+              tb_gift_recommend_course.section_code,
+              tb_gift_recommend_course.network_course_id,
+              tb_gift_recommend_course.create_date,
+              tb_gift_recommend_course.create_by,
+              tb_gift_recommend_course.update_date,
+              tb_gift_recommend_course.update_by,
+              tb_gift_recommend_course.remarks,
+              tb_gift_recommend_course.sort,
+              tb_gift_recommend_course.del_flag
+        from tb_gift_recommend_course
+        where id = #{id}
+            and  tb_gift_recommend_course.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.gift.recommendCourse.entity.GiftRecommendCourseEntity">
+        select
+              tb_gift_recommend_course.id,
+              tb_gift_recommend_course.section_code,
+              tb_gift_recommend_course.network_course_id,
+              tb_gift_recommend_course.create_date,
+              tb_gift_recommend_course.create_by,
+              tb_gift_recommend_course.update_date,
+              tb_gift_recommend_course.update_by,
+              tb_gift_recommend_course.remarks,
+              tb_gift_recommend_course.sort,
+              tb_gift_recommend_course.del_flag
+        from tb_gift_recommend_course
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_gift_recommend_course.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_gift_recommend_course.section_code = #{sectionCode}
+            </if>
+            <if test="networkCourseId!=null and networkCourseId!=''">
+                and  tb_gift_recommend_course.network_course_id = #{networkCourseId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_gift_recommend_course.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_gift_recommend_course.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_gift_recommend_course.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_gift_recommend_course.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_gift_recommend_course.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_gift_recommend_course.sort = #{sort}
+            </if>
+            and  tb_gift_recommend_course.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_gift_recommend_course
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

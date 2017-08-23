@@ -1,0 +1,54 @@
+group 'spark-english'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+ext {
+    shiroVersion = '1.4.0'
+}
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.qiniu:qiniu-java-sdk:7.2.+'
+    compile "mysql:mysql-connector-java"
+    compile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework.boot:spring-boot-starter-aop'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0'
+    compile 'com.github.pagehelper:pagehelper:5.0.1'
+    providedRuntime ("org.springframework.boot:spring-boot-starter-tomcat")
+    compile("org.apache.shiro:shiro-core:$shiroVersion")
+    compile("org.apache.shiro:shiro-spring:$shiroVersion")
+    compile("org.apache.shiro:shiro-ehcache:$shiroVersion")
+    compile 'net.spy:spymemcached:2.12.3'
+    compile 'com.alibaba:fastjson:1.2.31'
+    compile 'com.alibaba:druid:1.0.28'
+    compile 'commons-io:commons-io:2.5'
+    compile 'com.github.penggle:kaptcha:2.3.2'
+    compile 'org.ehcache:ehcache:3.3.1'
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'org.apache.velocity:velocity:1.7'
+    compile 'com.ibeetl:beetl:2.7.15'
+    compile group: 'org.apache.poi', name: 'poi', version: '3.16'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.16'
+    compile 'cn.jpush.api:jpush-client:3.2.17'
+}

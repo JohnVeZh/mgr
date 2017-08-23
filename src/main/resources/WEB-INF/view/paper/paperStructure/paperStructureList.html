@@ -1,0 +1,34 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>试卷结构管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+
+                        <input type="hidden" value="${paperId}" name="paperId" id="paperId"/>
+
+                        <div class="hidden-xs" id="PaperStructureListTableToolbar" role="group">
+
+                            @if(shiro.hasPermission("/paper/paperStructure/add")){
+                            <#button name="添加" icon="fa-plus" clickFun="PaperStructureList.addPaperStructure()"/>
+                            @}
+                            @if(shiro.hasPermission("/paper/paperStructure/update")){
+                            <#button name="修改" icon="fa-plus" clickFun="PaperStructureList.editPaperStructure()"/>
+                            @}
+                            @if(shiro.hasPermission("/paper/paperStructure/delete")){
+                            <#button name="删除" icon="fa-plus" clickFun="PaperStructureList.deletePaperStructure()"/>
+                            @}
+                        </div>
+                        <#table id="PaperStructureListTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paperStructure/paperStructureList.js"></script>
+@}

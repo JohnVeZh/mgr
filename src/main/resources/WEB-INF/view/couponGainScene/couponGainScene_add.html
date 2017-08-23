@@ -1,0 +1,62 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal"  id="couponGainSceneForm">
+
+            <input type="hidden" id="id" value="">
+
+            <input type="hidden" id="ruleId" value="${couponRuleId}">
+
+            <#input id="ruleName" name="规则名称" underline="true" value="${couponRuleEntity.title}"  readonly="true"/>
+
+            <#select id="type" name="场景类型" underline="true" changeFun="CouponGainSceneInfoDlg.changeType()">
+                <option value="1">商品</option>
+                <option value="2">优惠码</option>
+                <option value="3">活动</option>
+                <option value="4">首页banner</option>
+            </#select>
+
+            <input type="hidden" readonly id="contentId" >
+            <#input id="contentName" name="场景名称" readonly="true" underline="true"
+                    hidden="pId" readonly="readonly"
+                    clickFun="CouponGainSceneInfoDlg.selectContent(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;" />
+            <input type="hidden" readonly id="productId" >
+            <#input id="productName" name="商品名称" readonly="true" underline="true"
+                    hidden="pId" readonly="readonly"
+                    clickFun="CouponGainSceneInfoDlg.selectProductLayer(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CouponGainSceneInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CouponGainSceneInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/couponGainScene/couponGainScene_info.js"></script>
+<script type="application/javascript">
+    CouponGainSceneInfoDlg.couponRuleId = '${couponRuleId}';
+    /**
+     * 收集数据
+     */
+    CouponGainSceneInfoDlg.collectAddData = function() {
+        this.set('ruleId');
+        this.set('type',$("#type").val());
+        this.set('contentId');
+        var productIdArray = [];
+        var productIds = $("#productId").val();
+        if(productIds.indexOf(',') >= 0){
+            productIdArray = productIds.split(",");
+        }else{
+            productIdArray.push(productIds);
+        }
+        this.set('productIdList',productIdArray);
+    };
+</script>
+@}

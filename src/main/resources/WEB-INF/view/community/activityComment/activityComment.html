@@ -1,0 +1,79 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>活动评论管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="content" name="评论内容" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="userName" name="用户名" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="userPhone" name="用户手机号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="ActivityComment.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="ActivityCommentTableToolbar" role="group">
+                            @if(shiro.hasPermission("/community/activity/comment/add")){
+                            <#button name="添加" icon="fa-plus" clickFun="ActivityComment.openAddActivityComment()"/>
+                            @}
+                            @if(shiro.hasPermission("/community/activity/comment/update")){
+                            <#button name="回复" icon="fa-pencil" clickFun="ActivityComment.openActivityCommentDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/community/activity/comment/delete")){
+                            <#button name="删除" icon="fa-trash" clickFun="ActivityComment.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="ActivityCommentTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/activityComment/activityComment.js"></script>
+<script type="application/javascript">
+    /**
+     * 初始化表格的列
+     */
+    ActivityComment.initColumn = function () {
+        return [
+            {field: 'selectItem', radio: true},
+            {title: 'id', field: 'id',  visible: false, align: 'center', valign: 'middle'},
+            {title: '标题', field: 'title',  align: 'center', valign: 'middle'},
+            {title: '评论内容', field: 'content',  align: 'center', valign: 'middle'},
+            {title: '用户', field: 'userName',  align: 'center', valign: 'middle'},
+            {title: '点赞数量', field: 'praiseNum',  align: 'center', valign: 'middle'},
+            {title: '评论数量', field: 'replyNum',  align: 'center', valign: 'middle'},
+            {title: '标识', field: 'show', width: 180, align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                var htmlElement = '';
+                if(column.isTop == 1){
+                    htmlElement += '<span class="label label-primary">置顶</span>&nbsp;&nbsp;';
+                }
+                return htmlElement;
+            }},
+            {title: '操作', field: '',  width: 150, align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                var htmlElement = '';
+                @if(shiro.hasPermission("/community/activity/comment/update")){
+                    if(column.isTop == 1){
+                        htmlElement += '<a href="javascript:void(0)" onclick="ActivityComment.isTop(\''+column.id+'\',\'0\')">取消置顶</a>&nbsp;&nbsp;';
+                    }else{
+                        htmlElement += '<a href="javascript:void(0)"  onclick="ActivityComment.isTop(\''+column.id+'\',\'1\')">置顶</a>&nbsp;&nbsp;';
+                    }
+                    htmlElement += '<a href="javascript:void(0)" onclick="ActivityComment.viewReply(\''+column.id+'\')">查看回复</a>&nbsp;&nbsp;';
+                @}
+                return htmlElement;
+            }}
+        ];
+    };
+</script>
+@}

@@ -1,0 +1,73 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="wordsCatalogForm">
+
+            <input type="hidden" id="id" value="${wordsCatalog.id}">
+
+            <#input id="name" name="名称" underline="true"   value="${wordsCatalog.name}" />
+
+            <#input id="code" name="code" underline="true" value="${wordsCatalog.code}" />
+            <#input id="level" name="层级" underline="true"  value="${wordsCatalog.level}" />
+
+            <#input id="parentCatalogId" readonly="true" name="父级目录信息" underline="true" value="${wordsCatalog.parentId}"
+                    clickFun="WordsCatalogInfoDlg.showWordCatalogLayer(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;" />
+            <!--
+            <#input id="parentCatalogName" readonly="true" name="父级目录名称" underline="true" value="${wordsCatalog.parentCatalogName}"
+                    clickFun="WordsCatalogInfoDlg.showWordCatalogLayer(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;" />
+            <input type="hidden" readonly id="parentCatalogId" value="${wordsCatalog.parentId}">
+            -->
+            <#select id="isLeaf" name="是否是叶子节点" underline="true">
+                <option value="0"
+                        @if(wordsCatalog.isLeaf == 0){
+                        selected = "selected"
+                        @}
+                >否</option>
+                <option value="1"
+                        @if(wordsCatalog.isLeaf == 1){
+                        selected = "selected"
+                        @}
+                >是</option>
+            </#select>
+            <#select id="type" name="类型" underline="true" >
+                <option value="2"
+                        @if(wordsCatalog.type == 2){
+                        selected = "selected"
+                        @}
+                >专项练习</option>
+                <option value="1"
+                        @if(wordsCatalog.type == 1){
+                        selected = "selected"
+                        @}
+                >常用词汇</option>
+            </#select>
+            <#select id="sectionCode" name="学段" underline="true" >
+                <option value="1"
+                        @if(wordsCatalog.sectionCode == 1){
+                        selected = "selected"
+                        @}
+                >四级</option>
+                <option value="2"
+                        @if(wordsCatalog.sectionCode == 2){
+                        selected = "selected"
+                        @}
+                >六级</option>
+            </#select>
+            <#input id="iconUrl" name="icon路径地址" underline="true" value="${wordsCatalog.iconUrl}"  />
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="WordsCatalogInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="WordsCatalogInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/wordsCatalog/wordsCatalog_info.js"></script>
+@}

@@ -1,0 +1,99 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>优惠劵规则管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#input id="title" name="规则名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#select id="status" name="规则状态" underline="true">
+                                    <option value="">全部</option>
+                                    <option value="0">禁用</option>
+                                    <option value="1">正常</option>
+                                </#select>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="CouponRule.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="CouponRuleTableToolbar" role="group">
+                            @if(shiro.hasPermission("/couponRule/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="CouponRule.openAddCouponRule()"/>
+                            @}
+                            @if(shiro.hasPermission("/couponRule/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="CouponRule.openCouponRuleDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/couponRule/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="CouponRule.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="CouponRuleTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/couponRule/couponRule.js"></script>
+<script type="application/javascript">
+
+    CouponRule.changeStatus = function (id,status) {
+        //提交信息
+        var ajax = new $ax(Feng.ctxPath + "/couponRule/update", function (data) {
+            Feng.success("修改成功!");
+            CouponRule.table.refresh();
+        }, function (data) {
+            Feng.error("修改失败!" + data.responseJSON.message + "!");
+        },'json');
+        var obj = {};
+        obj.id = id;
+        obj.status = status;
+        ajax.setData(obj);
+        ajax.start();
+    };
+    /**
+     * 初始化表格的列
+     */
+    CouponRule.initColumn = function () {
+        return [
+            {field: 'selectItem', radio: true},
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '规则名称', field: 'title',  align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                return '<a href="/couponGainScene/'+column.id+'">'+column.title+'</a>';
+            }},
+            {title: '生效时间', field: 'effectDate',  align: 'center', valign: 'middle'},
+            {title: '失效时间', field: 'invalidDate',  align: 'center', valign: 'middle'},
+            {title: '最低使用金额', field: 'minMoney',  align: 'center', valign: 'middle'},
+            {title: '折扣金额', field: 'discountMoney', align: 'center', valign: 'middle'},
+            {title: '状态', field: 'status', align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                if(column.status == 1){
+                    return '<span class="label label-primary">正常</span>';
+                }else{
+                    return '<span class="label label-default">禁用</span>';
+                }
+            }},
+            {title: '操作', field: '',  width: 150, align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                var htmlElement = '';
+                @if(shiro.hasPermission("/community/activity/update")){
+                    htmlElement += '<a href="/couponGainScene/'+column.id+'">关联场景</a>&nbsp;&nbsp;';
+                    if(column.status == 1){
+                        htmlElement += ' <a href="javascript:void(0)" onclick="CouponRule.changeStatus(\''+column.id+'\',0)">点击禁用</a>&nbsp;&nbsp;';
+                    }else if(column.status == 0){
+                        htmlElement += '<a href="javascript:void(0)" onclick="CouponRule.changeStatus(\''+column.id+'\',1)">点击启用</a>&nbsp;&nbsp;';
+                    }
+                @}
+                return htmlElement;
+            }}
+
+
+        ];
+    };
+</script>
+@}

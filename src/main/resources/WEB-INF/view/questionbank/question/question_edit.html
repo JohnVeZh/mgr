@@ -1,0 +1,43 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="${question.id}">
+            <input type="hidden" id="type" value="${question.type}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="name" name="题目名称" value="${question.name}" underline="true" />
+                    <#input id="sort" name="排序" underline="true" value=""/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="questionNum" name="题目数量" value="${question.questionNum}" underline="true" />
+                    <#input id="remarks" name="备注" value="${question.remarks}" underline="true" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="content" name="题干" underline="true" content="${question.content}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="analysis" name="解析" underline="true" content="${question.analysis}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="QuestionInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="QuestionInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question/question_info.js"></script>
+@}

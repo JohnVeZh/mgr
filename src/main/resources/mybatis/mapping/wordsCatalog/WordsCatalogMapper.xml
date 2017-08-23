@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.wordsCatalog.mapper.WordsCatalogMapper">
+    <insert id="insert">
+        INSERT INTO tb_word_catalog
+        (
+            id,
+            name,
+            code,
+            parent_id,
+            parent_ids,
+            section_code,
+            level,
+            is_leaf,
+            type,
+            total_num,
+            icon_url,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{code},
+               #{parentId},
+               #{parentIds},
+               #{sectionCode},
+               #{level},
+               #{isLeaf},
+               #{type},
+               #{totalNum},
+               #{iconUrl},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.sparke.modules.wordsCatalog.entity.WordsCatalogEntity">
+        insert into tb_word_catalog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="sectionCode != null">
+                section_code,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="isLeaf != null">
+                is_leaf,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="totalNum != null">
+                total_num,
+            </if>
+            <if test="iconUrl != null">
+                icon_url,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="parentIds != null">
+                parent_ids,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="sectionCode != null">
+                #{sectionCode,jdbcType=TINYINT},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="isLeaf != null">
+                #{isLeaf,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="totalNum != null">
+                #{totalNum,jdbcType=INTEGER},
+            </if>
+            <if test="iconUrl != null">
+                #{iconUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="parentIds != null">
+                #{parentIds,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update tb_word_catalog
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="parentId!=null">
+                   ,parent_id = #{parentId}
+                </if>
+                <if test="parentIds!=null">
+                   ,parent_ids = #{parentIds}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="level!=null">
+                   ,level = #{level}
+                </if>
+                <if test="isLeaf!=null">
+                   ,is_leaf = #{isLeaf}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="totalNum!=null">
+                   ,total_num = #{totalNum}
+                </if>
+                <if test="iconUrl!=null">
+                   ,icon_url = #{iconUrl}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.wordsCatalog.entity.WordsCatalogEntity">
+        select
+              tb_word_catalog.id,
+              tb_word_catalog.name,
+              tb_word_catalog.code,
+              tb_word_catalog.parent_id,
+
+              tb_word_catalog.parent_ids,
+              tb_word_catalog.section_code,
+              tb_word_catalog.level,
+              tb_word_catalog.is_leaf,
+              tb_word_catalog.type,
+              tb_word_catalog.total_num,
+              tb_word_catalog.icon_url,
+              tb_word_catalog.create_date,
+              tb_word_catalog.create_by,
+              tb_word_catalog.update_date,
+              tb_word_catalog.update_by,
+              tb_word_catalog.remarks,
+              tb_word_catalog.sort,
+              tb_word_catalog.del_flag
+         from tb_word_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_word_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_word_catalog.name = #{name}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_word_catalog.code = #{code}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+              and  tb_word_catalog.parent_id = #{parentId}
+            </if>
+            <if test="parentIds!=null and parentIds!=''">
+              and  tb_word_catalog.parent_ids = #{parentIds}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_word_catalog.section_code = #{sectionCode}
+            </if>
+            <if test="level!=null and level!=''">
+              and  tb_word_catalog.level = #{level}
+            </if>
+            <if test="isLeaf!=null and isLeaf!=''">
+              and  tb_word_catalog.is_leaf = #{isLeaf}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_word_catalog.type = #{type}
+            </if>
+            <if test="totalNum!=null and totalNum!=''">
+              and  tb_word_catalog.total_num = #{totalNum}
+            </if>
+            <if test="iconUrl!=null and iconUrl!=''">
+              and  tb_word_catalog.icon_url = #{iconUrl}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_word_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_word_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_word_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_word_catalog.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_word_catalog.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_word_catalog.sort = #{sort}
+            </if>
+                and  tb_word_catalog.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.wordsCatalog.entity.WordsCatalogEntity">
+        select
+              tb_word_catalog.id,
+              tb_word_catalog.name,
+              tb_word_catalog.code,
+              tb_word_catalog.parent_id,
+            (SELECT twc.name FROM tb_word_catalog twc WHERE twc.id = tb_word_catalog.parent_id) AS parentCatalogName,
+              tb_word_catalog.parent_ids,
+              tb_word_catalog.section_code,
+              tb_word_catalog.level,
+              tb_word_catalog.is_leaf,
+              tb_word_catalog.type,
+              tb_word_catalog.total_num,
+              tb_word_catalog.icon_url,
+              tb_word_catalog.create_date,
+              tb_word_catalog.create_by,
+              tb_word_catalog.update_date,
+              tb_word_catalog.update_by,
+              tb_word_catalog.remarks,
+              tb_word_catalog.sort,
+              tb_word_catalog.del_flag
+        from tb_word_catalog
+        where id = #{id}
+            and  tb_word_catalog.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.wordsCatalog.entity.WordsCatalogEntity">
+        select
+              tb_word_catalog.id,
+              tb_word_catalog.name,
+              tb_word_catalog.code,
+              tb_word_catalog.parent_id,
+              tb_word_catalog.parent_ids,
+              tb_word_catalog.section_code,
+              tb_word_catalog.level,
+              tb_word_catalog.is_leaf,
+              tb_word_catalog.type,
+              tb_word_catalog.total_num,
+              tb_word_catalog.icon_url,
+              tb_word_catalog.create_date,
+              tb_word_catalog.create_by,
+              tb_word_catalog.update_date,
+              tb_word_catalog.update_by,
+              tb_word_catalog.remarks,
+              tb_word_catalog.sort,
+              tb_word_catalog.del_flag
+        from tb_word_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_word_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_word_catalog.name = #{name}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_word_catalog.code = #{code}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and  tb_word_catalog.parent_id = #{parentId}
+            </if>
+            <if test="parentIds!=null and parentIds!=''">
+                and  tb_word_catalog.parent_ids = #{parentIds}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_word_catalog.section_code = #{sectionCode}
+            </if>
+            <if test="level!=null and level!=''">
+                and  tb_word_catalog.level = #{level}
+            </if>
+            <if test="isLeaf!=null and isLeaf!=''">
+                and  tb_word_catalog.is_leaf = #{isLeaf}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_word_catalog.type = #{type}
+            </if>
+            <if test="totalNum!=null and totalNum!=''">
+                and  tb_word_catalog.total_num = #{totalNum}
+            </if>
+            <if test="iconUrl!=null and iconUrl!=''">
+                and  tb_word_catalog.icon_url = #{iconUrl}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_word_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_word_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_word_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_word_catalog.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_word_catalog.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_word_catalog.sort = #{sort}
+            </if>
+            and  tb_word_catalog.del_flag = 0
+         limit 1
+     </select>
+    <update id="countWordNum" >
+        UPDATE tb_word_catalog
+        SET total_num = (SELECT count(1) FROM tb_word WHERE catalog_id = #{catalogId} )
+        WHERE id = #{catalogId}
+    </update>
+
+    <update id="deleteById">
+            update tb_word_catalog
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

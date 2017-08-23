@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.questionbank.question_item.mapper.Question_itemMapper">
+    <insert id="insert">
+        INSERT INTO tb_question_item
+        (
+            id,
+            question_id,
+            content,
+            analysis,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{questionId},
+               #{content},
+               #{analysis},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+
+
+    <insert id="insertList" parameterType="java.util.List">
+
+        INSERT INTO tb_question_item
+        (
+        id,
+        question_id,
+        content,
+        analysis,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        sort,
+        del_flag
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.questionId},
+            #{item.content},
+            #{item.analysis},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.remarks},
+            #{item.sort},
+            #{item.delFlag}
+            )
+        </foreach>
+
+
+
+    </insert>
+
+
+    <update id="update">
+        update tb_question_item
+        set
+                id = #{id}
+                <if test="questionId!=null">
+                   ,question_id = #{questionId}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="analysis!=null">
+                   ,analysis = #{analysis}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.questionbank.question_item.entity.Question_itemEntity">
+        select
+              a.id,
+              a.question_id,
+              a.content,
+              a.analysis,
+              a.create_date,
+              a.create_by,
+              a.update_date,
+              a.update_by,
+              a.remarks,
+              a.sort,
+              b.name,
+              b.type,
+              a.del_flag
+         from tb_question_item a, tb_question b
+        where 1=1
+        and   a.question_id = b.id
+            <if test="id!=null and id!=''">
+              and  a.id = #{id}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+              and  a.question_id = #{questionId}
+            </if>
+            <if test="content!=null and content!=''">
+              and  a.content = #{content}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+              and  a.analysis = #{analysis}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  a.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  a.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  a.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  a.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  a.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  a.sort = #{sort}
+            </if>
+            <if test="questionIdList!=null">
+                and  a.question_id in (
+                <foreach collection="questionIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+                and  a.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.questionbank.question_item.entity.Question_itemEntity">
+        select
+              tb_question_item.id,
+              tb_question_item.question_id,
+              tb_question_item.content,
+              tb_question_item.analysis,
+              tb_question_item.create_date,
+              tb_question_item.create_by,
+              tb_question_item.update_date,
+              tb_question_item.update_by,
+              tb_question_item.remarks,
+              tb_question_item.sort,
+              tb_question_item.del_flag
+        from tb_question_item
+        where id = #{id}
+            and  tb_question_item.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.questionbank.question_item.entity.Question_itemEntity">
+        select
+              tb_question_item.id,
+              tb_question_item.question_id,
+              tb_question_item.content,
+              tb_question_item.analysis,
+              tb_question_item.create_date,
+              tb_question_item.create_by,
+              tb_question_item.update_date,
+              tb_question_item.update_by,
+              tb_question_item.remarks,
+              tb_question_item.sort,
+              tb_question_item.del_flag
+        from tb_question_item
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_question_item.id = #{id}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+                and  tb_question_item.question_id = #{questionId}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_question_item.content = #{content}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+                and  tb_question_item.analysis = #{analysis}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_question_item.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_question_item.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_question_item.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_question_item.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_question_item.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_question_item.sort = #{sort}
+            </if>
+            and  tb_question_item.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_question_item
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

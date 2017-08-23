@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.system.dept.mapper.DeptMapper">
+
+    <select id="getById" resultType="cn.sparke.modules.system.dept.entity.Dept">
+        SELECT
+            dept.*,
+            pd.fullname AS pName
+        FROM sys_dept dept
+            LEFT JOIN sys_dept pd
+                ON dept.pid = pd.id
+        WHERE dept.id = #{id} AND dept.del_flag = 0
+    </select>
+    <select id="tree" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+            id,
+            pid        AS pId,
+            simplename AS name,
+            (
+                CASE
+                WHEN (pId = '0' OR pId IS NULL)
+                    THEN
+                        'true'
+                ELSE
+                    'false'
+                END
+            )          AS isOpen
+        FROM sys_dept
+        WHERE del_flag = 0
+    </select>
+
+    <select id="findList" resultType="cn.sparke.modules.system.dept.entity.Dept">
+        select * from sys_dept
+        WHERE del_flag = 0
+        <if test="condition != null">
+            AND simplename like CONCAT('%',#{condition},'%') or fullname like CONCAT('%',#{condition},'%')
+        </if>
+        <if test="pids != null">
+            AND pids like CONCAT('%[',#{pids},']%')
+        </if>
+        order by sort ASC
+    </select>
+
+    <update id="update">
+        UPDATE sys_dept
+        SET
+        <if test="pid!=null">
+            pid = #{pid},
+        </if>
+        <if test="pids!=null">
+            pids = #{pids},
+        </if>
+        <if test="simplename!=null">
+            simplename = #{simplename},
+        </if>
+        <if test="fullname!=null">
+            fullname = #{fullname},
+        </if>
+        <if test="tips!=null">
+            tips = #{tips},
+        </if>
+        <if test="sort!=null">
+            sort = #{sort},
+        </if>
+        <if test="updateBy!=null">
+            update_by = #{updateBy},
+        </if>
+        update_date = #{updateDate}
+        WHERE id = #{id}
+    </update>
+    <update id="deleteById">
+        UPDATE sys_dept
+        SET del_flag = 1
+        WHERE id = #{id}
+    </update>
+    <insert id="insert">
+        INSERT INTO sys_dept (id, pid, pids, simplename, fullname, tips, create_date, create_by, update_date, update_by)
+        VALUES
+            (
+                #{id},
+                #{pid},
+                #{pids},
+                #{simplename},
+                #{fullname},
+                #{tips},
+                #{createDate},
+                #{createBy},
+                #{updateDate},
+                #{updateBy}
+            )
+    </insert>
+</mapper>

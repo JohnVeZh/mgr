@@ -1,0 +1,99 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="exportCourseForm">
+            <form name="excelForm" action="" method="post" scope="request">
+                <input type="hidden" name="eProductType" id="eProductType" />
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <#SelectCon id="eProductId" name="网课名称" >
+                            <option selected="selected" value=''></option>
+                            @ if(productList != null){
+                                @ for(product in productList){
+                                    <option value = "${product.id!}" >${product.name!}</option>
+                                @ }
+                            @ }
+                        </#SelectCon>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 b-r">
+                        <#TimeCon id="eStartTime" name="开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                    </div>
+                    <div class="col-sm-6">
+                        <#TimeCon id="eEndTime" name="结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 b-r">
+                        <#SelectCon id="eOrderStatus" name="订单状态">
+                            <option selected="selected" value=''></option>
+                            <option value="1">待支付</option>
+                            <option value="2">待发货</option>
+                            <option value="3">待收货</option>
+                            <option value="4">待评论</option>
+                            <option value="5">已完成</option>
+                            <option value="6">已取消</option>
+                        </#SelectCon>
+                    </div>
+                    <div class="col-sm-6">
+                        <#SelectCon id="eSectionCode" name="网课学段">
+                            <option selected="selected" value=''></option>
+                            <option value="1">四级</option>
+                            <option value="2">六级</option>
+                            <option value="3">考研</option>
+                            <option value="4">英专</option>
+                            <option value="5">高中英语</option>
+                            <option value="6">初中英语</option>
+                            <option value="7">小学英语</option>
+                        </#SelectCon>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 b-r">
+                        <#SelectCon id="ePayType" name="支付方式">
+                            <option selected="selected" value=''></option>
+                            <option value="1">支付宝</option>
+                            <option value="2">微信</option>
+                            <option value="3">兑换码</option>
+                        </#SelectCon>
+                    </div>
+                    <div class="col-sm-6">
+                        <#SelectCon id="eFromType" name="订单来源">
+                            <option selected="selected" value=''></option>
+                            <option value="0">老数据</option>
+                            <option value="1">Android</option>
+                            <option value="2">iOS</option>
+                            <option value="3">M站</option>
+                            <option value="4">PC站</option>
+                            <option value="5">知米</option>
+                        </#SelectCon>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <font color="#FF8888">
+                            友情提示:
+                            <ol>
+                                <li>如果不选择导出时间段，默认只导出最近一月网课订单</li>
+                                <li>如果不选择导出时间段，但已选定网课名称，默认导出此网课所有订单</li>
+                            </ol>
+                        </font>
+                    </div>
+                </div>
+                <div class="row"><div class="col-sm-6 b-r">&nbsp;</div></div>
+                <div class="row">
+                    <div class="col-sm-4 b-r">&nbsp;</div>
+                    <div class="col-sm-4 b-6">
+                        <#button name="导出" title="如果不选择导出时间段，默认只导出最近一月网课订单" icon="fa-download" btnCss="info" clickFun="OrderInfoDlg.exportCourseOrder()" space="true"/>
+                        <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/order/order_info.js"></script>
+@}

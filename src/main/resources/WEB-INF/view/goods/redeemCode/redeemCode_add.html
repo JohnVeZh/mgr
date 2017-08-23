@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="redeemCodeInfoForm">
+
+            <form name="excelForm" style="display: none;" scope="request" action="" method="post">
+                <input type="hidden" name="ncId"  id="ncId"  />
+                <input type="hidden" name="number"  id="number"  />
+                <input type="hidden"  name="export" id="export" />
+                <input type="hidden"  name="startDate" id="startDate" />
+                <input type="hidden"  name="endDate" id="endDate" />
+                <input type="submit" id="exportUtil" value="导出excel" onclick="RedeemCodeInfoDlg.openExportExcel()"/>&nbsp;&nbsp;
+            </form>
+
+            <div class="row">
+                <div class="col-sm-4 b-r" >
+                    <#select id="networkCourseId" name="选择网课" ></#select>
+                </div>
+                <div class="col-sm-4">
+                    <#input name="生成数量" id="sort" placeholder="请输入正整数"/>
+                </div>
+                <div class="col-sm-4">
+                    <#select name="是否导出" id="isExport">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </#select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r" >
+                    <#input id="startTime" name="生效时间" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="endTime" name="失效时间" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="RedeemCodeInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="RedeemCodeInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/redeemCode/redeemCode_info.js"></script>
+@}

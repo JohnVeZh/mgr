@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.teacher.mapper.TeacherMapper">
+    <insert id="insert">
+        INSERT INTO tb_product_network_course_teacher
+        (
+            id,
+            name,
+            moblie,
+            tags,
+            email,
+            head_img,
+            gender,
+            introduce,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{moblie},
+               #{tags},
+               #{email},
+               #{headImg},
+               #{gender},
+               #{introduce},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_product_network_course_teacher
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="moblie!=null">
+                   ,moblie = #{moblie}
+                </if>
+                <if test="tags!=null">
+                   ,tags = #{tags}
+                </if>
+                <if test="email!=null">
+                   ,email = #{email}
+                </if>
+                <if test="headImg!=null">
+                   ,head_img = #{headImg}
+                </if>
+                <if test="gender!=null">
+                   ,gender = #{gender}
+                </if>
+                <if test="introduce!=null">
+                   ,introduce = #{introduce}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.teacher.entity.TeacherEntity">
+        select
+              tb_product_network_course_teacher.id,
+              tb_product_network_course_teacher.name,
+              tb_product_network_course_teacher.moblie,
+              tb_product_network_course_teacher.tags,
+              tb_product_network_course_teacher.email,
+              tb_product_network_course_teacher.head_img,
+              tb_product_network_course_teacher.gender,
+              tb_product_network_course_teacher.introduce,
+              tb_product_network_course_teacher.create_date,
+              tb_product_network_course_teacher.create_by,
+              tb_product_network_course_teacher.update_date,
+              tb_product_network_course_teacher.update_by,
+              tb_product_network_course_teacher.remarks,
+              tb_product_network_course_teacher.sort,
+              tb_product_network_course_teacher.del_flag
+         from tb_product_network_course_teacher
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_product_network_course_teacher.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_product_network_course_teacher.name = #{name}
+            </if>
+            <if test="moblie!=null and moblie!=''">
+              and  tb_product_network_course_teacher.moblie = #{moblie}
+            </if>
+            <if test="tags!=null and tags!=''">
+              and  tb_product_network_course_teacher.tags = #{tags}
+            </if>
+            <if test="email!=null and email!=''">
+              and  tb_product_network_course_teacher.email = #{email}
+            </if>
+            <if test="headImg!=null and headImg!=''">
+              and  tb_product_network_course_teacher.head_img = #{headImg}
+            </if>
+            <if test="gender!=null and gender!=''">
+              and  tb_product_network_course_teacher.gender = #{gender}
+            </if>
+            <if test="introduce!=null and introduce!=''">
+              and  tb_product_network_course_teacher.introduce = #{introduce}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_product_network_course_teacher.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_product_network_course_teacher.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_product_network_course_teacher.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_product_network_course_teacher.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_product_network_course_teacher.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_product_network_course_teacher.sort = #{sort}
+            </if>
+            <if test="condition != null">
+                AND name like CONCAT('%',#{condition},'%')
+            </if>
+                and  tb_product_network_course_teacher.del_flag = 0
+            ORDER BY sort ASC ,create_date DESC
+    </select>
+
+    <select id="quertTeachers" resultType="cn.sparke.modules.goods.teacher.entity.TeacherEntity">
+        select
+        tb_product_network_course_teacher.id,
+        tb_product_network_course_teacher.name,
+        tb_product_network_course_teacher.tags,
+        tb_product_network_course_teacher.introduce
+        from tb_product_network_course_teacher
+        where 1=1
+        AND  tb_product_network_course_teacher.del_flag = 0
+        ORDER BY sort ASC ,create_date DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.teacher.entity.TeacherEntity">
+        select
+              tb_product_network_course_teacher.id,
+              tb_product_network_course_teacher.name,
+              tb_product_network_course_teacher.moblie,
+              tb_product_network_course_teacher.tags,
+              tb_product_network_course_teacher.email,
+              tb_product_network_course_teacher.head_img,
+              tb_product_network_course_teacher.gender,
+              tb_product_network_course_teacher.introduce,
+              tb_product_network_course_teacher.create_date,
+              tb_product_network_course_teacher.create_by,
+              tb_product_network_course_teacher.update_date,
+              tb_product_network_course_teacher.update_by,
+              tb_product_network_course_teacher.remarks,
+              tb_product_network_course_teacher.sort,
+              tb_product_network_course_teacher.del_flag
+        from tb_product_network_course_teacher
+        where id = #{id}
+            and  tb_product_network_course_teacher.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.teacher.entity.TeacherEntity">
+        select
+              tb_product_network_course_teacher.id,
+              tb_product_network_course_teacher.name,
+              tb_product_network_course_teacher.moblie,
+              tb_product_network_course_teacher.tags,
+              tb_product_network_course_teacher.email,
+              tb_product_network_course_teacher.head_img,
+              tb_product_network_course_teacher.gender,
+              tb_product_network_course_teacher.introduce,
+              tb_product_network_course_teacher.create_date,
+              tb_product_network_course_teacher.create_by,
+              tb_product_network_course_teacher.update_date,
+              tb_product_network_course_teacher.update_by,
+              tb_product_network_course_teacher.remarks,
+              tb_product_network_course_teacher.sort,
+              tb_product_network_course_teacher.del_flag
+        from tb_product_network_course_teacher
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_product_network_course_teacher.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_product_network_course_teacher.name = #{name}
+            </if>
+            <if test="moblie!=null and moblie!=''">
+                and  tb_product_network_course_teacher.moblie = #{moblie}
+            </if>
+            <if test="tags!=null and tags!=''">
+                and  tb_product_network_course_teacher.tags = #{tags}
+            </if>
+            <if test="email!=null and email!=''">
+                and  tb_product_network_course_teacher.email = #{email}
+            </if>
+            <if test="headImg!=null and headImg!=''">
+                and  tb_product_network_course_teacher.head_img = #{headImg}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and  tb_product_network_course_teacher.gender = #{gender}
+            </if>
+            <if test="introduce!=null and introduce!=''">
+                and  tb_product_network_course_teacher.introduce = #{introduce}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_product_network_course_teacher.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_product_network_course_teacher.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_product_network_course_teacher.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_product_network_course_teacher.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_product_network_course_teacher.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_product_network_course_teacher.sort = #{sort}
+            </if>
+            and  tb_product_network_course_teacher.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_product_network_course_teacher
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

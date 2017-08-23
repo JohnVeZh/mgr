@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperCorrect.mapper.PaperCorrectMapper">
+    <insert id="insert">
+        INSERT INTO tb_gift_user_answer
+        (
+            id,
+            report_id,
+            paper_id,
+            user_id,
+            period,
+            question_type,
+            question_no,
+            right_answer,
+            user_answer,
+            is_teacher_evaluate,
+            score,
+            reply_content,
+            reply_user_id,
+            reply_date,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{reportId},
+               #{paperId},
+               #{userId},
+               #{period},
+               #{questionType},
+               #{questionNo},
+               #{rightAnswer},
+               #{userAnswer},
+               #{isTeacherEvaluate},
+               #{score},
+               #{replyContent},
+               #{replyUserId},
+               #{replyDate},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_gift_user_answer
+        set
+                id = #{id}
+                <if test="reportId!=null">
+                   ,report_id = #{reportId}
+                </if>
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="period!=null">
+                   ,period = #{period}
+                </if>
+                <if test="questionType!=null">
+                   ,question_type = #{questionType}
+                </if>
+                <if test="questionNo!=null">
+                   ,question_no = #{questionNo}
+                </if>
+                <if test="rightAnswer!=null">
+                   ,right_answer = #{rightAnswer}
+                </if>
+                <if test="userAnswer!=null">
+                   ,user_answer = #{userAnswer}
+                </if>
+                <if test="isTeacherEvaluate!=null">
+                   ,is_teacher_evaluate = #{isTeacherEvaluate}
+                </if>
+                <if test="score!=null">
+                   ,score = #{score}
+                </if>
+                <if test="replyContent!=null">
+                   ,reply_content = #{replyContent}
+                </if>
+                <if test="replyUserId!=null">
+                   ,reply_user_id = #{replyUserId}
+                </if>
+                <if test="replyDate!=null">
+                   ,reply_date = #{replyDate}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperCorrect.entity.PaperCorrectEntity">
+        SELECT
+            answer.id,
+            users.phone,
+            answer.period,
+            answer.question_type  AS questionType,
+            answer.reply_status  AS replyStatus,
+            report.section_code   AS sectionCode,
+            answer.create_date    AS createDate,
+            answer.reply_date     AS replyDate,
+            teacher.`name`        AS teacherName
+        FROM
+          tb_gift_user_answer answer
+        LEFT JOIN  tb_user users          ON answer.user_id=users.id
+        LEFT JOIN  sys_user teacher       ON answer.reply_user_id=teacher.id
+        LEFT JOIN  tb_gift_report report  ON answer.report_id=report.id
+        WHERE
+        answer.del_flag=0
+        AND answer.is_teacher_evaluate=1
+        <if test="phone!=null and phone!=''">
+            AND  users.phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="period!=null">
+            AND  answer.period =#{period}
+        </if>
+        <if test="questionType!=null">
+            AND  answer.question_type =#{questionType}
+        </if>
+        <if test="replyStatus!=null">
+            AND  answer.reply_status =#{replyStatus}
+        </if>
+        <if test="sectionCode!=null">
+            AND  report.section_code =#{sectionCode}
+        </if>
+        <if test="commitTimeStart!=null and commitTimeStart!=''">
+            AND answer.create_date &gt;= #{commitTimeStart}
+        </if>
+        <if test="commitTimeEnd!=null and commitTimeEnd!=''">
+            AND answer.create_date &lt;= #{commitTimeEnd}
+        </if>
+        <if test="correctTimeStart!=null and correctTimeStart!=''">
+            AND answer.reply_date &gt;= #{correctTimeStart}
+        </if>
+        <if test="correctTimeEnd!=null and correctTimeEnd!=''">
+            AND answer.reply_date &lt;= #{correctTimeEnd}
+        </if>
+        ORDER BY answer.sort,answer.create_date
+
+    </select>
+
+
+    <resultMap id="paperRuleDetail" type="cn.sparke.modules.paper.paperCorrect.entity.PaperCorrectEntity">
+        <id column="id" property="id" />
+        <result column="sectionCode" property="sectionCode" />
+        <result column="questionType" property="questionType" />
+        <result column="userAnswer" property="userAnswer" />
+        <result column="replyContent" property="replyContent" />
+        <collection property="ruleBeans" ofType="cn.sparke.modules.paper.paperCorrect.entity.RuleBean">
+            <id column="ruleDetailId" property="ruleDetailId" />
+            <result column="ruleName" property="ruleName" />
+            <result column="level" property="level" />
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="paperRuleDetail">
+        SELECT
+            answer.id,
+            answer.user_answer AS userAnswer,
+            detail.id AS ruleDetailId,
+            report.section_code AS sectionCode,
+            answer.question_type AS questionType,
+            rule.`name` AS ruleName,
+            detail.`level`,
+            answer.reply_content AS replyContent
+        FROM
+            tb_gift_user_answer answer
+            LEFT JOIN	tb_gift_user_answer_subjective sub ON answer.id=sub.answer_id
+            LEFT JOIN tb_gift_report report ON answer.report_id=report.id
+            LEFT JOIN	tb_gift_subjective_rule rule ON sub.rule_id=rule.id
+            LEFT JOIN	tb_gift_subjective_rule_detail detail ON sub.rule_detail_id=detail.id
+        WHERE
+            answer.del_flag=0
+            AND answer.id=#{answerId}
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperCorrect.entity.PaperCorrectEntity">
+        select
+              tb_gift_user_answer.id,
+              tb_gift_user_answer.report_id,
+              tb_gift_user_answer.paper_id,
+              tb_gift_user_answer.user_id,
+              tb_gift_user_answer.period,
+              tb_gift_user_answer.question_type,
+              tb_gift_user_answer.question_no,
+              tb_gift_user_answer.right_answer,
+              tb_gift_user_answer.user_answer,
+              tb_gift_user_answer.is_teacher_evaluate,
+              tb_gift_user_answer.score,
+              tb_gift_user_answer.reply_content,
+              tb_gift_user_answer.reply_user_id,
+              tb_gift_user_answer.reply_date,
+              tb_gift_user_answer.create_date,
+              tb_gift_user_answer.create_by,
+              tb_gift_user_answer.update_date,
+              tb_gift_user_answer.update_by,
+              tb_gift_user_answer.remarks,
+              tb_gift_user_answer.sort,
+              tb_gift_user_answer.del_flag
+        from tb_gift_user_answer
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_gift_user_answer.id = #{id}
+            </if>
+            <if test="reportId!=null and reportId!=''">
+                and  tb_gift_user_answer.report_id = #{reportId}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_gift_user_answer.paper_id = #{paperId}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_gift_user_answer.user_id = #{userId}
+            </if>
+            <if test="period!=null and period!=''">
+                and  tb_gift_user_answer.period = #{period}
+            </if>
+            <if test="questionType!=null and questionType!=''">
+                and  tb_gift_user_answer.question_type = #{questionType}
+            </if>
+            <if test="questionNo!=null and questionNo!=''">
+                and  tb_gift_user_answer.question_no = #{questionNo}
+            </if>
+            <if test="rightAnswer!=null and rightAnswer!=''">
+                and  tb_gift_user_answer.right_answer = #{rightAnswer}
+            </if>
+            <if test="userAnswer!=null and userAnswer!=''">
+                and  tb_gift_user_answer.user_answer = #{userAnswer}
+            </if>
+            <if test="isTeacherEvaluate!=null and isTeacherEvaluate!=''">
+                and  tb_gift_user_answer.is_teacher_evaluate = #{isTeacherEvaluate}
+            </if>
+            <if test="score!=null and score!=''">
+                and  tb_gift_user_answer.score = #{score}
+            </if>
+            <if test="replyContent!=null and replyContent!=''">
+                and  tb_gift_user_answer.reply_content = #{replyContent}
+            </if>
+            <if test="replyUserId!=null and replyUserId!=''">
+                and  tb_gift_user_answer.reply_user_id = #{replyUserId}
+            </if>
+            <if test="replyDate!=null and replyDate!=''">
+                and  tb_gift_user_answer.reply_date = #{replyDate}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_gift_user_answer.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_gift_user_answer.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_gift_user_answer.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_gift_user_answer.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_gift_user_answer.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_gift_user_answer.sort = #{sort}
+            </if>
+            and  tb_gift_user_answer.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_gift_user_answer
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+    <select id="getRules" resultType="cn.sparke.modules.paper.paperCorrect.entity.RuleBean">
+        SELECT
+            rule.id AS ruleId,
+            detail.id AS ruleDetailId,
+            rule.`name` AS ruleName,
+            detail.`level` AS `level`,
+            detail.content AS content,
+            detail.score AS score
+        FROM
+            tb_gift_subjective_rule rule
+            LEFT JOIN tb_gift_subjective_rule_detail detail ON rule.id=detail.rule_id
+        WHERE rule.question_type=#{questionType} AND section_code=#{sectionCode}
+
+    </select>
+
+</mapper>

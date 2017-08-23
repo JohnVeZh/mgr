@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.reportStatistics.trafficStatistic.mapper.TrafficStatisticMapper">
+    <insert id="insert">
+        INSERT INTO tb_traffic_statistic
+        (
+            id,
+            channel_code,
+            operation_type,
+            from_type,
+            ip,
+            province,
+            city,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{channelCode},
+               #{operationType},
+               #{fromType},
+               #{ip},
+               #{province},
+               #{city},
+               #{createBy},
+               #{createDate},
+               #{updateBy},
+               #{updateDate},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_traffic_statistic
+        set
+                id = #{id}
+                <if test="channelCode!=null">
+                   ,channel_code = #{channelCode}
+                </if>
+                <if test="operationType!=null">
+                   ,operation_type = #{operationType}
+                </if>
+                <if test="fromType!=null">
+                   ,from_type = #{fromType}
+                </if>
+                <if test="ip!=null">
+                   ,ip = #{ip}
+                </if>
+                <if test="province!=null">
+                   ,province = #{province}
+                </if>
+                <if test="city!=null">
+                   ,city = #{city}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.reportStatistics.trafficStatistic.entity.TrafficStatisticEntity">
+        select
+              tb_traffic_statistic.id,
+              tb_traffic_statistic.channel_code,
+              tb_traffic_statistic.operation_type,
+              tb_traffic_statistic.from_type,
+              tb_traffic_statistic.ip,
+              tb_traffic_statistic.province,
+              tb_traffic_statistic.city,
+              tb_traffic_statistic.create_by,
+              tb_traffic_statistic.create_date,
+              tb_traffic_statistic.update_by,
+              tb_traffic_statistic.update_date,
+              tb_traffic_statistic.del_flag
+         from tb_traffic_statistic
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_traffic_statistic.id = #{id}
+            </if>
+            <if test="channelCode!=null and channelCode!=''">
+              and  tb_traffic_statistic.channel_code = #{channelCode}
+            </if>
+            <if test="operationType!=null and operationType!=''">
+              and  tb_traffic_statistic.operation_type = #{operationType}
+            </if>
+            <if test="fromType!=null and fromType!=''">
+              and  tb_traffic_statistic.from_type = #{fromType}
+            </if>
+            <if test="ip!=null and ip!=''">
+              and  tb_traffic_statistic.ip = #{ip}
+            </if>
+            <if test="province!=null and province!=''">
+              and  tb_traffic_statistic.province = #{province}
+            </if>
+            <if test="city!=null and city!=''">
+              and  tb_traffic_statistic.city = #{city}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_traffic_statistic.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_traffic_statistic.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_traffic_statistic.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_traffic_statistic.update_date = #{updateDate}
+            </if>
+                and  tb_traffic_statistic.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.reportStatistics.trafficStatistic.entity.TrafficStatisticEntity">
+        select
+              tb_traffic_statistic.id,
+              tb_traffic_statistic.channel_code,
+              tb_traffic_statistic.operation_type,
+              tb_traffic_statistic.from_type,
+              tb_traffic_statistic.ip,
+              tb_traffic_statistic.province,
+              tb_traffic_statistic.city,
+              tb_traffic_statistic.create_by,
+              tb_traffic_statistic.create_date,
+              tb_traffic_statistic.update_by,
+              tb_traffic_statistic.update_date,
+              tb_traffic_statistic.del_flag
+        from tb_traffic_statistic
+        where id = #{id}
+            and  tb_traffic_statistic.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.reportStatistics.trafficStatistic.entity.TrafficStatisticEntity">
+        select
+              tb_traffic_statistic.id,
+              tb_traffic_statistic.channel_code,
+              tb_traffic_statistic.operation_type,
+              tb_traffic_statistic.from_type,
+              tb_traffic_statistic.ip,
+              tb_traffic_statistic.province,
+              tb_traffic_statistic.city,
+              tb_traffic_statistic.create_by,
+              tb_traffic_statistic.create_date,
+              tb_traffic_statistic.update_by,
+              tb_traffic_statistic.update_date,
+              tb_traffic_statistic.del_flag
+        from tb_traffic_statistic
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_traffic_statistic.id = #{id}
+            </if>
+            <if test="channelCode!=null and channelCode!=''">
+                and  tb_traffic_statistic.channel_code = #{channelCode}
+            </if>
+            <if test="operationType!=null and operationType!=''">
+                and  tb_traffic_statistic.operation_type = #{operationType}
+            </if>
+            <if test="fromType!=null and fromType!=''">
+                and  tb_traffic_statistic.from_type = #{fromType}
+            </if>
+            <if test="ip!=null and ip!=''">
+                and  tb_traffic_statistic.ip = #{ip}
+            </if>
+            <if test="province!=null and province!=''">
+                and  tb_traffic_statistic.province = #{province}
+            </if>
+            <if test="city!=null and city!=''">
+                and  tb_traffic_statistic.city = #{city}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_traffic_statistic.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_traffic_statistic.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_traffic_statistic.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_traffic_statistic.update_date = #{updateDate}
+            </if>
+            and  tb_traffic_statistic.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_traffic_statistic
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+
+
+
+    <select id="getOSPVUV" resultType="cn.sparke.modules.reportStatistics.trafficStatistic.entity.ValueEntity">
+        select COUNT(ts.ip) pv, COUNT(DISTINCT ts.ip) uv,ts.from_type
+        from tb_traffic_statistic ts
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  ts.id = #{id}
+        </if>
+        <if test="channelCode!=null and channelCode!=''">
+            and  ts.channel_code = #{channelCode}
+        </if>
+        <if test="operationType!=null and operationType!=''">
+            and  ts.operation_type = #{operationType}
+        </if>
+        <if test="fromType!=null and fromType!=''">
+            and  ts.from_type = #{fromType}
+        </if>
+        <if test="ip!=null and ip!=''">
+            and  ts.ip = #{ip}
+        </if>
+        <if test="province!=null and province!=''">
+            and  ts.province = #{province}
+        </if>
+        <if test="city!=null and city!=''">
+            and  ts.city = #{city}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  ts.create_by = #{createBy}
+        </if>
+        <if test="btTime!=null and btTime!=''">
+            and  ts.create_date >= #{btTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and  ts.create_date &lt;= #{endTime}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  ts.update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  ts.update_date = #{updateDate}
+        </if>
+        and  ts.del_flag = 0
+        GROUP BY ts.from_type
+    </select>
+    <select id="getAddressPVUV" resultType="cn.sparke.modules.reportStatistics.trafficStatistic.entity.ValueEntity">
+        select COUNT(ts.ip) pv, COUNT(DISTINCT ts.ip) uv,ts.province
+        from tb_traffic_statistic ts
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  ts.id = #{id}
+        </if>
+        <if test="channelCode!=null and channelCode!=''">
+            and  ts.channel_code = #{channelCode}
+        </if>
+        <if test="operationType!=null and operationType!=''">
+            and  ts.operation_type = #{operationType}
+        </if>
+        <if test="fromType!=null and fromType!=''">
+            and  ts.from_type = #{fromType}
+        </if>
+        <if test="ip!=null and ip!=''">
+            and  ts.ip = #{ip}
+        </if>
+        <if test="province!=null and province!=''">
+            and  ts.province = #{province}
+        </if>
+        <if test="city!=null and city!=''">
+            and  ts.city = #{city}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  ts.create_by = #{createBy}
+        </if>
+        <if test="btTime!=null and btTime!=''">
+            and  ts.create_date >= #{btTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and  ts.create_date &lt;= #{endTime}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  ts.update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  ts.update_date = #{updateDate}
+        </if>
+        and  ts.del_flag = 0
+        GROUP BY ts.province
+    </select>
+</mapper>

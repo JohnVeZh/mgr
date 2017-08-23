@@ -1,0 +1,71 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>网课管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <#NameCon id="condition" name="网课名称" style="width:150px;" />
+                                <#SelectCon id="sectionCode" name="网课学段" style="width:150px;" >
+                                    <option value="1">4级</option>
+                                    <option value="2">6级</option>
+                                    <option value="3">考研</option>
+                                    <option value="4">英专</option>
+                                    <option value="5">高中英语</option>
+                                    <option value="6">初中英语</option>
+                                    <option value="7">小学英语</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-4">
+                                <#SelectCon id="courseType" name="网课类型" style="width:150px;"  >
+                                    <option value="">全部</option>
+                                    <option value="1">系统课</option>
+                                    <option value="2">公开课</option>
+                                    <option value="3">微课</option>
+                                </#SelectCon>
+                                <#SelectCon id="isLive" name="网课形式" style="width:150px;"  >
+                                    <option value="">全部</option>
+                                    <option value="0">录播</option>
+                                    <option value="1">直播</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-4">
+                                <#button name="搜索" icon="fa-search" clickFun="NetworkCourse.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="NetworkCourse.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="NetworkCourseTableToolbar" role="group">
+                            @if(shiro.hasPermission("/goods/networkCourse/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="NetworkCourse.openAddNetworkCourse()"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/networkCourse/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="NetworkCourse.openNetworkCourseDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/networkCourse/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="NetworkCourse.delete()" space="true"/>
+                            @}
+
+                            @if(shiro.hasPermission("/goods/video")){
+                            <#button name="视频管理" icon="fa-film" clickFun="NetworkCourse.openVideo()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/catalog")){
+                            <#button name="目录管理" icon="fa-th-list" clickFun="NetworkCourse.catalogOpen()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/catalog")){
+                            <#button name="评论管理" icon="fa-book" clickFun="NetworkCourse.courseCommentOpen()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="NetworkCourseTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/networkCourse/networkCourse.js"></script>
+@}

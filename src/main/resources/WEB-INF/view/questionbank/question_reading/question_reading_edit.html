@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="${question_reading.id}">
+            <input type="hidden" id="questionId" value="${question_reading.questionId}">
+            <input type="hidden" id="hasItemValue" value="${question_reading.hasItem}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="name" name="题目名称" underline="true" value="${question_reading.name}"/>
+                    <#select id="hasItem" name="是否存在小题">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <!--<#input id="sort" name="排序" underline="true" value="${question_reading.sort}"/>-->
+                </div>
+
+                <div class="col-sm-6">
+
+                    <#input id="questionNum" name="题目数量" underline="true" value="${question_reading.questionNum}"/>
+                    <#input id="remarks" name="备注" underline="true" value="${question_reading.remarks}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="content" name="题干" underline="true" content="${question_reading.content}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="translation" name="译文" underline="true" content="${question_reading.translation}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="Question_readingInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="Question_readingInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question_reading/question_reading_info.js"></script>
+@}

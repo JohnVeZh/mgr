@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.specialSuggestion.mapper.SpecialSuggestionMapper">
+    <insert id="insert">
+        INSERT INTO tb_special_suggestion
+        (
+            id,
+            type,
+            start,
+            end,
+            section_code,
+            analysis,
+            suggestion,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{type},
+               #{start},
+               #{end},
+               #{sectionCode},
+               #{analysis},
+               #{suggestion},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_special_suggestion
+        set
+                id = #{id}
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="start!=null">
+                   ,start = #{start}
+                </if>
+                <if test="end!=null">
+                   ,end = #{end}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="analysis!=null">
+                   ,analysis = #{analysis}
+                </if>
+                <if test="suggestion!=null">
+                   ,suggestion = #{suggestion}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.specialSuggestion.entity.SpecialSuggestionEntity">
+        select
+              tb_special_suggestion.id,
+              tb_special_suggestion.type,
+              tb_special_suggestion.start,
+              tb_special_suggestion.end,
+              tb_special_suggestion.section_code,
+              tb_special_suggestion.analysis,
+              tb_special_suggestion.suggestion,
+              tb_special_suggestion.create_date,
+              tb_special_suggestion.create_by,
+              tb_special_suggestion.update_date,
+              tb_special_suggestion.update_by,
+              tb_special_suggestion.remarks,
+              tb_special_suggestion.sort,
+              tb_special_suggestion.del_flag
+         from tb_special_suggestion
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_special_suggestion.id = #{id}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_special_suggestion.type = #{type}
+            </if>
+            <if test="start!=null and start!=''">
+              and  tb_special_suggestion.start = #{start}
+            </if>
+            <if test="end!=null and end!=''">
+              and  tb_special_suggestion.end = #{end}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_special_suggestion.section_code = #{sectionCode}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+              and  tb_special_suggestion.analysis = #{analysis}
+            </if>
+            <if test="suggestion!=null and suggestion!=''">
+              and  tb_special_suggestion.suggestion = #{suggestion}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_special_suggestion.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_special_suggestion.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_special_suggestion.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_special_suggestion.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_special_suggestion.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_special_suggestion.sort = #{sort}
+            </if>
+                and  tb_special_suggestion.del_flag = 0
+        ORDER BY tb_special_suggestion.sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.specialSuggestion.entity.SpecialSuggestionEntity">
+        select
+              tb_special_suggestion.id,
+              tb_special_suggestion.type,
+              tb_special_suggestion.start,
+              tb_special_suggestion.end,
+              tb_special_suggestion.section_code,
+              tb_special_suggestion.analysis,
+              tb_special_suggestion.suggestion,
+              tb_special_suggestion.create_date,
+              tb_special_suggestion.create_by,
+              tb_special_suggestion.update_date,
+              tb_special_suggestion.update_by,
+              tb_special_suggestion.remarks,
+              tb_special_suggestion.sort,
+              tb_special_suggestion.del_flag
+        from tb_special_suggestion
+        where id = #{id}
+            and  tb_special_suggestion.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.specialSuggestion.entity.SpecialSuggestionEntity">
+        select
+              tb_special_suggestion.id,
+              tb_special_suggestion.type,
+              tb_special_suggestion.start,
+              tb_special_suggestion.end,
+              tb_special_suggestion.section_code,
+              tb_special_suggestion.analysis,
+              tb_special_suggestion.suggestion,
+              tb_special_suggestion.create_date,
+              tb_special_suggestion.create_by,
+              tb_special_suggestion.update_date,
+              tb_special_suggestion.update_by,
+              tb_special_suggestion.remarks,
+              tb_special_suggestion.sort,
+              tb_special_suggestion.del_flag
+        from tb_special_suggestion
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_special_suggestion.id = #{id}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_special_suggestion.type = #{type}
+            </if>
+            <if test="start!=null and start!=''">
+                and  tb_special_suggestion.start = #{start}
+            </if>
+            <if test="end!=null and end!=''">
+                and  tb_special_suggestion.end = #{end}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_special_suggestion.section_code = #{sectionCode}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+                and  tb_special_suggestion.analysis = #{analysis}
+            </if>
+            <if test="suggestion!=null and suggestion!=''">
+                and  tb_special_suggestion.suggestion = #{suggestion}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_special_suggestion.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_special_suggestion.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_special_suggestion.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_special_suggestion.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_special_suggestion.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_special_suggestion.sort = #{sort}
+            </if>
+            and  tb_special_suggestion.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_special_suggestion
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

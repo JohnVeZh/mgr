@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.questionbank.question.mapper.QuestionMapper">
+    <resultMap id="QuestionMap" type="cn.sparke.modules.questionbank.question.entity.QuestionEntity" >
+        <id column="q_id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="has_item" property="hasItem" jdbcType="INTEGER" />
+        <result column="question_num" property="questionNum" jdbcType="INTEGER" />
+        <result column="section_code" property="sectionCode" jdbcType="INTEGER" />
+        <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO tb_question
+        (
+            id,
+            name,
+            content,
+            type,
+            has_item,
+            question_num,
+            section_code,
+            analysis,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{content},
+               #{type},
+               #{hasItem},
+               #{questionNum},
+               #{sectionCode},
+               #{analysis},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+
+    <!--批量插入-->
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO tb_question
+        (
+        id,
+        name,
+        content,
+        type,
+        has_item,
+        question_num,
+        section_code,
+        analysis,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        del_flag
+        )
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.name},
+            #{item.content},
+            #{item.type},
+            #{item.hasItem},
+            #{item.questionNum},
+            #{item.sectionCode},
+            #{item.analysis},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.remarks},
+            #{item.delFlag}
+            )
+        </foreach>
+
+    </insert>
+
+    <update id="update">
+        update tb_question
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="hasItem!=null">
+                   ,has_item = #{hasItem}
+                </if>
+                <if test="questionNum!=null">
+                   ,question_num = #{questionNum}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="analysis!=null">
+                   ,analysis = #{analysis}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.questionbank.question.entity.QuestionEntity">
+        select
+              a.id,
+              a.name,
+              a.content,
+              a.type,
+              a.has_item,
+              a.question_num,
+              a.section_code,
+              a.analysis,
+              a.create_date,
+              a.create_by,
+              a.update_date,
+              a.update_by,
+              a.remarks,
+              b.structure_id,
+              a.del_flag
+         from tb_question a ,tb_paper_question b
+        where a.id=b.question_id
+        and  b.paper_id=#{paperId}
+            <if test="id!=null and id!=''">
+              and  a.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  a.name = #{name}
+            </if>
+            <if test="content!=null and content!=''">
+              and  a.content = #{content}
+            </if>
+            <if test="type!=null and type!=''">
+              and  a.type = #{type}
+            </if>
+            <if test="hasItem!=null and hasItem!=''">
+              and  a.has_item = #{hasItem}
+            </if>
+            <if test="questionNum!=null and questionNum!=''">
+              and  a.question_num = #{questionNum}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  a.section_code = #{sectionCode}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+              and  a.analysis = #{analysis}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  a.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  a.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  a.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  a.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  a.remarks = #{remarks}
+            </if>
+                and  a.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.questionbank.question.entity.QuestionEntity">
+        select
+              tb_question.id,
+              tb_question.name,
+              tb_question.content,
+              tb_question.type,
+              tb_question.has_item,
+              tb_question.question_num,
+              tb_question.section_code,
+              tb_question.analysis,
+              tb_question.create_date,
+              tb_question.create_by,
+              tb_question.update_date,
+              tb_question.update_by,
+              tb_question.remarks,
+              tb_question.del_flag
+        from tb_question,tb_paper_question b
+        where tb_question.id = #{id}
+            and  tb_question.del_flag = 0
+            and  tb_question.id = b.question_id
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.questionbank.question.entity.QuestionEntity">
+        select
+              tb_question.id,
+              tb_question.name,
+              tb_question.content,
+              tb_question.type,
+              tb_question.has_item,
+              tb_question.question_num,
+              tb_question.section_code,
+              tb_question.analysis,
+              tb_question.create_date,
+              tb_question.create_by,
+              tb_question.update_date,
+              tb_question.update_by,
+              tb_question.remarks,
+              tb_question.del_flag
+        from tb_question
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_question.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_question.name = #{name}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_question.content = #{content}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_question.type = #{type}
+            </if>
+            <if test="hasItem!=null and hasItem!=''">
+                and  tb_question.has_item = #{hasItem}
+            </if>
+            <if test="questionNum!=null and questionNum!=''">
+                and  tb_question.question_num = #{questionNum}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_question.section_code = #{sectionCode}
+            </if>
+            <if test="analysis!=null and analysis!=''">
+                and  tb_question.analysis = #{analysis}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_question.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_question.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_question.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_question.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_question.remarks = #{remarks}
+            </if>
+            and  tb_question.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_question
+            set del_flag = 1
+            where id = #{questionId}
+      </update>
+    <select id="TreeList" resultType="cn.sparke.core.common.entity.ZTreeNode">
+
+        select id,
+                name,
+                code,
+                '0' as pId,
+                'true'AS isOpen
+        from  tb_section
+    </select>
+
+    <select id="sectionTreeList" resultType="cn.sparke.core.common.entity.ZTreeNode" parameterType="java.lang.Integer">
+        select ts.id as id,'0' as pId,ts.name as name,'true' as isOpen from tb_section ts where 1=1
+        <if test="loopBz !=null and loopBz !='' and loopBz !=0">
+            and ts.code in (
+            <foreach collection="sectionList" item="item" separator="," index="index">
+                #{item}
+            </foreach>
+            )
+
+        </if>
+
+        UNION ALL
+        select * from (
+            SELECT
+                m1.id AS id,
+                (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                THEN
+                    (select id from tb_section where code = m1.section_code)
+                ELSE
+                m2.id
+                END
+                )     AS pId,
+                m1.NAME
+                AS NAME,
+                (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                THEN
+                'true'
+                ELSE
+                'false'
+                END
+                )     AS isOpen
+                FROM
+                tb_paper_catalog m1
+                LEFT JOIN tb_paper_catalog m2 ON (m2.del_flag IS NULL OR (m1.parent_id = m2.id AND m2.del_flag = 0))
+                WHERE m1.del_flag = 0
+               AND    m1.type=#{type}
+               <if test="loopBz !=null and loopBz !='' and loopBz !=0">
+                  and m1.section_code in (
+                    <foreach collection="sectionList" item="item" separator="," index="index">
+                        #{item}
+                    </foreach>
+                 )
+
+              </if>
+                ORDER BY
+                m1.sort ASC
+        ) m
+    </select>
+
+    <select id="findPaperQrList" resultType="cn.sparke.modules.questionbank.question.entity.PaperSubtitleEntity">
+        select
+        a.id,
+        a.catalog_id,
+        a.qr_code,
+        a.name,
+        a.content_type,
+        a.code,
+        a.img,
+        a.question_num,
+        a.create_date,
+        a.create_by,
+        a.update_date,
+        a.update_by,
+        a.remarks,
+        a.sort,
+        b.section_code,
+        a.del_flag
+        from  tb_paper_group_relation d, tb_paper a, tb_paper_catalog b,tb_paper_group c
+
+        WHERE   d.paper_id = a.id
+        AND   d.group_id = c.id
+        AND   b.id = c.catalog_id
+        and a.del_flag = 0
+        and b.del_flag=0
+        and c.del_flag=0
+        and d.del_flag=0
+        and  b.type=#{type}
+        <if test="catalogId!=null and catalogId!=''">
+            and  b.id = #{catalogId}
+        </if>
+        <if test="paperId!=null and paperId!=''">
+            and  a.id = #{paperId}
+        </if>
+        <if test="name!=null and name!=''">
+            and  a.name =  #{name}
+        </if>
+
+        <if test="queryName!=null and queryName!=''">
+            and  a.name like CONCAT('%',#{queryName},'%')
+        </if>
+
+
+    </select>
+
+
+
+
+    <select id="findPaperList" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+        a.id,
+        a.catalog_id,
+        a.qr_code,
+        a.name,
+        a.content_type,
+        a.code,
+        a.img,
+        a.question_num,
+        a.create_date,
+        a.create_by,
+        a.update_date,
+        a.update_by,
+        a.remarks,
+        a.sort,
+        a.del_flag
+        from  tb_paper a,tb_paper_catalog b
+
+        WHERE a.catalog_id =b.id
+        and a.del_flag = 0
+        and b.del_flag=0
+        and  b.type=#{type}
+        <if test="catalogId!=null and catalogId!=''">
+            and  a.catalog_id = #{catalogId}
+        </if>
+
+        <if test="name!=null and name!=''">
+            and  a.name =  #{name}
+        </if>
+
+        <if test="queryName!=null and queryName!=''">
+            and  a.name like CONCAT('%',#{queryName},'%')
+        </if>
+
+        <!--<if test="sectionCode !=-1">
+            and  b.section_code = #{sectionCode}
+        </if> -->
+
+    </select>
+
+    <select id="getType" resultType="java.util.Map">
+        SELECT  a.paper_id,
+                  a.name,
+                  a.content_type as contentType
+        from  tb_paper_structure a
+        where  a.id= #{id}
+
+    </select>
+
+    <select id="paperStructureTree"  resultType="cn.sparke.core.common.entity.ZTreeNode">
+
+        SELECT
+            m1.id AS id,
+           (
+            CASE
+               WHEN ((m2.id = '0' OR m2.id IS NULL) AND  m1.content_type =1)
+                THEN
+                    '1'
+              WHEN ((m2.id = '0' OR m2.id IS NULL) AND  m1.content_type =2)
+                THEN
+                    '2'
+              WHEN ((m2.id = '0' OR m2.id IS NULL) AND  m1.content_type =3)
+                THEN
+                    '3'
+              WHEN ((m2.id = '0' OR m2.id IS NULL) AND  m1.content_type =4)
+                THEN
+                    '4'
+                ELSE
+                  m2.id
+            END
+            )     AS pId,
+            m1.NAME
+                  AS NAME,
+            (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                    THEN
+                        'true'
+                ELSE
+                    'false'
+                END
+            )     AS isOpen
+        FROM
+            tb_paper_structure m1
+            LEFT JOIN tb_paper_structure m2 ON (m2.del_flag IS NULL OR (m1.parent_id = m2.id AND m2.del_flag = 0))
+        WHERE m1.del_flag = 0
+         and   m1.paper_id= #{id}
+        ORDER BY
+            m1.sort ASC
+    </select>
+
+    <select id="getSectionCodeByPaperId" resultType="java.util.Map">
+        select
+        a.id,
+        a.catalog_id,
+        a.name,
+        b.section_code as sectionCode,
+        a.content_type
+        from  tb_paper a,tb_paper_catalog b
+
+        WHERE a.catalog_id =b.id
+        and a.del_flag = 0
+        and b.del_flag=0
+        and  a.id=#{paperId}
+
+    </select>
+
+    <select id="getCaptionSectionCodeByPaperId" resultType="java.util.Map">
+        select
+        a.id,
+        a.catalog_id,
+        a.name,
+        d.section_code as sectionCode,
+        a.content_type
+        from  tb_paper a, tb_paper_group_relation b , tb_paper_group c ,tb_paper_catalog d
+      where a.id =b.paper_id
+        and b.group_id = c.id
+        and c.catalog_id =d.id
+        and a.del_flag=0
+        and b.del_flag=0
+        and c.del_flag=0
+        and d.del_flag=0
+        and  a.id=#{paperId}
+
+    </select>
+
+</mapper>

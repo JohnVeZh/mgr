@@ -1,0 +1,19 @@
+@layout("/common/_container.html"){
+                    <div class="col-sm-12">
+                        <input type="hidden" id="questionId" value="${questionId}">
+                        <div id="Question_itemTableToolbar" role="group">
+
+                                <#button name="添加" icon="fa-plus" clickFun="Question_item.openAddQuestion_item()"/>
+
+
+                                <#button name="修改" icon="fa fa-pencil" clickFun="Question_item.openQuestion_itemDetail()" space="true"/>
+
+
+                                <#button name="删除" icon="fa fa-trash" clickFun="Question_item.delete()" space="true"/>
+
+                        </div>
+                        <#table id="Question_itemTable"/>
+                    </div>
+
+<script src="${ctxPath}/static/modules/questionbank/question_item/question_item.js"></script>
+@}

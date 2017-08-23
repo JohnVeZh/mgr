@@ -1,0 +1,31 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="channelInfoForm">
+            <input type="hidden" id="type" value="traffic_statistic_channel">
+            <input type="hidden" id="description" value="">
+            <div class="row" >
+                <div class="col-sm-12">
+                    <div class="form-group col-sm-1">
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <#input id="label" name="渠道名称" underline="true" leftWidth="3" rightWidth="9" />
+                        <#input  id="value"  name="渠道代码" underline="true" leftWidth="3" rightWidth="9"/>
+                        <#input id="sort" name="排序" type="number" underline="true" leftWidth="3" rightWidth="9"/>
+                    </div>
+                    <div class="form-group col-sm-1">
+                    </div>
+                </div>
+            </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12" style="text-align: center">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ChannelInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ChannelInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${ctxPath}/static/modules/reportStatistics/trafficStatistic/channel/channel_info.js"></script>
+@}

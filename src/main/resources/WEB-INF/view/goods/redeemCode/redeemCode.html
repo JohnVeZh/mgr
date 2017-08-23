@@ -1,0 +1,43 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>网课兑换码管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="code" name="兑换码" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="ncName" name="网课名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="status" leftWidth="4" rightWidth="8" name="兑换码状态" >
+                                    <option selected="selected" disabled="disabled"  style='display: none' value=''></option>
+                                    <option value="0">未使用</option>
+                                    <option value="1">已使用</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="RedeemCode.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="RedeemCode.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="RedeemCodeTableToolbar" role="group">
+                            @if(shiro.hasPermission("/goods/redeemCode/update")){
+                                <#button name="批量添加" icon="fa-plus" clickFun="RedeemCode.openAddRedeemCode()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="RedeemCodeTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/redeemCode/redeemCode.js"></script>
+@}

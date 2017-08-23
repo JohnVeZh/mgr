@@ -1,0 +1,56 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${startPage.id}">
+            <input type="hidden" id="isInit" value="1">
+            <input type="hidden" id="jumpTypeInit" value="${startPage.jumpType}">
+            <input type="hidden" id="isShowInit" value="${startPage.isShow}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="jumpType" name="跳转类型" leftWidth="4" rightWidth="8">
+                        <option value="0">无跳转</option>
+                        <option value="1">自有富文本</option>
+                        <option value="2">外部链接</option>
+                        <option value="3">活动</option>
+                        <option value="4">资讯</option>
+                        <option value="5">图书</option>
+                        <option value="6">网课</option>
+                    </#select>
+                    <#input id="title" name="标题" leftWidth="4" rightWidth="8" value="${startPage.title}" />
+                </div>
+                <div class="col-sm-6">
+                    <#select id="isShow" name="是否展示" leftWidth="4" rightWidth="8">
+                        <option value="0">隐藏</option>
+                        <option value="1">展示</option>
+                    </#select>
+                    <#input id="sort" name="排序" type="number" value="${startPage.sort}" leftWidth="4" rightWidth="8" />
+                </div>
+                <div class="col-sm-12">
+                    <#uploadImg id="img" name="图片" underline="true" width="100px" height="50px"  url="${startPage.img}"/>
+                </div>
+                <div class="col-sm-12">
+                    <#input id="url" name="跳转地址" leftWidth="2" rightWidth="10"  value="${startPage.url}" />
+                </div>
+                <div class="col-sm-12">
+                    <#input id="contentTitle" name="跳转内容" value="${startPage.contentTitle}" leftWidth="2" rightWidth="10" />
+                    <input id="contentId" type="hidden" value="${startPage.contentId}">
+                </div>
+                <div class="col-sm-12">
+                    <#wangEditor id="content" name="内容" content="${startPage.content}" leftWidth="2" rightWidth="10" height="300px" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="StartPageInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="StartPageInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/startPage/startPage_info.js"></script>
+@}

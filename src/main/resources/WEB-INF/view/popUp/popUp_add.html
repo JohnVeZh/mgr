@@ -1,0 +1,52 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="popUpInfoForm">
+
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <input id="status" type="hidden" value="1">
+                    <#input id="title" name="弹窗主题" leftWidth="4" rightWidth="8" required="required" />
+                    <#select id="showModule" name="展示频道" leftWidth="4" rightWidth="8">
+                        <option value="1">首页</option>
+                        <option value="2">社区</option>
+                        <option value="3">商城</option>
+                        <option value="4">我的</option>
+                        <option value="5">网课</option>
+                    </#select>
+                    <#select id="jumpType" name="跳转类型" leftWidth="4" rightWidth="8">
+                        <option value="2">外部链接</option>
+                        <option value="3">首页</option>
+                        <option value="4">网课—四级</option>
+                        <option value="5">网课—六级</option>
+                        <option value="6">网课-考研</option>
+                        <option value="7">社区-资讯</option>
+                        <option value="8">社区-活动</option>
+                        <option value="9">图书</option>
+                        <option value="10">我的</option>
+                    </#select>
+                    <#input id="url" name="外部链接地址" leftWidth="4" rightWidth="8"/>
+                    <#input id="sort" name="排序" type="number" leftWidth="4" rightWidth="8"  />
+                </div>
+                <div class="col-sm-6">
+                    <#TimeCon2 id="startTime" name="开始时间" isTime="true" underline="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                    <#TimeCon2 id="endTime" name="结束时间" isTime="true" underline="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                </div>
+                <div class="col-sm-12">
+                    <#uploadImg id="img" name="弹窗图片" underline="true" width="100px" height="50px"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PopUpInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PopUpInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/popUp/popUp_info.js"></script>
+@}

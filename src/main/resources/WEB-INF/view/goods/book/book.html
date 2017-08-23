@@ -1,0 +1,72 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>图书管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="图书名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#TimeCon id="startDate" name="开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                                <#TimeCon id="endDate" name="结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="sectionCode" name="图书学段"  >
+                                    <option value="1" selected="selected">4级</option>
+                                    <option value="2">6级</option>
+                                    <option value="3">考研</option>
+                                    <option value="4">英专</option>
+                                    <option value="5">高中英语</option>
+                                    <option value="6">初中英语</option>
+                                    <option value="7">小学英语</option>
+                                </#SelectCon>
+
+                                <#InputCon id="typeName" name="图书类型" readonly="readonly" hidden="typeId"
+                                        clickFun="Book.showBookSelectTree(); return false;"
+                                        style="background-color: #ffffff !important;"/>
+
+
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Book.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="Book.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+
+                        <!-- 父级类型的选择框 -->
+                        <div id="parentBookMenu" class="menuContent"
+                             style="display: none; position: absolute; z-index: 200;">
+                            <ul id="parentBookMenuTree" class="ztree tree-box" style="width: 245px !important;"></ul>
+                        </div>
+
+                        <div class="hidden-xs" id="BookTableToolbar" role="group">
+                            @if(shiro.hasPermission("/goods/book/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="Book.openAddBook()"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/book/update")){
+                                <#button name="修改" icon="fa-plus" clickFun="Book.openBookDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/book/delete")){
+                                <#button name="删除" icon="fa-plus" clickFun="Book.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="BookTable"/>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/book/book.js"></script>
+@}

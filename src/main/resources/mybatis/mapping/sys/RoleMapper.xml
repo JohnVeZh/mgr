@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.system.role.mapper.RoleMapper">
+
+    <select id="getById" resultType="cn.sparke.modules.system.role.entity.Role">
+        SELECT
+            role.*,
+            p.name        AS pName,
+            dept.fullname AS deptName
+        FROM sys_role role
+            LEFT JOIN sys_role p
+                ON role.pid = p.id
+            LEFT JOIN sys_dept dept
+                ON role.deptid = dept.id
+        WHERE role.id = #{id}
+              AND role.del_flag = 0
+    </select>
+    <select id="findList" resultType="cn.sparke.modules.system.role.entity.Role">
+        select
+        role.*,
+        p.name AS pName,
+        dept.fullname AS deptName
+        from sys_role role
+        LEFT JOIN sys_role p
+        ON role.pid = p.id
+        INNER JOIN sys_dept dept
+        ON role.deptid = dept.id AND dept.del_flag = 0
+        WHERE role.del_flag = 0
+        <if test="name != null">
+            and role.name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <delete id="deleteRolesById">
+        DELETE FROM sys_role_menu
+        WHERE roleid = #{roleId}
+    </delete>
+
+    <select id="roleTreeList" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+            id                 "id",
+            pId
+                               "pId",
+            name AS            "name",
+            (CASE WHEN (pId = 0 OR pId IS NULL)
+                THEN 'true'
+             ELSE 'false' END) "open"
+        FROM sys_role
+        WHERE del_flag = 0
+    </select>
+
+    <select id="roleTreeListByRoleId" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+        r.id "id",
+        pId "pId",
+        NAME AS "name",
+        (
+        CASE
+        WHEN (pId = '0' OR pId IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) "open",
+        (
+        CASE
+        WHEN (r1.ID = '0' OR r1.ID IS NULL) THEN
+        'false'
+        ELSE
+        'true'
+        END
+        ) "checked"
+        FROM
+        sys_role r
+        LEFT JOIN (
+        SELECT
+        ID
+        FROM
+        sys_role
+        WHERE
+        del_flag = 0
+        AND ID IN
+
+        <foreach collection="array" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+
+        ) r1 ON r.ID = r1.ID
+        WHERE r.del_flag = 0
+        ORDER BY
+        pId,
+        sort ASC
+    </select>
+    <insert id="insert">
+        INSERT INTO sys_role (id, pid, name, deptid, tips, create_date, create_by, update_date, update_by, sort) VALUES
+            (
+                #{id},
+                #{pid},
+                #{name},
+                #{deptid},
+                #{tips},
+                #{createDate},
+                #{createBy},
+                #{updateDate},
+                #{updateBy},
+                #{sort}
+            )
+    </insert>
+    <update id="update">
+        UPDATE sys_role
+        SET
+        <if test="pid!=null">
+            pid = #{pid},
+        </if>
+        <if test="name!=null">
+            name = #{name},
+        </if>
+        <if test="deptid!=null">
+            deptid = #{deptid},
+        </if>
+        <if test="tips!=null">
+            tips = #{tips},
+        </if>
+        <if test="updateBy!=null">
+            update_by = #{updateBy},
+        </if>
+        update_date = #{updateDate}
+        WHERE id = #{id}
+    </update>
+    <update id="deleteById">
+        UPDATE sys_role
+        SET del_flag = 1
+        WHERE id = #{id}
+    </update>
+</mapper>

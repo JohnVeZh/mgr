@@ -1,0 +1,50 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="${specialSuggestion.id}">
+            <input type="hidden" id="typeValue" value="${specialSuggestion.type}">
+            <input type="hidden" id="sectionCodeValue" value="${specialSuggestion.sectionCode}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="type" name="专项类型" underline="true">
+                        <option value="0">不区分</option>
+                        <option value="1">听力</option>
+                        <option value="2">阅读</option>
+                        <option value="3">翻译</option>
+                        <option value="4">写作</option>
+                        <option value="5">词汇</option>
+                    </#select>
+                    <#input id="start" name="下限分数" underline="true" value="${specialSuggestion.start}"/>
+                    <#input id="sort" name="排序" underline="true" value="${specialSuggestion.sort}"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="sectionCode" name="学段" underline="true"></#select>
+                    <#input id="end" name="上限分数" underline="true" value="${specialSuggestion.end}"/>
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="row">
+                <div class="col-sm-12" id="contentDiv">
+                    <!--<#wangEditor id="analysis" name="分析" height="300px" content="${specialSuggestion.analysis}" underline="true"/>-->
+                    <!--<#wangEditor id="suggestion" name="建议" height="300px" content="${specialSuggestion.suggestion}" underline="true"/>-->
+                    <#textarea id="analysis" name="分析" style="height:200px" underline="true" content="${specialSuggestion.analysis}" />
+                    <#textarea id="suggestion" name="建议" style="height:200px" underline="true" content="${specialSuggestion.suggestion}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SpecialSuggestionInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SpecialSuggestionInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/specialSuggestion/specialSuggestion_info.js"></script>
+@}

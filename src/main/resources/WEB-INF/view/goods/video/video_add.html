@@ -1,0 +1,66 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="videoInfoForm">
+
+            <input type="hidden" id="id" value="">
+            <input type="hidden" id="networkCourseId" value="${networkCourseId}">
+            <input type="hidden" id="catalogId" value="${catalogId}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#uploadImg id="coverImg" name="封面图片"  width="200" height="100" />
+
+
+                    <#select id="type" name="视频类型" changeFun="VideoInfoDlg.changeType(this.value)" >
+                        <option value="0" selected = "selected">录播</option>
+                        <option value="1">直播</option>
+                    </#select>
+                    <#input id="videoUrl" name="视频连接"  />
+                    <#input id="sort" name="视频排序" placeholder="请输入正整数" />
+                    <#input id="remarks" name="视频备注"  />
+
+
+
+
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="name" name="视频名称"  />
+                    <#input id="duration" name="课时时长"  />
+                    <#input id="size" name="视频大小" placeholder="录播时填写,单位:字节"  />
+                    <#input id="previewCcId" name="预告视频" placeholder="预告cc视频路径" />
+                    <#input id="videoCcId" name="录播视频ID" placeholder="录播时填写"   />
+                    <#input id="liveCcId" name="直播视频ID" placeholder="直播时填写" disabled="disabled"  />
+                    <#input id="liveRoomId" name="直播间ID" placeholder="直播时填写" disabled="disabled" />
+                    <#input id="startTime" name="开课时间" placeholder="直播时填写" disabled="disabled"  clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+
+
+                </div>
+            </div>
+
+            <div class="form-group" style="height: auto;">
+                <div class="col-sm-12" style="height: auto;">
+                    <strong class="control-label">选取老师</strong>
+                    &nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-chevron-down" onclick="VideoInfoDlg.showTeachers()" style="cursor:pointer" aria-hidden="true"></span>
+                    <br><br>
+                    <div id="teachers" class="form-control table-responsive" style="height: auto;border: hidden;display:none;">
+
+                    </div>
+                </div>
+            </div>
+
+            <br><br><br>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="VideoInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="VideoInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/video/video_info.js"></script>
+@}

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.CourseComment.mapper.CourseCommentMapper">
+    <insert id="insert">
+        INSERT INTO tb_user_comment
+        (
+            id,
+            user_id,
+            content_type,
+            content_id,
+            praise_num,
+            content,
+            imgs,
+            is_top,
+            reply_num,
+            create_date,
+            update_date,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{contentType},
+               #{contentId},
+               #{praiseNum},
+               #{content},
+               #{imgs},
+               #{isTop},
+               #{replyNum},
+               #{createDate},
+               #{updateDate},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user_comment
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="contentType!=null">
+                   ,content_type = #{contentType}
+                </if>
+                <if test="contentId!=null">
+                   ,content_id = #{contentId}
+                </if>
+                <if test="praiseNum!=null">
+                   ,praise_num = #{praiseNum}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="imgs!=null">
+                   ,imgs = #{imgs}
+                </if>
+                <if test="isTop!=null">
+                   ,is_top = #{isTop}
+                </if>
+                <if test="replyNum!=null">
+                   ,reply_num = #{replyNum}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.CourseComment.entity.CourseCommentEntity">
+            SELECT
+                tuc.id,
+                tuc.content,
+                tp.`name`,
+                tuc.praise_num AS praiseNum,
+                tu.phone,
+                tuc.create_date AS createDate
+            FROM
+              tb_user_comment tuc
+            LEFT JOIN tb_product tp
+              ON tuc.content_id=tp.id
+            LEFT JOIN tb_user tu
+              ON tuc.user_id=tu.id
+            WHERE
+              tuc.content_type=1
+            AND
+              tuc.del_flag=0
+            <if test="condition!=null and condition!=''">
+                AND  tuc.content like CONCAT('%',#{condition},'%')
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                AND tuc.create_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                AND tuc.create_date &lt;=#{endDate}
+            </if>
+            <if test="id!=null and id!=''">
+              and  tuc.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tuc.user_id = #{userId}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+              and  tuc.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+              and  tuc.content_id = #{contentId}
+            </if>
+            <if test="praiseNum!=null and praiseNum!=''">
+              and  tuc.praise_num = #{praiseNum}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tuc.content = #{content}
+            </if>
+            <if test="imgs!=null and imgs!=''">
+              and  tuc.imgs = #{imgs}
+            </if>
+            <if test="isTop!=null and isTop!=''">
+              and  tuc.is_top = #{isTop}
+            </if>
+            <if test="replyNum!=null and replyNum!=''">
+              and  tuc.reply_num = #{replyNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tuc.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tuc.update_date = #{updateDate}
+            </if>
+
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.CourseComment.entity.CourseCommentEntity">
+        select
+              tb_user_comment.id,
+              tb_user_comment.user_id,
+              tb_user_comment.content_type,
+              tb_user_comment.content_id,
+              tb_user_comment.praise_num,
+              tb_user_comment.content,
+              tb_user_comment.imgs,
+              tb_user_comment.is_top,
+              tb_user_comment.reply_num,
+              tb_user_comment.create_date,
+              tb_user_comment.update_date,
+              tb_user_comment.del_flag
+        from tb_user_comment
+        where id = #{id}
+            and  tb_user_comment.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.CourseComment.entity.CourseCommentEntity">
+        select
+              tb_user_comment.id,
+              tb_user_comment.user_id,
+              tb_user_comment.content_type,
+              tb_user_comment.content_id,
+              tb_user_comment.praise_num,
+              tb_user_comment.content,
+              tb_user_comment.imgs,
+              tb_user_comment.is_top,
+              tb_user_comment.reply_num,
+              tb_user_comment.create_date,
+              tb_user_comment.update_date,
+              tb_user_comment.del_flag
+        from tb_user_comment
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_user_comment.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_user_comment.user_id = #{userId}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+                and  tb_user_comment.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+                and  tb_user_comment.content_id = #{contentId}
+            </if>
+            <if test="praiseNum!=null and praiseNum!=''">
+                and  tb_user_comment.praise_num = #{praiseNum}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_user_comment.content = #{content}
+            </if>
+            <if test="imgs!=null and imgs!=''">
+                and  tb_user_comment.imgs = #{imgs}
+            </if>
+            <if test="isTop!=null and isTop!=''">
+                and  tb_user_comment.is_top = #{isTop}
+            </if>
+            <if test="replyNum!=null and replyNum!=''">
+                and  tb_user_comment.reply_num = #{replyNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_user_comment.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_user_comment.update_date = #{updateDate}
+            </if>
+            and  tb_user_comment.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_user_comment
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+    <update id="updatePraiseNum">
+        update tb_user_comment
+        set tb_user_comment.praise_num = #{praiseNum}
+        where id = #{id}
+    </update>
+    <update id="updateCommentNum">
+        UPDATE tb_product_network_course
+        SET comment_num = comment_num - 1
+        WHERE
+            id = #{networkCourseId}
+    </update>
+
+    <select id="getManagerreplyNum" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            tb_user_comment_reply tucr
+        WHERE
+            tucr.comment_id = #{commentId}
+            AND user_id = 'f2b7d7d6568d5c800156a1558217315a'
+    </select>
+
+    <select id="getEntityById" resultType="cn.sparke.modules.goods.CourseComment.entity.CourseCommentEntity">
+        SELECT
+            tuc.id,
+            tuc.content,
+            tuc.user_id AS userId,
+            tp.`name`,
+            tuc.praise_num AS praiseNum,
+            tu.phone,
+            tuc.create_date AS createDate
+        FROM
+            tb_user_comment tuc
+            LEFT JOIN tb_product tp ON tuc.content_id = tp.id
+            LEFT JOIN tb_user tu ON tuc.user_id = tu.id
+        WHERE
+            tuc.id = #{id}
+    </select>
+
+    <!--增加评论回复数量-->
+    <update id="addCommentReplyNum">
+        UPDATE tb_user_comment
+        SET reply_num = reply_num + 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="getContentIdByCommentId" resultType="string">
+        SELECT content_id
+        FROM tb_user_comment
+        WHERE del_flag = 0
+        AND id = #{id}
+    </select>
+
+</mapper>

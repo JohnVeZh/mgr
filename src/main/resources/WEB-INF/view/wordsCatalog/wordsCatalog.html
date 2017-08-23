@@ -1,0 +1,88 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>词汇栏目管理管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#SelectCon id="type" name="栏目类型" >
+                                    <option value="">全部</option>
+                                    <option value="1">常用词汇</option>
+                                    <option value="2">专项练习</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="sectionCode" name="学段" >
+                                    <option value="">全部</option>
+                                    <option value="1">四级</option>
+                                    <option value="2">六级</option>
+                                </#SelectCon>
+                            </div>
+                            <!--<div class="col-sm-3">
+                                <#SelectCon id="isLeaf" name="节点" >
+                                    <option value="">全部</option>
+                                    <option value="1">叶子节点</option>
+                                    <option value="0">非叶子节点</option>
+                                </#SelectCon>
+                            </div>-->
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="WordsCatalog.search()"/>
+                            </div>
+                        </div>
+                        @if(isSelect){
+                        <div class="hidden-xs" id="selectWordsCatalogTableToolbar" role="group" style="text-align: right">
+                            <#button name="添加" icon="fa-plus" clickFun="ParentForm.selectItem()"/>
+                        </div>
+                        @}
+                        @if(!isSelect){
+                        <div class="hidden-xs" id="WordsCatalogTableToolbar" role="group">
+                            @if(shiro.hasPermission("/wordsCatalog/add")){
+                                <#button name="添加根节点" icon="fa-plus" clickFun="WordsCatalog.openAddRootWordsCatalog()"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <#button name="添加" icon="fa-plus" clickFun="WordsCatalog.openAddWordsCatalog()"/>
+                            @}
+                            @if(shiro.hasPermission("/wordsCatalog/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="WordsCatalog.openWordsCatalogDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/wordsCatalog/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="WordsCatalog.delete()" space="true"/>
+                            @}
+                        </div>
+                        @}
+                        <#table id="WordsCatalogTable"/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/wordsCatalog/wordsCatalog.js"></script>
+<script type="application/javascript">
+    var ParentForm = {};
+    ParentForm.selectItem = function () {
+        if (WordsCatalog.check()){
+            try{
+                window.parent.$("#catalogId").val(WordsCatalog.seItem.id);
+                window.parent.$("#catalogName").val(WordsCatalog.seItem.name);
+                parent.layer.close(window.parent.WordsInfoDlg.selectWordCatalog);
+            }catch (error){
+                //来自单词选择栏目页面
+            }
+
+            try{
+                window.parent.$("#parentCatalogId").val(WordsCatalog.seItem.id);
+                window.parent.$("#parentCatalogName").val(WordsCatalog.seItem.name);
+                parent.layer.close(window.parent.WordsCatalogInfoDlg.selectWordCatalog);
+            }catch (error){
+                //来自栏目选择父级栏目页面
+            }
+
+        }
+    }
+</script>
+@}

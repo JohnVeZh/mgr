@@ -1,0 +1,51 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="code" name="内容" underline="true" />
+                    <#select id="sectionCode" name="学段" underline="true"></#select>
+                    <#select id="targetType" name="目标类型" underline="true">
+                        <option value="1">列表</option>
+                        <option value="2">详情</option>
+                    </#select>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="useScene" name="使用场景" underline="true">
+                        <option value="1">简系列</option>
+                        <option value="2">配套专区</option>
+                    </#select>
+                    <#select id="type" name="类型" underline="true">
+                        <option value="1">简系列考场原音</option>
+                        <option value="2">简系列碎片</option>
+                        <option value="3">简系列学习视频</option>
+                        <option value="4">简系列简写作</option>
+                        <option value="5">简系列词汇</option>
+                        <option value="6">简系列字幕听力</option>
+                        <option value="7">简系列写作翻译</option>
+                        <option value="8">配套专区全真考场</option>
+                        <option value="9">配套专区名师视频</option>
+                        <option value="10">配套专区常用词汇</option>
+                        <option value="11">配套专区字幕听力</option>
+                    </#select>
+                    <#input id="sort" name="排序" underline="true" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="QrCodeInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="QrCodeInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/qrcode/qrCode/qrCode_info.js"></script>
+@}

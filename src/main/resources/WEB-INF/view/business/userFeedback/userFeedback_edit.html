@@ -1,0 +1,52 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${userFeedback.id}">
+            <input type="hidden" id="handleStatus" value="${userFeedback.isHandle}">
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td width="50px" >昵称</td>
+                            <td>${userFeedback.nickname}</td>
+                            <td width="50px" >是否处理</td>
+                            <td id="isHandle"></td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >联系电话</td>
+                            <td>${userFeedback.phone}</td>
+                            <td width="50px" >联系邮箱</td>
+                            <td>${userFeedback.email}</td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >创建时间</td>
+                            <td>${userFeedback.createDate}</td>
+                            <td width="50px" ></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >反馈内容</td>
+                            <td colspan="3">${userFeedback.content}</td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >处理结果</td>
+                            <td colspan="3"><textarea  id="handleResults" class="form-control"   style="height: 120px;width: 100%">${userFeedback.handleResults}</textarea></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="UserFeedbackInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="UserFeedbackInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/business/userFeedback/userFeedback_info.js"></script>
+@}

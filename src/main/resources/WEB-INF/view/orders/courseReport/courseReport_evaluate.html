@@ -1,0 +1,86 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${order.id!}">
+
+            @ if(orderEvaluateList != null) {
+            <div class="row">
+                <div class="fixed-table-header" style="margin-right: 0px; width: 100%;">
+                    <table class="table table-hover table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; width: 40px; ">
+                                    <div class="th-inner ">序号</div><div class="fht-cell" style="width: 40px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; width: 85px; ">
+                                    <div class="th-inner ">商品图片</div><div class="fht-cell" style="width: 85px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: left; vertical-align: middle; ">
+                                    <div class="th-inner ">商品名称</div><div class="fht-cell"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: left; vertical-align: middle; width: 180px; ">
+                                    <div class="th-inner ">讲课思路/讲师风格/课程板书</div><div class="fht-cell" style="width: 120px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: left; vertical-align: middle; width: 60px; ">
+                                    <div class="th-inner ">平均分</div><div class="fht-cell" style="width: 60px;"></div>
+                                </th>
+                                <th data-field="orderCode" style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">用户帐号</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    <div class="th-inner ">用户昵称</div><div class="fht-cell" style="width: 80px;"></div>
+                                </th>
+                                <th data-field="user.nickname" style="text-align: center; vertical-align: middle; width: 50px; ">
+                                    <div class="th-inner ">操作</div><div class="fht-cell" style="width: 50px;"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @ for(orderEvaluate in orderEvaluateList!) {
+                            <tr class="selected" data-index="0">
+                                <td style="text-align: center; vertical-align: middle; width: 40px; ">
+                                    ${orderEvaluateLP.index!}
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; width: 90px; ">
+                                    <img src="${orderEvaluate.productImg!}" width="82px" height="82px" style="border:1px solid #ccc;padding:5px;">
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; ">
+                                    ${orderEvaluate.productName!}
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 200px; ">
+                                    <span class="label label-info" style="font-weight:bold;">&nbsp;${orderEvaluate.thinkingScore!}&nbsp;</span>&nbsp;&nbsp;
+                                    <span class="label label-primary" style="font-weight:bold;">&nbsp;${orderEvaluate.styleScore!}&nbsp;</span>&nbsp;&nbsp;
+                                    <span class="label label-success" style="font-weight:bold;">&nbsp;${orderEvaluate.curriculumScore!}&nbsp;</span>&nbsp;
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 60px; ">
+                                    <span class="label badge-warning" style="font-weight:bold;">${orderEvaluate.averageScore!}</span>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    ${orderEvaluate.phone!}
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 80px; ">
+                                    ${orderEvaluate.nickname!}
+                                </td>
+                                <td style="text-align: left; vertical-align: middle; width: 50px; ">
+                                    <#button name="删除" icon="fa-remove" clickFun="CourseReportInfoDlg.deleteOrderEvaluate(\'${orderEvaluate.id!}\')" space="true"/>
+                                </td>
+                            </tr>
+                        @ }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            @ }
+
+            <div class="row btn-group-m-t">
+                <#button btnCss="danger" name="关闭" id="cancel" icon="fa-close" clickFun="CourseReportInfoDlg.close()"/>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/courseReport/courseReport_info.js"></script>
+@}

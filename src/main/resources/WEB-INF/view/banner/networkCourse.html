@@ -1,0 +1,50 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>网课管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <#NameCon id="condition" name="网课名称" />
+                                <#select id="sectionCode" name="网课级别"  >
+                                    <option value="1">4级</option>
+                                    <option value="2">6级</option>
+                                    <option value="3">考研</option>
+                                    <option value="4">英专</option>
+                                    <option value="5">高中英语</option>
+                                    <option value="6">初中英语</option>
+                                    <option value="7">小学英语</option>
+                                </#select>
+                            </div>
+                            <div class="col-sm-5">
+                                <#select id="courseType" name="网课类型"  >
+                                    <option value="">全部</option>
+                                    <option value="1">系统课</option>
+                                    <option value="2">公开课</option>
+                                    <option value="3">微课</option>
+                                </#select>
+                                <#select id="isLive" name="网课形式"  >
+                                    <option value="">全部</option>
+                                    <option value="0">录播</option>
+                                    <option value="1">直播</option>
+                                </#select>
+                            </div>
+                            <div class="col-sm-1">
+                                <#button name="搜索" icon="fa-search" clickFun="NetworkCourse.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="NetworkCourse.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <#table id="NetworkCourseTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/banner/networkCourse.js"></script>
+@}

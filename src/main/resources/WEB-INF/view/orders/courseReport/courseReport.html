@@ -1,0 +1,79 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>图书订单报表</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#NameConStyle id="qOrderCode" name="订单/交易号" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#NameConStyle id="qPhone" name="手机号" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#NameConStyle id="qReceiver" name="收货人" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="qOrderStatus" name="订单状态" style="width: 120px;">
+                                    <option selected="selected" disabled="disabled"  style='display: none' value=''></option>
+                                    <option value="1">待支付</option>
+                                    <option value="2">待发货</option>
+                                    <option value="3">待收货</option>
+                                    <option value="4">待评论</option>
+                                    <option value="5">已完成</option>
+                                    <option value="6">已取消</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="qRefundStatus" name="退单状态" style="width: 120px;">
+                                    <option selected="selected" disabled="disabled"  style='display: none' value=''></option>
+                                    <option value="0">未退款</option>
+                                    <option value="1">退款中</option>
+                                    <option value="2">拒绝退款</option>
+                                    <option value="3">完成退款</option>
+                                </#SelectCon>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#TimeCon id="qStartTime" name="开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#TimeCon id="qEndTime" name="结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="CourseReport.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="CourseReport.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="CourseReportTableToolbar" role="group">
+                            @if(shiro.hasPermission("/orders/courseReport/update")){
+                                <#button name="编辑" icon="fa-edit" clickFun="CourseReport.update()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/courseReport/update")){
+                                <#button name="查看" icon="fa-info-circle" clickFun="CourseReport.details()" space="true"/>
+                            @}
+
+                            &nbsp;&nbsp;
+                            @if(shiro.hasPermission("/orders/courseReport/exportCurrent")){
+                                <#button name="导出当前页订单" icon="fa-download" btnCss="info" clickFun="CourseReport.exportCurrentOrders()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/courseReport/exportAll")){
+                                <#button name="导出所有订单" icon="fa-cloud-download" btnCss="info" clickFun="CourseReport.exportAllOrders()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="CourseReportTable" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/courseReport/courseReport.js"></script>
+@}

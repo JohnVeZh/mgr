@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 ">
+                    <#select id="sectionCode" name="学段" underline="true"></#select>
+                    <#select id="catalogId" name="目录" underline="true"></#select>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="name" name="视频名称"  maxlength="32" underline="true"  />
+                    <#input id="qrCode" name="二维码"  maxlength="32" underline="true" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="ccId" name="视频ccid"  maxlength="32" underline="true"  />
+                    <#uploadImg id="img" name="图片" underline="true" width="100px" height="100px"/>
+                </div>
+                <div class="col-sm-6">
+                    <#input id="sort" name="排序"  maxlength="32" underline="true"  />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="QrNetworkVideoInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="QrNetworkVideoInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/simple/qrNetworkVideo/qrNetworkVideo_info.js"></script>
+@}

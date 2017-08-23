@@ -1,0 +1,52 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="planConfigForm">
+
+            <input type="hidden" id="id" value="${planConfig.id}">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <#select id="sectionCode" name="学段" leftWidth="4" rightWidth="8">
+                        <option value="1" ${planConfig.sectionCode==1?"selected='selected'":""}>4级</option>
+                        <option value="2" ${planConfig.sectionCode==2?"selected='selected'":""}>6级</option>
+                    </#select>
+                    <#input id="title" name="展示名称" value="${planConfig.title}" leftWidth="4" rightWidth="8"/>
+                    <#input id="scoreStart" name="起始分数" placeholder="请输入正整数" value="${planConfig.scoreStart}" leftWidth="4" rightWidth="8"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="period" name="阶段" leftWidth="4" rightWidth="8">
+                        <option value="1" ${planConfig.period==1?"selected='selected'":""}>学前</option>
+                        <option value="2" ${planConfig.period==2?"selected='selected'":""}>学中</option>
+                        <option value="3" ${planConfig.period==3?"selected='selected'":""}>学末</option>
+                    </#select>
+                    <#input id="sort" name="排序" placeholder="请输入正整数" value="${planConfig.sort}" leftWidth="4" rightWidth="8"/>
+                    <#input id="scoreEnd" name="结束分数" placeholder="请输入正整数" value="${planConfig.scoreEnd}" leftWidth="4" rightWidth="8"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#textarea id="comment" style="height:80px" name="评语" content="${planConfig.comment}" leftWidth="2" rightWidth="10" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 " >
+                    <#BookwangEditor id="content" name="内容" underline="true" content="${planConfig.content}" height="500px" leftWidth="2" rightWidth="10"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PlanConfigInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PlanConfigInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/gift/planConfig/planConfig_info.js"></script>
+@}

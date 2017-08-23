@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.gift.planNetworkCourse.mapper.PlanNetworkCourseMapper">
+    <insert id="insert">
+        INSERT INTO tb_gift_plan_network_course
+        (
+            id,
+            plan_id,
+            network_course_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{planId},
+               #{networkCourseId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        update tb_gift_plan_network_course
+        set
+                id = #{id}
+                <if test="planId!=null">
+                   ,plan_id = #{planId}
+                </if>
+                <if test="networkCourseId!=null">
+                   ,network_course_id = #{networkCourseId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.gift.planNetworkCourse.entity.PlanNetworkCourseEntity">
+        select
+              tb_gift_plan_network_course.id,
+              tb_gift_plan_network_course.plan_id,
+              tb_gift_plan_network_course.network_course_id,
+              tb_gift_plan_network_course.create_date,
+              tb_gift_plan_network_course.create_by,
+              tb_gift_plan_network_course.update_date,
+              tb_gift_plan_network_course.update_by,
+              tb_gift_plan_network_course.remarks,
+              tb_gift_plan_network_course.sort,
+              tb_gift_plan_network_course.del_flag
+         from tb_gift_plan_network_course
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_gift_plan_network_course.id = #{id}
+            </if>
+            <if test="planId!=null and planId!=''">
+              and  tb_gift_plan_network_course.plan_id = #{planId}
+            </if>
+            <if test="networkCourseId!=null and networkCourseId!=''">
+              and  tb_gift_plan_network_course.network_course_id = #{networkCourseId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_gift_plan_network_course.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_gift_plan_network_course.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_gift_plan_network_course.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_gift_plan_network_course.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_gift_plan_network_course.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_gift_plan_network_course.sort = #{sort}
+            </if>
+                and  tb_gift_plan_network_course.del_flag = 0
+    </select>
+
+    <select id="queryList" resultType="cn.sparke.modules.gift.planNetworkCourse.entity.PlanNetworkCourseEntity">
+       SELECT
+              tgpnc.*,
+              tgpc.title,
+              tp.cover_img,
+              tp.name,
+              concat_ws( '-', CASE tp.section_code
+                                    WHEN '1' THEN '四级'
+                                    WHEN '2' THEN '六级'
+                                    WHEN '3' THEN '考研'
+                                    WHEN '4' THEN '英专'
+                                    WHEN '5' THEN '高中英语'
+                                    WHEN '6' THEN '初中英语'
+                                    WHEN '7' THEN '小学英语' END,
+                              CASE tpnc.course_type
+                                    WHEN '1' THEN '系统课'
+                                    WHEN '2' THEN '公开课'
+                                    WHEN '3' THEN '微课' END,
+                              CASE tpnc.is_live
+                                    WHEN '0' THEN '录播'
+                                    WHEN '1' THEN '直播' END ) mold
+            FROM tb_gift_plan_network_course tgpnc
+       LEFT JOIN tb_gift_plan_config tgpc ON tgpc.id = tgpnc.plan_id
+       LEFT JOIN tb_product_network_course tpnc on tgpnc.network_course_id = tpnc.id
+       LEFT JOIN tb_product tp ON tpnc.product_id = tp.id
+           WHERE tp.type = 1
+             AND tp.del_flag = 0
+             AND tgpnc.del_flag = 0
+             AND tgpc.del_flag = 0
+                <if test="ncName!=null and ncName!=''">
+                    AND  tp.name like CONCAT('%',#{ncName},'%')
+                </if>
+                <if test="sectionCode!=null">
+                    AND  tp.section_code = #{sectionCode}
+                </if>
+                <if test="planId!=null and planId!=''">
+                    AND  tgpnc.plan_id = #{planId}
+                </if>
+       ORDER by tgpnc.create_date DESC
+    </select>
+
+    <select id="getById" resultType="cn.sparke.modules.gift.planNetworkCourse.entity.PlanNetworkCourseEntity">
+        select
+              tb_gift_plan_network_course.id,
+              tb_gift_plan_network_course.plan_id,
+              tb_gift_plan_network_course.network_course_id,
+              tb_gift_plan_network_course.create_date,
+              tb_gift_plan_network_course.create_by,
+              tb_gift_plan_network_course.update_date,
+              tb_gift_plan_network_course.update_by,
+              tb_gift_plan_network_course.remarks,
+              tb_gift_plan_network_course.sort,
+              tb_gift_plan_network_course.del_flag
+        from tb_gift_plan_network_course
+        where id = #{id}
+            and  tb_gift_plan_network_course.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.gift.planNetworkCourse.entity.PlanNetworkCourseEntity">
+        select
+              tb_gift_plan_network_course.id,
+              tb_gift_plan_network_course.plan_id,
+              tb_gift_plan_network_course.network_course_id,
+              tb_gift_plan_network_course.create_date,
+              tb_gift_plan_network_course.create_by,
+              tb_gift_plan_network_course.update_date,
+              tb_gift_plan_network_course.update_by,
+              tb_gift_plan_network_course.remarks,
+              tb_gift_plan_network_course.sort,
+              tb_gift_plan_network_course.del_flag
+        from tb_gift_plan_network_course
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_gift_plan_network_course.id = #{id}
+            </if>
+            <if test="planId!=null and planId!=''">
+                and  tb_gift_plan_network_course.plan_id = #{planId}
+            </if>
+            <if test="networkCourseId!=null and networkCourseId!=''">
+                and  tb_gift_plan_network_course.network_course_id = #{networkCourseId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_gift_plan_network_course.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_gift_plan_network_course.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_gift_plan_network_course.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_gift_plan_network_course.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_gift_plan_network_course.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_gift_plan_network_course.sort = #{sort}
+            </if>
+            and  tb_gift_plan_network_course.del_flag = 0
+         limit 1
+     </select>
+
+    <update id="deleteById">
+            update tb_gift_plan_network_course
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

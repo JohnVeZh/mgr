@@ -1,0 +1,90 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="orderEditInfoForm">
+
+            <input type="hidden" id="id" value="${order.id!}">
+            <input type="hidden" id="uId" value="${order.user.id!}">
+            <input type="hidden" id="olId" value="${order.orderLogistics.id!}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="nickname"  name="用户昵称" disabled="true" underline="false" value="${order.user.nickname!}" />
+                </div>
+                <div class="col-sm-6">
+                    @if(isEmpty(order.orderLogistics)){
+                        <#input id="zipcode"  name="邮编" disabled="true" underline="false" value="${order.orderLogistics.zipcode!}" />
+                    @}else{
+                        <#input id="zipcode"  name="邮编" underline="false" value="${order.orderLogistics.zipcode!}" />
+                    @}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    @if(isEmpty(order.orderLogistics)){
+                        <#input id="receiver"  name="收货人" disabled="true" underline="false" value="${order.orderLogistics.receiver!}" />
+                    @}else{
+                        <#input id="receiver"  name="收货人" underline="false" value="${order.orderLogistics.receiver!}" />
+                    @}
+                </div>
+                <div class="col-sm-6">
+                    @if(isEmpty(order.orderLogistics)){
+                    <#input id="receiveMobile"  name="收货人电话" disabled="true" underline="false" value="${order.orderLogistics.receiveMobile!}" />
+                    @}else{
+                        <#input id="receiveMobile"  name="收货人电话" underline="false" value="${order.orderLogistics.receiveMobile!}" />
+                    @}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="orderPrice"  name="订单金额" underline="false" value="${order.orderPrice!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="payPrice"  name="实付金额" disabled="true" underline="false" value="${order.payPrice!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r" readonly="readonly">
+                    <div class="form-group" style="vertical-align: middle">
+                        <label class="col-sm-3 control-label">订单状态</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="orderStatus" name="orderStatus" disabled="disabled">
+                                <option ${order.orderStatus==1?"selected='selected'":""}>待支付</option>
+                                <option ${order.orderStatus==2?"selected='selected'":""}>待发货</option>
+                                <option ${order.orderStatus==3?"selected='selected'":""}>待收货</option>
+                                <option ${order.orderStatus==4?"selected='selected'":""}>待评论</option>
+                                <option ${order.orderStatus==5?"selected='selected'":""}>已完成</option>
+                                <option ${order.orderStatus==6?"selected='selected'":""}>已取消</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <#input id="postagePrice"  name="邮费" underline="false" value="${order.postagePrice!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    @if(isEmpty(order.orderLogistics)){
+                        <#input id="receiveAddress" name="详细地址" disabled="true" underline="false" value="${order.orderLogistics.receiveAddress!}" />
+                    @}else{
+                        <#input id="receiveAddress" name="详细地址" underline="false" value="${order.orderLogistics.receiveAddress!}" />
+                    @}
+                </div>
+                <div class="col-sm-6">
+                    <#input id="remarks" name="订单备注" underline="false" value="${order.remarks!}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="align-items: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OrderInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/order/order_info.js"></script>
+@}

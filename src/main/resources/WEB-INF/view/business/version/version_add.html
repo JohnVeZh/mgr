@@ -1,0 +1,42 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="title" name="标题"  leftWidth="4" rightWidth="8" />
+                    <#input id="code" name="版本code" type="number" leftWidth="4" rightWidth="8" />
+                    <#input id="isForce" name="是否强制更新" type="checkbox" leftWidth="4" rightWidth="8" style="height: 20px;" />
+                </div>
+                <div class="col-sm-6">
+                    <#select id="type" name="类型"  leftWidth="4" rightWidth="8" >
+                        <option value="1">Android</option>
+                        <option value="2">IOS</option>
+                    </#select>
+                    <#input id="version" name="版本"  leftWidth="4" rightWidth="8" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#input id="downloadUrl" name="下载链接" leftWidth="2" rightWidth="10" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#textarea id="summary" name="更新内容"  style="height:180px" leftWidth="2" rightWidth="10" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="VersionInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="VersionInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/business/version/version_info.js"></script>
+@}

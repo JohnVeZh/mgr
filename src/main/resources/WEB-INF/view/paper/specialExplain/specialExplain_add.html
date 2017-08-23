@@ -1,0 +1,94 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="title" name="标题" underline="true" />
+                    <#select id="type" name="专项类型" underline="true">
+                        <option value="1">听力</option>
+                        <option value="2">阅读</option>
+                        <option value="3">翻译</option>
+                        <option value="4">写作</option>
+                        <option value="5">词汇</option>
+                    </#select>
+                    <#input id="sort" name="排序" underline="true" />
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="contentType" name="内容类型" underline="true">
+                        <option value="1">自有内容</option>
+                        <option value="2">外部链接</option>
+                        <option value="3">资讯</option>
+                        <option value="4">图书</option>
+                        <option value="5">网课</option>
+                    </#select>
+                    <#select id="sectionCode" name="学段" underline="true">
+                        <option value="1">CET4</option>
+                        <option value="2">CET6</option>
+                    </#select>
+                    <#input id="remarks" name="备注" underline="true" />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12" id="contentDiv">
+                    <#wangEditor id="content" name="内容" height="300px" />
+                </div>
+                <div class="col-sm-8" id="urlDiv">
+                    <#input id="url" name="外部链接地址" underline="true" />
+                </div>
+                <div class="col-sm-12" id="bookDiv">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <#NameCon id="bookName" name="图书名称" />
+                        </div>
+                        <div class="col-sm-3">
+                            <#button name="搜索" icon="fa-search" clickFun="SpecialExplainInfoDlg.searchBook()"/>
+                            <#button name="重置" icon="fa-trash" clickFun="SpecialExplainInfoDlg.resetSearch()" space="true"/>
+                        </div>
+                        <#table id="BookTable"/>
+                    </div>
+
+                </div>
+                <div class="col-sm-12" id="networkCourseDiv">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <#NameCon id="networkCourseName" name="网课名称" />
+                        </div>
+                        <div class="col-sm-3">
+                            <#button name="搜索" icon="fa-search" clickFun="SpecialExplainInfoDlg.searchNetworkCourse()"/>
+                            <#button name="重置" icon="fa-trash" clickFun="SpecialExplainInfoDlg.resetSearch()" space="true"/>
+                        </div>
+                        <#table id="NetworkCourseTable"/>
+                    </div>
+                </div>
+                <div class="col-sm-12" id="newsDiv">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <#NameCon id="newsName" name="资讯名称" />
+                        </div>
+                        <div class="col-sm-3">
+                            <#button name="搜索" icon="fa-search" clickFun="SpecialExplainInfoDlg.searchNews()"/>
+                            <#button name="重置" icon="fa-trash" clickFun="SpecialExplainInfoDlg.resetSearch()" space="true"/>
+                        </div>
+                        <#table id="NewsTable"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SpecialExplainInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SpecialExplainInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/specialExplain/specialExplain_info.js"></script>
+@}

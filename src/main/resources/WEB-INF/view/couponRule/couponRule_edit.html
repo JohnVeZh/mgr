@@ -1,0 +1,40 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="couponRuleForm">
+
+            <input type="hidden" id="id" value="${couponRule.id}">
+
+            <#input id="title" name="优惠券名称" underline="true"  value="${couponRule.title}" />
+
+            <#TimeCon2 id="effectDate" name="生效时间" underline="true" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" value="${couponRule.effectDate}"/>
+            <#TimeCon2 id="invalidDate" name="失效时间" underline="true" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" value="${couponRule.invalidDate}"/>
+
+            <#input id="minMoney" name="最低使用金额" underline="true" value="${couponRule.minMoney}" />
+            <#input id="discountMoney" name="折扣金额" underline="true" value="${couponRule.discountMoney}"/>
+
+            <#select id="status" name="规则状态" underline="true">
+                <option value="0"
+                        @if(couponRule.status == 0){
+                        selected
+                        @}
+                >禁用</option>
+                <option value="1"
+                        @if(couponRule.status == 1){
+                        selected
+                        @}
+                >正常</option>
+            </#select>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CouponRuleInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CouponRuleInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/couponRule/couponRule_info.js"></script>
+@}

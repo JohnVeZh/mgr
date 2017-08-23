@@ -1,0 +1,69 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="communityNewsForm">
+
+            <input type="hidden" id="id" value="">
+
+            <#input id="title" name="标题" underline="true" />
+
+            <#input id="subtitle" name="副标题" underline="true" />
+
+            <#input id="author" name="作者" underline="true" />
+
+            <#TimeCon2 id="publishTime" name="发布时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss"  underline="true" />
+            <!--//列表图片
+            private String listImg;
+            //内容
+            private String content;
+            //是否发布展示，0为不展示或者翻译为草稿箱，1为展示
+            private Integer isShow;-->
+
+            <#uploadMultipleImg id="listImg" width="200" height="200" name="多张图片" type="file" underline="true" />
+
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+                <!--
+                <div class="col-sm-2">
+                     <label>是否置顶&nbsp;</label><input name="isTop" type="checkbox" value="1"/>
+                 </div>
+                 <div class="col-sm-2">
+                     <label>是否推荐&nbsp;</label><input name="isRecommend" type="checkbox" value="1"/>
+                 </div>
+
+                <div class="col-sm-2">
+                    <label>是否显示客服&nbsp;</label><input name="serviceStatus" type="checkbox" value="1"/>
+                </div>
+                -->
+                <div class="col-sm-3">
+                    <label>是否存为草稿&nbsp;</label><input name="isShow" type="checkbox" value="1"/>
+                </div>
+                <div class="col-sm-6"></div>
+            </div>
+
+            <#wangEditor id="content" name="内容" underline="true" height="500px" content="" />
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CommunityNewsInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CommunityNewsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/news/communityNews_info.js"></script>
+<script type="application/javascript">
+    $(function (e) {
+        var config = {
+            $inputFile: $("#listImgUploader"),
+            uploadImgContainer: "uploadImgContainer",
+            $resUrl: $("#listImg")
+        };
+        CommunityNewsInfoDlg.uploadMultipleImg = new FileInputCustom(config, {
+            dataUrls: ''
+        });
+    })
+</script>
+@}

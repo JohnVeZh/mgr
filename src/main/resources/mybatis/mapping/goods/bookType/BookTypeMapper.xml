@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.bookType.mapper.BookTypeMapper">
+    <insert id="insert">
+        INSERT INTO tb_product_book_type
+        (
+            id,
+            name,
+            parent_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{parentId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_product_book_type
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="parentId!=null">
+                   ,parent_id = #{parentId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.bookType.entity.BookTypeEntity">
+        select
+              tb_product_book_type.id,
+              tb_product_book_type.name,
+              tb_product_book_type.parent_id,
+              tb_product_book_type.create_date,
+              tb_product_book_type.create_by,
+              tb_product_book_type.update_date,
+              tb_product_book_type.update_by,
+              tb_product_book_type.remarks,
+              tb_product_book_type.sort,
+              tb_product_book_type.del_flag
+         from tb_product_book_type
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_product_book_type.id = #{id}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+              and  tb_product_book_type.parent_id = #{parentId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_product_book_type.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_product_book_type.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_product_book_type.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_product_book_type.update_by = #{updateBy}
+            </if>
+            <if test="name != null and name!=''">
+                AND tb_product_book_type.name like CONCAT('%',#{name},'%')
+            </if>
+            AND  tb_product_book_type.del_flag = 0
+            order by sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.bookType.entity.BookTypeEntity">
+        select
+              tb_product_book_type.id,
+              tb_product_book_type.name,
+              tb_product_book_type.parent_id,
+                (
+                    SELECT
+                        NAME
+                    FROM
+                        tb_product_book_type
+                    WHERE
+                        id = (
+                            SELECT
+                                parent_id
+                            FROM
+                                tb_product_book_type
+                            WHERE
+                                id = #{id}
+                        )
+                )  parent_name,
+
+              tb_product_book_type.create_date,
+              tb_product_book_type.create_by,
+              tb_product_book_type.update_date,
+              tb_product_book_type.update_by,
+              tb_product_book_type.remarks,
+              tb_product_book_type.sort,
+              tb_product_book_type.del_flag
+        from tb_product_book_type
+        where id = #{id}
+            and  tb_product_book_type.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.bookType.entity.BookTypeEntity">
+        select
+              tb_product_book_type.id,
+              tb_product_book_type.name,
+              tb_product_book_type.parent_id,
+              tb_product_book_type.create_date,
+              tb_product_book_type.create_by,
+              tb_product_book_type.update_date,
+              tb_product_book_type.update_by,
+              tb_product_book_type.remarks,
+              tb_product_book_type.sort,
+              tb_product_book_type.del_flag
+        from tb_product_book_type
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_product_book_type.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_product_book_type.name = #{name}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and  tb_product_book_type.parent_id = #{parentId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_product_book_type.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_product_book_type.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_product_book_type.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_product_book_type.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_product_book_type.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_product_book_type.sort = #{sort}
+            </if>
+            and  tb_product_book_type.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_product_book_type
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+    <select id="tree" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+        id,
+        parent_id        AS pId,
+        name,
+        (
+        CASE
+        WHEN (parent_id = 'FFFFFF' OR parent_id IS NULL)
+        THEN
+        'true'
+        ELSE
+        'false'
+        END
+        )          AS isOpen
+        FROM tb_product_book_type
+        WHERE del_flag = 0
+    </select>
+
+
+</mapper>

@@ -1,0 +1,155 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>选择商品</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="name" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="type" name="商品类型">
+                                    <option value="">全部</option>
+                                    <option value="1">网课</option>
+                                    <option value="2">图书</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="CouponGainScene.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="selectActivityTableToolbar" role="group">
+                            <#button name="选择" icon="fa-plus" clickFun="CouponGainScene.selectItem()"/>
+                        </div>
+                        <#table id="CouponGainSceneTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+
+    /**
+     * 优惠劵业务场景管理初始化
+     */
+    var CouponGainScene = {
+        id: "CouponGainSceneTable",	//表格id
+        seItem: null,		//选中的条目
+        table: null,
+        layerIndex: -1
+    };
+
+    /**
+     * 检查是否选中
+     */
+    CouponGainScene.check = function () {
+        var selected = $('#' + this.id).bootstrapTable('getSelections');
+        if(selected.length == 0){
+            Feng.info("请先选中表格中的某一记录！");
+            return false;
+        }else{
+            CouponGainScene.seItem = selected[0];
+            return true;
+        }
+    };
+
+    CouponGainScene.selectItem = function () {
+        if (CouponGainScene.check()){
+            var selectItem = $('#' + CouponGainScene.id).bootstrapTable('getSelections');
+            try{
+                @if(targetType == 1){
+                    window.parent.$("#contentId").val(CouponGainScene.seItem.id);
+                    window.parent.$("#contentName").val(CouponGainScene.seItem.name);
+                @}
+                 @if(targetType == 2){
+
+                    var returnIdArray = [];
+                    var returnNameArray = [];
+                    if(selectItem.length > 1) {
+                        $.each(selectItem,function (index, element) {
+                            returnIdArray.push(element.id);
+                            returnNameArray.push(element.name);
+                        });
+                    }
+
+                    var returnName = "";
+                    if(selectItem.length > 1){
+                        returnName = returnNameArray.join(',');
+                    }else{
+                        returnName = selectItem[0].name;
+                    }
+                    var returnId = "";
+                    if(selectItem.length > 1){
+                        returnId = returnIdArray.join(',');
+                    }else{
+                        returnId = selectItem[0].id;
+                    }
+                    window.parent.$("#productId").val(returnId);
+                    window.parent.$("#productName").val(returnName);
+                @}
+
+
+                parent.layer.close(window.parent.CouponGainSceneInfoDlg.selectLayerIndex);
+            }catch (error){
+                //
+                console.info(error);
+            }
+
+        }
+    };
+
+
+    /**
+     * 初始化表格的列
+     */
+    CouponGainScene.initColumn = function () {
+        return [
+            {field: 'selectItem',
+                @if(targetType == 1){
+                    radio: true
+                @}
+                 @if(targetType == 2){
+                    checkbox: true
+                @}
+            },
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '商品名称', field: 'name',  align: 'center', valign: 'middle'},
+            {title: '商品简介', field: 'brief', align: 'center', valign: 'middle'},
+            {title: '商品类型', field: 'type', align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                if(column.type == 1){
+                    return '<span class="label label-primary">网课</span>';
+                }else if(column.type == 2){
+                    return '<span class="label label-success">图书</span>';
+                }
+            }}
+            /*,
+            {title: '操作', field: '',   align: 'center', valign: 'middle',formatter : function (e,column,index) {
+                return "<a onclick='CouponGainScene.selectItem();return false;'>选择</a>"
+            }}*/
+        ];
+    };
+
+    /**
+     * 查询优惠劵业务场景列表
+     */
+    CouponGainScene.search = function () {
+        var queryData = {};
+        queryData.nameLike = $("#name").val();
+        queryData['type'] = $("#type").val();
+        CouponGainScene.table.refresh({query: queryData});
+    };
+
+    $(function () {
+        var defaultColunms = CouponGainScene.initColumn();
+        var table = new BSTable(CouponGainScene.id, "/couponGainScene/product/list", defaultColunms);
+        CouponGainScene.table = table.init();
+    });
+
+</script>
+@}

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.user.mapper.UserAddressMapper">
+    <insert id="insert">
+        INSERT INTO tb_user_address
+        (
+            id,
+            user_id,
+            province_id,
+            city_id,
+            county_id,
+            district_cn,
+            detail_address,
+            receiver,
+            zipcode,
+            mobile,
+            is_default,
+            create_date,
+            update_date,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{provinceId},
+               #{cityId},
+               #{countyId},
+               #{districtCn},
+               #{detailAddress},
+               #{receiver},
+               #{zipcode},
+               #{mobile},
+               #{isDefault},
+               #{createDate},
+               #{updateDate},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user_address
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="provinceId!=null">
+                   ,province_id = #{provinceId}
+                </if>
+                <if test="cityId!=null">
+                   ,city_id = #{cityId}
+                </if>
+                <if test="countyId!=null">
+                   ,county_id = #{countyId}
+                </if>
+                <if test="districtCn!=null">
+                   ,district_cn = #{districtCn}
+                </if>
+                <if test="detailAddress!=null">
+                   ,detail_address = #{detailAddress}
+                </if>
+                <if test="receiver!=null">
+                   ,receiver = #{receiver}
+                </if>
+                <if test="zipcode!=null">
+                   ,zipcode = #{zipcode}
+                </if>
+                <if test="mobile!=null">
+                   ,mobile = #{mobile}
+                </if>
+                <if test="isDefault!=null">
+                   ,is_default = #{isDefault}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.user.entity.UserAddressEntity">
+        select
+              tb_user_address.id,
+              tb_user_address.user_id,
+              tb_user_address.province_id,
+              tb_user_address.city_id,
+              tb_user_address.county_id,
+              tb_user_address.district_cn,
+              tb_user_address.detail_address,
+              tb_user_address.receiver,
+              tb_user_address.zipcode,
+              tb_user_address.mobile,
+              tb_user_address.is_default,
+              tb_user_address.create_date,
+              tb_user_address.update_date,
+              tb_user_address.del_flag
+         from tb_user_address
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_user_address.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tb_user_address.user_id = #{userId}
+            </if>
+            <if test="provinceId!=null and provinceId!=''">
+              and  tb_user_address.province_id = #{provinceId}
+            </if>
+            <if test="cityId!=null and cityId!=''">
+              and  tb_user_address.city_id = #{cityId}
+            </if>
+            <if test="countyId!=null and countyId!=''">
+              and  tb_user_address.county_id = #{countyId}
+            </if>
+            <if test="districtCn!=null and districtCn!=''">
+              and  tb_user_address.district_cn = #{districtCn}
+            </if>
+            <if test="detailAddress!=null and detailAddress!=''">
+              and  tb_user_address.detail_address = #{detailAddress}
+            </if>
+            <if test="receiver!=null and receiver!=''">
+              and  tb_user_address.receiver = #{receiver}
+            </if>
+            <if test="zipcode!=null and zipcode!=''">
+              and  tb_user_address.zipcode = #{zipcode}
+            </if>
+            <if test="mobile!=null and mobile!=''">
+              and  tb_user_address.mobile = #{mobile}
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+              and  tb_user_address.is_default = #{isDefault}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_user_address.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_user_address.update_date = #{updateDate}
+            </if>
+                and  tb_user_address.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.user.entity.UserAddressEntity">
+        select
+              tb_user_address.id,
+              tb_user_address.user_id,
+              tb_user_address.province_id,
+              tb_user_address.city_id,
+              tb_user_address.county_id,
+              tb_user_address.district_cn,
+              tb_user_address.detail_address,
+              tb_user_address.receiver,
+              tb_user_address.zipcode,
+              tb_user_address.mobile,
+              tb_user_address.is_default,
+              tb_user_address.create_date,
+              tb_user_address.update_date,
+              tb_user_address.del_flag
+        from tb_user_address
+        where id = #{id}
+            and  tb_user_address.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.user.entity.UserAddressEntity">
+        select
+              tb_user_address.id,
+              tb_user_address.user_id,
+              tb_user_address.province_id,
+              tb_user_address.city_id,
+              tb_user_address.county_id,
+              tb_user_address.district_cn,
+              tb_user_address.detail_address,
+              tb_user_address.receiver,
+              tb_user_address.zipcode,
+              tb_user_address.mobile,
+              tb_user_address.is_default,
+              tb_user_address.create_date,
+              tb_user_address.update_date,
+              tb_user_address.del_flag
+        from tb_user_address
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_user_address.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_user_address.user_id = #{userId}
+            </if>
+            <if test="provinceId!=null and provinceId!=''">
+                and  tb_user_address.province_id = #{provinceId}
+            </if>
+            <if test="cityId!=null and cityId!=''">
+                and  tb_user_address.city_id = #{cityId}
+            </if>
+            <if test="countyId!=null and countyId!=''">
+                and  tb_user_address.county_id = #{countyId}
+            </if>
+            <if test="districtCn!=null and districtCn!=''">
+                and  tb_user_address.district_cn = #{districtCn}
+            </if>
+            <if test="detailAddress!=null and detailAddress!=''">
+                and  tb_user_address.detail_address = #{detailAddress}
+            </if>
+            <if test="receiver!=null and receiver!=''">
+                and  tb_user_address.receiver = #{receiver}
+            </if>
+            <if test="zipcode!=null and zipcode!=''">
+                and  tb_user_address.zipcode = #{zipcode}
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                and  tb_user_address.mobile = #{mobile}
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+                and  tb_user_address.is_default = #{isDefault}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_user_address.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_user_address.update_date = #{updateDate}
+            </if>
+            and  tb_user_address.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_user_address
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

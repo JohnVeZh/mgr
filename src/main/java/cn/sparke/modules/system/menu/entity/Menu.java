@@ -1,0 +1,171 @@
+package cn.sparke.modules.system.menu.entity;
+
+
+import cn.sparke.core.common.entity.BaseEntity;
+import org.hibernate.validator.constraints.NotBlank;
+
+/**
+ * <p>
+ * 菜单表
+ * </p>
+ *
+ * @author sparke
+ * @since 2017-07-11
+ */
+public class Menu extends BaseEntity {
+
+    /**
+     * 菜单编号
+     */
+    @NotBlank
+    private String code;
+    private String pcodeName;
+    /**
+     * 菜单父编号
+     */
+    private String pcode = "0";
+    /**
+     * 当前菜单的所有父菜单编号
+     */
+    private String pcodes = "0";
+    /**
+     * 菜单名称
+     */
+    @NotBlank
+    private String name;
+    private String pId = "0";
+    /**
+     * 菜单图标
+     */
+    private String icon;
+    /**
+     * url地址
+     */
+    private String url;
+    /**
+     * 菜单层级
+     */
+    private Integer level;
+    /**
+     * 是否是菜单（1：是  0：不是）
+     */
+    private Integer ismenu;
+    /**
+     * 备注
+     */
+    private String tips;
+    /**
+     * 菜单状态 :  1:启用   0:不启用
+     */
+    private Integer status;
+    /**
+     * 是否打开:    1:打开   0:不打开
+     */
+    private Integer isopen;
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+    }
+
+    public String getPcodeName() {
+        return pcodeName;
+    }
+
+    public void setPcodeName(String pcodeName) {
+        this.pcodeName = pcodeName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPcode() {
+        return pcode;
+    }
+
+    public void setPcode(String pcode) {
+        this.pcode = pcode;
+    }
+
+    public String getPcodes() {
+        return pcodes;
+    }
+
+    public void setPcodes(String pcodes) {
+        this.pcodes = pcodes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getIsmenu() {
+        return ismenu;
+    }
+
+    public void setIsmenu(Integer ismenu) {
+        this.ismenu = ismenu;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getIsopen() {
+        return isopen;
+    }
+
+    public void setIsopen(Integer isopen) {
+        this.isopen = isopen;
+    }
+
+}

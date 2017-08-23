@@ -1,0 +1,144 @@
+##########################################################
+##################  所有profile共有的配置  #################
+##########################################################
+
+###################  project配置  ###################
+server:
+  port: 8888
+
+project:
+  kaptcha-open: false #是否开启登录时验证码 (true/false)
+  session-open: false #是否开启session验证 (true/false)
+  session-invalidate-time: 1800 #session失效时间 单位：秒
+  session-validation-interval: 900 #多久检测一次失效的session 单位：秒
+
+###################  beetl配置  ###################
+beetl:
+  delimiter-statement-start: \@   #开始结束标签(yaml不允许@开头)
+  delimiter-statement-end: null
+  resource-tagroot: common/tags   #自定义标签文件Root目录和后缀
+  resource-tagsuffix: tag
+  resource-auto-check: true #是否检测文件变化,开发用true合适，但线上要改为false
+
+###################  spring配置  ###################
+spring:
+  profiles:
+    active: dev
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /WEB-INF/view
+  http:
+    converters:
+      preferred-json-mapper: fastjson
+    multipart:
+      max-request-size: 100MB #最大请求大小
+      max-file-size: 100MB #最大文件大小
+
+
+
+###################  mybatis-plus配置  ###################
+mybatis:
+  mapper-locations: classpath:mybatis/mapping/**/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+pagehelper:
+  supportMethodsArguments: true
+
+---
+
+##########################################################
+###################  开发环境的profile  ###################
+###########################################################
+spring:
+  profiles: dev
+  datasource:
+      url: jdbc:mysql://rm-bp12e6xa0a8hd5eja.mysql.rds.aliyuncs.com:3306/spark_english_dev?autoReconnect=true&zeroDateTimeBehavior=convertToNull
+      username: sparkdb
+      password: Spark2017!@#
+      filters: log4j,wall,mergeStat
+
+log:
+  level: info
+
+project:
+  cacheSuffix: sparke
+  cache:
+    level:  test
+    url: memcached.jszx.sparke.cn
+    port: 9999
+  qiniu:
+    access_key_id: NEg0gY6JM0N-UUeGrfEz3wvX6NJFRiAXwQ-SHdjS
+    access_key_secret: 00pJ0KbemdYzpfpETC-c8wSjYgWUPZbiOY6_Gzo8
+    bucket: spark
+    domain: http://res.xhiw.com.cn/
+
+  jiguang:
+    appKey: b9717d1a354bb698d2a08eaa
+    masterSecret: 5cb892abfacbc923abbce3a6
+
+---
+##########################################################
+###################  测试环境的profile  ###################
+##########################################################
+spring:
+  profiles: tests
+  datasource:
+    url: jdbc:mysql://mysql.jszx.sparke.cn:3306/spark_english_test?autoReconnect=true&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: spark2016
+    filters: log4j,wall,mergeStat
+
+log:
+  level: info
+
+project:
+  cacheSuffix: sparke
+  cache:
+    level:  test
+    url: memcached.jszx.sparke.cn
+    port: 9999
+  qiniu:
+    access_key_id: NEg0gY6JM0N-UUeGrfEz3wvX6NJFRiAXwQ-SHdjS
+    access_key_secret: 00pJ0KbemdYzpfpETC-c8wSjYgWUPZbiOY6_Gzo8
+    bucket: spark
+    domain: http://res.xhiw.com.cn/
+
+  jiguang:
+    appKey: b9717d1a354bb698d2a08eaa
+    masterSecret: 5cb892abfacbc923abbce3a6
+
+---
+
+##########################################################
+###################  正式环境的profile  ###################
+##########################################################
+spring:
+  profiles: produce
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/spark?autoReconnect=true&useUnicode=true&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      filters: log4j,wall,mergeStat
+project:
+  cacheSuffix: sparke
+  cache:
+    level:  ali
+  ali:
+    ocs:
+      uid: d6cde31883894d00
+      pwd: Rabbit123
+      url: d6cde31883894d00.m.cnqdalicm9pub001.ocs.aliyuncs.com:11211
+  qiniu:
+    access_key_id: NEg0gY6JM0N-UUeGrfEz3wvX6NJFRiAXwQ-SHdjS
+    access_key_secret: 00pJ0KbemdYzpfpETC-c8wSjYgWUPZbiOY6_Gzo8
+    bucket: spark
+    domain: http://res.xhiw.com.cn/
+
+  jiguang:
+      appKey: b9717d1a354bb698d2a08eaa
+      masterSecret: 5cb892abfacbc923abbce3a6
+log:
+   file_path: ./spark-english-mgr.log
+   level:  warn
+
+

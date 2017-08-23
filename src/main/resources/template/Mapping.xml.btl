@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${mapping.packageName}.${context.bizEnBigName}Mapper">
+    <insert id="insert">
+        INSERT INTO ${context.tableName}
+        (
+        <% for(property in context.tablePropertyList!){ %>
+            ${property.name}<% if(!propertyLP.last){%>,<%}%>
+        <% } %>
+        )
+        VALUES
+        (
+         <% for(property in context.tablePropertyList!){ %>
+               #{${property.javaName}}<% if(!propertyLP.last){%>,<%}%>
+          <% } %>
+        )
+    </insert>
+    <update id="update">
+        update ${context.tableName}
+        set
+         <% for(property in context.tablePropertyList!){ %>
+             <% if(property.javaName == "id"){ %>
+                ${property.name} = #{${property.javaName}}
+           <% }else{ %>
+                <if test="${property.javaName}!=null">
+                   ,${property.name} = #{${property.javaName}}
+                </if>
+            <% } %>
+          <% }%>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="${mapping.entityPackageName}.${context.bizEnBigName}Entity">
+        select
+          <% for(property in context.tablePropertyList!){ %>
+              ${context.tableName}.${property.name}<% if(!propertyLP.last){%>,<%}%>
+          <% } %>
+         from ${context.tableName}
+        where 1=1
+        <% for(property in context.tablePropertyList!){ %>
+            <% if(property.javaName == "delFlag"){ %>
+                and  ${context.tableName}.${property.name} = 0
+           <% }else{ %>
+            <if test="${property.javaName}!=null and ${property.javaName}!=''">
+              and  ${context.tableName}.${property.name} = #{${property.javaName}}
+            </if>
+            <% } %>
+           <% } %>
+    </select>
+
+
+    <select id="getById" resultType="${mapping.entityPackageName}.${context.bizEnBigName}Entity">
+        select
+          <% for(property in context.tablePropertyList!){ %>
+              ${context.tableName}.${property.name}<% if(!propertyLP.last){%>,<%}%>
+          <% } %>
+        from ${context.tableName}
+        where id = #{id}
+        <% for(property in context.tablePropertyList!){ %>
+            <% if(property.javaName == "delFlag"){ %>
+            and  ${context.tableName}.${property.name} = 0
+            <% } %>
+        <% } %>
+    </select>
+
+    <select id="get" resultType="${mapping.entityPackageName}.${context.bizEnBigName}Entity">
+        select
+         <% for(property in context.tablePropertyList!){ %>
+              ${context.tableName}.${property.name}<% if(!propertyLP.last){%>,<%}%>
+         <% } %>
+        from ${context.tableName}
+        where 1=1
+        <% for(property in context.tablePropertyList!){ %>
+            <% if(property.javaName == "delFlag"){ %>
+            and  ${context.tableName}.${property.name} = 0
+            <% }else{ %>
+            <if test="${property.javaName}!=null and ${property.javaName}!=''">
+                and  ${context.tableName}.${property.name} = #{${property.javaName}}
+            </if>
+             <% } %>
+           <% } %>
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update ${context.tableName}
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

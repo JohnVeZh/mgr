@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.simple.qrNetworkVideo.mapper.QrNetworkVideoMapper">
+    <insert id="insert">
+        INSERT INTO tb_qr_network_video
+        (
+            id,
+            section_code,
+            catalog_id,
+            name,
+            qr_code,
+            cc_id,
+            img,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{sectionCode},
+               #{catalogId},
+               #{name},
+               #{qrCode},
+               #{ccId},
+               #{img},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_qr_network_video
+        set
+                id = #{id}
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="catalogId!=null">
+                   ,catalog_id = #{catalogId}
+                </if>
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="ccId!=null">
+                   ,cc_id = #{ccId}
+                </if>
+                <if test="img!=null">
+                   ,img = #{img}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.simple.qrNetworkVideo.entity.QrNetworkVideoEntity">
+        select
+              tb_qr_network_video.id,
+              tb_qr_network_video.section_code,
+              tb_qr_network_video.catalog_id,
+              tb_qr_network_video.name,
+              tb_qr_network_video.qr_code,
+              tb_qr_network_video.cc_id,
+              tb_qr_network_video.img,
+              tb_qr_network_video.create_date,
+              tb_qr_network_video.create_by,
+              tb_qr_network_video.update_date,
+              tb_qr_network_video.update_by,
+              tb_qr_network_video.sort,
+              tb_qr_network_video.del_flag
+         from tb_qr_network_video
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_qr_network_video.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_qr_network_video.section_code = #{sectionCode}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+              and  tb_qr_network_video.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_qr_network_video.name LIKE concat('%',#{name} ,'%')
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  tb_qr_network_video.qr_code = #{qrCode}
+            </if>
+            <if test="ccId!=null and ccId!=''">
+              and  tb_qr_network_video.cc_id = #{ccId}
+            </if>
+            <if test="img!=null and img!=''">
+              and  tb_qr_network_video.img = #{img}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_qr_network_video.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_qr_network_video.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_qr_network_video.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_qr_network_video.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_qr_network_video.sort = #{sort}
+            </if>
+                and  tb_qr_network_video.del_flag = 0
+        order by sort ASC , create_date DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.simple.qrNetworkVideo.entity.QrNetworkVideoEntity">
+        select
+              tb_qr_network_video.id,
+              tb_qr_network_video.section_code,
+              tb_qr_network_video.catalog_id,
+              tb_qr_network_video.name,
+              tb_qr_network_video.qr_code,
+              tb_qr_network_video.cc_id,
+              tb_qr_network_video.img,
+              tb_qr_network_video.create_date,
+              tb_qr_network_video.create_by,
+              tb_qr_network_video.update_date,
+              tb_qr_network_video.update_by,
+              tb_qr_network_video.sort,
+              tb_qr_network_video.del_flag
+        from tb_qr_network_video
+        where id = #{id}
+            and  tb_qr_network_video.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.simple.qrNetworkVideo.entity.QrNetworkVideoEntity">
+        select
+              tb_qr_network_video.id,
+              tb_qr_network_video.section_code,
+              tb_qr_network_video.catalog_id,
+              tb_qr_network_video.name,
+              tb_qr_network_video.qr_code,
+              tb_qr_network_video.cc_id,
+              tb_qr_network_video.img,
+              tb_qr_network_video.create_date,
+              tb_qr_network_video.create_by,
+              tb_qr_network_video.update_date,
+              tb_qr_network_video.update_by,
+              tb_qr_network_video.sort,
+              tb_qr_network_video.del_flag
+        from tb_qr_network_video
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_qr_network_video.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_qr_network_video.section_code = #{sectionCode}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+                and  tb_qr_network_video.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_qr_network_video.name = #{name}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  tb_qr_network_video.qr_code = #{qrCode}
+            </if>
+            <if test="ccId!=null and ccId!=''">
+                and  tb_qr_network_video.cc_id = #{ccId}
+            </if>
+            <if test="img!=null and img!=''">
+                and  tb_qr_network_video.img = #{img}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_qr_network_video.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_qr_network_video.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_qr_network_video.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_qr_network_video.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_qr_network_video.sort = #{sort}
+            </if>
+            and  tb_qr_network_video.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_qr_network_video
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

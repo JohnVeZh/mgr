@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.coupon.couponGainScene.mapper.CouponGainSceneMapper">
+    <insert id="insert">
+        INSERT INTO tb_coupon_gain_scene
+        (
+            id,
+            rule_id,
+            type,
+            content_id,
+            product_id,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{ruleId},
+               #{type},
+               #{contentId},
+               #{productId},
+               #{createBy},
+               #{createDate},
+               #{updateBy},
+               #{updateDate},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="insertBatch">
+        INSERT INTO tb_coupon_gain_scene
+        (
+            id,
+            rule_id,
+            type,
+            content_id,
+            product_id,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES
+            <foreach collection="couponGainSceneEntityList" item="couponGainSceneEntity" open="" separator="," close=" ">
+                (
+                #{couponGainSceneEntity.id},
+                #{couponGainSceneEntity.ruleId},
+                #{couponGainSceneEntity.type},
+                #{couponGainSceneEntity.contentId},
+                #{couponGainSceneEntity.productId},
+                #{couponGainSceneEntity.createBy},
+                #{couponGainSceneEntity.createDate},
+                #{couponGainSceneEntity.updateBy},
+                #{couponGainSceneEntity.updateDate},
+                #{couponGainSceneEntity.remarks},
+                #{couponGainSceneEntity.delFlag}
+                )
+            </foreach>
+
+    </insert>
+    <update id="update">
+        update tb_coupon_gain_scene
+        set
+                id = #{id}
+                <if test="ruleId!=null">
+                   ,rule_id = #{ruleId}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="contentId!=null">
+                   ,content_id = #{contentId}
+                </if>
+                <if test="productId!=null">
+                   ,product_id = #{productId}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.coupon.couponGainScene.entity.CouponGainSceneEntity">
+        select
+        if(tb_coupon_gain_scene.type = 1,tb_product.name,if(tb_coupon_gain_scene.type = 2,tb_coupon_code.code,if(tb_coupon_gain_scene.type = 3,tb_community_activity.title,if(tb_coupon_gain_scene.type = 4,tb_banner.title,NULL )))) AS contentName,
+              tb_coupon_gain_scene.id,
+              tb_coupon_gain_scene.rule_id,
+        tb_coupon_rule.title AS ruleName,
+              tb_coupon_gain_scene.type,
+              tb_coupon_gain_scene.content_id,
+              tb_coupon_gain_scene.product_id,
+        tp2.name AS productName,
+              tb_coupon_gain_scene.create_by,
+              tb_coupon_gain_scene.create_date,
+              tb_coupon_gain_scene.update_by,
+              tb_coupon_gain_scene.update_date,
+              tb_coupon_gain_scene.remarks,
+              tb_coupon_gain_scene.del_flag
+         from tb_coupon_gain_scene
+        LEFT JOIN tb_coupon_rule ON tb_coupon_gain_scene.rule_id = tb_coupon_rule.id AND tb_coupon_rule.del_flag = 0
+        LEFT JOIN tb_product tp2 on tp2.id = tb_coupon_gain_scene.product_id  AND tp2.del_flag = 0
+        LEFT JOIN tb_product on tb_product.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 1 AND tb_product.del_flag = 0
+        LEFT JOIN tb_coupon_code ON tb_coupon_code.id = tb_coupon_gain_scene.content_id AND tb_coupon_code.del_flag = 0 AND tb_coupon_gain_scene.type = 2
+        LEFT JOIN tb_community_activity ON tb_community_activity.id =tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.del_flag = 0 AND tb_coupon_gain_scene.type = 3
+        LEFT JOIN tb_banner on tb_banner.del_flag = 0 and tb_banner.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 4
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_coupon_gain_scene.id = #{id}
+            </if>
+            <if test="ruleId!=null and ruleId!=''">
+              and  tb_coupon_gain_scene.rule_id = #{ruleId}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_coupon_gain_scene.type = #{type}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+              and  tb_coupon_gain_scene.content_id = #{contentId}
+            </if>
+            <if test="productId!=null and productId!=''">
+              and  tb_coupon_gain_scene.product_id = #{productId}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_coupon_gain_scene.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_coupon_gain_scene.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_coupon_gain_scene.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_coupon_gain_scene.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_coupon_gain_scene.remarks = #{remarks}
+            </if>
+                and  tb_coupon_gain_scene.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.coupon.couponGainScene.entity.CouponGainSceneEntity">
+        select
+            if(tb_coupon_gain_scene.type = 1,tb_product.name,if(tb_coupon_gain_scene.type = 2,tb_coupon_code.code,if(tb_coupon_gain_scene.type = 3,tb_community_activity.title,if(tb_coupon_gain_scene.type = 4,tb_banner.title,NULL )))) AS contentName,
+            tb_coupon_gain_scene.id,
+              tb_coupon_gain_scene.rule_id,
+            tb_coupon_rule.title AS ruleName,
+              tb_coupon_gain_scene.type,
+              tb_coupon_gain_scene.content_id,
+              tb_coupon_gain_scene.product_id,
+            tp2.name AS productName,
+              tb_coupon_gain_scene.create_by,
+              tb_coupon_gain_scene.create_date,
+              tb_coupon_gain_scene.update_by,
+              tb_coupon_gain_scene.update_date,
+              tb_coupon_gain_scene.remarks,
+              tb_coupon_gain_scene.del_flag
+        from tb_coupon_gain_scene
+            LEFT JOIN tb_coupon_rule ON tb_coupon_gain_scene.rule_id = tb_coupon_rule.id AND tb_coupon_rule.del_flag = 0
+            LEFT JOIN tb_product tp2 on tp2.id = tb_coupon_gain_scene.product_id  AND tp2.del_flag = 0
+            LEFT JOIN tb_product on tb_product.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 1 AND tb_product.del_flag = 0
+            LEFT JOIN tb_coupon_code ON tb_coupon_code.id = tb_coupon_gain_scene.content_id AND tb_coupon_code.del_flag = 0 AND tb_coupon_gain_scene.type = 2
+            LEFT JOIN tb_community_activity ON tb_community_activity.id =tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.del_flag = 0 AND tb_coupon_gain_scene.type = 3
+            LEFT JOIN tb_banner on tb_banner.del_flag = 0 and tb_banner.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 4
+
+        where tb_coupon_gain_scene.id = #{id}
+            and  tb_coupon_gain_scene.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.coupon.couponGainScene.entity.CouponGainSceneEntity">
+        select
+              tb_coupon_gain_scene.id,
+              tb_coupon_gain_scene.rule_id,
+              tb_coupon_gain_scene.type,
+              tb_coupon_gain_scene.content_id,
+              tb_coupon_gain_scene.product_id,
+              tb_coupon_gain_scene.create_by,
+              tb_coupon_gain_scene.create_date,
+              tb_coupon_gain_scene.update_by,
+              tb_coupon_gain_scene.update_date,
+              tb_coupon_gain_scene.remarks,
+              tb_coupon_gain_scene.del_flag
+        from tb_coupon_gain_scene
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_coupon_gain_scene.id = #{id}
+            </if>
+            <if test="ruleId!=null and ruleId!=''">
+                and  tb_coupon_gain_scene.rule_id = #{ruleId}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_coupon_gain_scene.type = #{type}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+                and  tb_coupon_gain_scene.content_id = #{contentId}
+            </if>
+            <if test="productId!=null and productId!=''">
+                and  tb_coupon_gain_scene.product_id = #{productId}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_coupon_gain_scene.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_coupon_gain_scene.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_coupon_gain_scene.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_coupon_gain_scene.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_coupon_gain_scene.remarks = #{remarks}
+            </if>
+            and  tb_coupon_gain_scene.del_flag = 0
+         limit 1
+     </select>
+    <select id="findVoList" resultType="cn.sparke.modules.coupon.couponGainScene.entity.vo.CouponGainSceneVo">
+        select
+        if(tb_coupon_gain_scene.type = 1,tb_product.name,if(tb_coupon_gain_scene.type = 2,tb_coupon_code.code,if(tb_coupon_gain_scene.type = 3,tb_community_activity.title,if(tb_coupon_gain_scene.type = 4,tb_banner.title,NULL )))) AS contentName,
+        tb_coupon_gain_scene.id,
+        tb_coupon_gain_scene.rule_id,
+        tb_coupon_rule.title AS ruleName,
+        tb_coupon_gain_scene.type,
+        tb_coupon_gain_scene.content_id,
+        tb_coupon_gain_scene.product_id,
+        tp2.name AS productName,
+        tb_coupon_gain_scene.create_by,
+        tb_coupon_gain_scene.create_date,
+        tb_coupon_gain_scene.update_by,
+        tb_coupon_gain_scene.update_date,
+        tb_coupon_gain_scene.remarks,
+        tb_coupon_gain_scene.del_flag
+        from tb_coupon_gain_scene
+        LEFT JOIN tb_coupon_rule ON tb_coupon_gain_scene.rule_id = tb_coupon_rule.id AND tb_coupon_rule.del_flag = 0
+        LEFT JOIN tb_product tp2 on tp2.id = tb_coupon_gain_scene.product_id  AND tp2.del_flag = 0
+        LEFT JOIN tb_product on tb_product.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 1 AND tb_product.del_flag = 0
+        LEFT JOIN tb_coupon_code ON tb_coupon_code.id = tb_coupon_gain_scene.content_id AND tb_coupon_code.del_flag = 0 AND tb_coupon_gain_scene.type = 2
+        LEFT JOIN tb_community_activity ON tb_community_activity.id =tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.del_flag = 0 AND tb_coupon_gain_scene.type = 3
+        LEFT JOIN tb_banner on tb_banner.del_flag = 0 and tb_banner.id = tb_coupon_gain_scene.content_id AND tb_coupon_gain_scene.type = 4
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  tb_coupon_gain_scene.id = #{id}
+        </if>
+        <if test="ruleId!=null and ruleId!=''">
+            and  tb_coupon_gain_scene.rule_id = #{ruleId}
+        </if>
+        <if test="type!=null and type!=''">
+            and  tb_coupon_gain_scene.type = #{type}
+        </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_coupon_gain_scene.content_id = #{contentId}
+        </if>
+        <if test="productIdList!=null">
+            <foreach collection="productIdList" item="productIdItem" open=" and  tb_coupon_gain_scene.product_id in ( " separator=" , " close=" )" >
+               #{productIdItem}
+            </foreach>
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_coupon_gain_scene.create_by = #{createBy}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  tb_coupon_gain_scene.create_date = #{createDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_coupon_gain_scene.update_by = #{updateBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  tb_coupon_gain_scene.update_date = #{updateDate}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_coupon_gain_scene.remarks = #{remarks}
+        </if>
+        and  tb_coupon_gain_scene.del_flag = 0
+    </select>
+
+    <update id="deleteById">
+            update tb_coupon_gain_scene
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

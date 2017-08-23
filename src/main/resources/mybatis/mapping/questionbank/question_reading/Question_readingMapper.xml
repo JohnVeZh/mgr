@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.questionbank.question_reading.mapper.Question_readingMapper">
+    <resultMap id="ReadingMap" type="cn.sparke.modules.questionbank.question_reading.entity.QuestionReadingEntity" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+        <result column="translation" property="translation" jdbcType="VARCHAR" />
+        <association property="questionEntity" resultMap="cn.sparke.modules.questionbank.question.mapper.QuestionMapper.QuestionMap"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO tb_question_reading
+        (
+            id,
+            question_id,
+            translation
+        )
+        VALUES
+        (
+               #{id},
+               #{questionId},
+               #{translation}
+        )
+    </insert>
+
+
+    <insert id="insertList" parameterType="java.util.List">
+
+        INSERT INTO tb_question_reading
+        (
+        id,
+        question_id,
+        translation
+        )
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.questionId},
+            #{item.translation}
+            )
+
+        </foreach>
+
+    </insert>
+
+
+    <update id="update">
+        update tb_question_reading
+        set
+                id = #{id}
+                <if test="questionId!=null">
+                   ,question_id = #{questionId}
+                </if>
+                <if test="translation!=null">
+                   ,translation = #{translation}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="queryList" resultMap="ReadingMap">
+        SELECT
+        q.id q_id,
+        q.name,
+        q.content,
+        q.type,
+        q.has_item,
+        q.question_num,
+        q.section_code,
+        q.analysis,
+        q.create_date,
+        q.create_by,
+        q.update_date,
+        q.update_by,
+        q.remarks,
+        q.del_flag,
+        qr.id,
+        qr.question_id,
+        qr.translation
+        from tb_question q,tb_question_reading qr,tb_paper_question pq
+        where q.id = qr.question_id and pq.question_id = q.id and q.del_flag = 0
+        <if test="structureId!=null and structureId!=''">
+            and  pq.structure_id = #{structureId}
+        </if>
+        <if test="condition!=null and condition!=''">
+            and  q.name like CONCAT('%',#{condition},'%')
+        </if>
+    </select>
+
+    <select id="findList" resultType="cn.sparke.modules.questionbank.question_reading.entity.Question_readingEntity">
+        SELECT * from (
+        select
+        tb_question_reading.id,
+        tb_question_reading.question_id,
+        tb_question_reading.translation,
+        d.name,
+        d.type,
+        d.has_item as hasItem
+        from tb_question_reading,tb_paper_structure a,tb_paper_question b,tb_question d
+        where 1=1
+        and tb_question_reading.question_id=b.question_id
+        and b.question_id = d.id
+        and b.structure_id= a.id
+        and a.parent_ids like CONCAT(CONCAT('%', #{id}), '%')
+        and d.del_flag=0
+        UNION
+        select
+        tb_question_reading.id,
+        tb_question_reading.question_id,
+        tb_question_reading.translation,
+        d.name,
+        d.type,
+        d.has_item as hasItem
+        from tb_question_reading,tb_paper_question b,tb_question d
+        where 1=1
+        and tb_question_reading.question_id=b.question_id
+        and b.question_id = d.id
+        AND b.structure_id=#{id}
+        <if test="questionId!=null and questionId!=''">
+            and tb_question_reading.question_id = #{questionId}
+        </if>
+        <if test="translation!=null and translation!=''">
+                and tb_question_reading.translation = #{translation}
+        </if>
+        and d.del_flag=0
+        ) m1
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.questionbank.question_reading.entity.Question_readingEntity">
+        select
+              a.id,
+              a.question_id,
+              a.translation,
+              b.name,
+              b.content,
+              b.type,
+              b.has_item,
+              b.question_num,
+              b.section_code,
+              b.analysis,
+              b.remarks
+        from tb_question_reading a ,tb_question b
+        where a.question_id=b.id
+        and a.id = #{id}
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.questionbank.question_reading.entity.Question_readingEntity">
+        select
+              tb_question_reading.id,
+              tb_question_reading.question_id,
+              tb_question_reading.translation
+        from tb_question_reading
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_question_reading.id = #{id}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+                and  tb_question_reading.question_id = #{questionId}
+            </if>
+            <if test="translation!=null and translation!=''">
+                and  tb_question_reading.translation = #{translation}
+            </if>
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_question_reading
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

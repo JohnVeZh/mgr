@@ -1,0 +1,58 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="activityInfoForm">
+
+            <input type="hidden" id="id" value="">
+
+            <#input id="title" name="标题" underline="true" />
+
+            <#input id="brief" name="简介" underline="true" />
+
+            <#uploadMultipleImg id="imgList" width="200" height="200" type="file" name="多张图片" underline="true"  />
+
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+               <!--
+               <div class="col-sm-2">
+                    <label>是否置顶&nbsp;</label><input name="isTop" type="checkbox" value="1"/>
+                </div>
+                <div class="col-sm-2">
+                    <label>是否推荐&nbsp;</label><input name="isRecommend" type="checkbox" value="1"/>
+                </div>
+                -->
+                <div class="col-sm-2">
+                    <label>是否显示客服&nbsp;</label><input name="serviceStatus" type="checkbox" value="1"/>
+                </div>
+                <div class="col-sm-3">
+                    <label>是否存为草稿&nbsp;</label><input name="isShow" type="checkbox" value="1"/>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            <#wangEditor id="content" name="内容" underline="true" height="500px" content="" />
+
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ActivityInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ActivityInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/activity/activity_info.js"></script>
+<script type="application/javascript">
+    $(function (e) {
+        var config = {
+            $inputFile: $("#imgListUploader"),
+            uploadImgContainer: "uploadImgContainer",
+            $resUrl: $("#imgList")
+        };
+        ActivityInfoDlg.uploadMultipleImg = new FileInputCustom(config, {
+            dataUrls: ''
+        });
+    })
+</script>
+@}

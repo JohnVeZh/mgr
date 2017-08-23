@@ -1,0 +1,17 @@
+@layout("/common/_container.html"){
+<div>
+    <input type="hidden" id="type" value="${type}">
+    <input type="hidden" id="paperId" value="${paperId}">
+    <input type="hidden" id="contentType" value="${contentType}">
+<div class="row">
+    上传文件<input type="file" id="UploadFile" name="myfile" onchange=""/>
+    <span id="progressInfo" style="display:none;">
+<progress id="progressBar" value="0" max="100"></progress>
+<span id="percentage"></span>
+</span><br/>
+    <input type="button" onclick="FileUpload.Upload()" value="上传" />
+</div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/FileUpload/FileUpload.js"></script>
+@}
+

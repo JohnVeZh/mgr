@@ -1,0 +1,40 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>题目管理</h5>
+            </div>
+            <input type="hidden" id="type" value="${type}">
+            <input type="hidden" id="paperId" value="${paperId}">
+            <input type="hidden" id="contentType" value="${contentType}">
+            <input type="hidden" id="sectionCode" value="${sectionCode}">
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Question.search()"/>
+                            </div>
+                        </div>
+                        <div  id="QuestionTableToolbar" role="group">
+
+                            <#button name="添加" icon="fa-plus" clickFun="Questionmanage.openAddQuestion()"/>
+
+                            <#button name="修改" icon="fa-pencil" clickFun="Questionmanage.openQuestionDetail()" space="true"/>
+
+                            <#button name="删除" icon="fa-trash" clickFun="Questionmanage.delete()" space="true"/>
+
+                        </div>
+                        <#table id="QuestionTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question/questionManage.js"></script>
+@}

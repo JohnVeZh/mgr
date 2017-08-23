@@ -1,0 +1,92 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="bookInfoForm">
+        <div class="form-horizontal" id="bookInfoForm">
+
+            <input type="hidden" id="id" value="${book.id}">
+            <input type="hidden" id="sectionCodeValue" value="${book.sectionCode}">
+            <input type="hidden" id="isShowValue" value="${book.isShow}">
+            <input type="hidden" id="isPostageValue" value="${book.isPostage}">
+            <input type="hidden" id="isPromotionValue" value="${book.isPromotion}">
+            <input type="hidden" id="isSendValue" value="${book.isSend}">
+            <input type="hidden" id="bookId" value="${book.bookId}">
+            <input type="hidden" id="contentImgsValue" value="${book.contentImgs}">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <#uploadImg id="listImg" name="列表图片"  width="200" height="100" url="${book.listImg}" />
+                    <#uploadImg id="coverImg" name="封面图片"  width="200" height="100" url="${book.coverImg}" />
+                    <#MuploadImg id="contentImgs" name="详情多图"  width="200" height="100"  />
+                    <#input id="typeName" name="图书类型" readonly="readonly" hidden="typeId"
+                            value="${book.bookTypeName}" hiddenValue="${book.typeId}"
+                            clickFun="BookInfoDlg.showBookSelectTree(); return false;"
+                            style="background-color: #ffffff !important;"/>
+                    <#input id="presss" name="出版社" value="${book.presss}" />
+                    <#input id="remarks" name="备注" value="${book.remarks}" />
+
+                </div>
+                <div class="col-sm-6">
+                    <#input id="name" name="图书名称" value="${book.name}" />
+                    <#input id="brief" name="图书简介" value="${book.brief}" />
+                    <#input id="originalPrice" name="图书原价" value="${book.originalPrice}" />
+                    <#input id="presentPrice" name="图书现价" value="${book.presentPrice}" />
+                    <#input id="postage" name="图书运费" value="${book.postage}" />
+                    <#input id="sort" name="图书排序" value="${book.sort}" placeholder="请输入正整数" />
+                    <#select id="sectionCode" name="图书级别"  >
+                        <option value="1">4级</option>
+                        <option value="2">6级</option>
+                        <option value="3">考研</option>
+                        <option value="4">英专</option>
+                        <option value="5">高中英语</option>
+                        <option value="6">初中英语</option>
+                        <option value="7">小学英语</option>
+                    </#select>
+                    <#select id="isShow" name="是否展示"  >
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </#select>
+                    <#select id="isPostage" name="是否包邮" leftWidth="4" >
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </#select>
+                    <#select id="isPromotion" name="是否促销"  >
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </#select>
+                    <#select id="isSend" name="是否邮寄" changeFun="BookInfoDlg.changeIsSend(this.value)" underline="true">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </#select>
+
+                </div>
+
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="content" name="详细介绍" underline="true" content="${book.content}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+
+
+            <!-- 父级类型的选择框 -->
+            <div id="parentBookMenu" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="parentBookMenuTree" class="ztree tree-box" style="width: 245px !important;"></ul>
+            </div>
+
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                        <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="BookInfoDlg.editSubmit()"/>
+                        <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="BookInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/book/book_info.js"></script>
+@}

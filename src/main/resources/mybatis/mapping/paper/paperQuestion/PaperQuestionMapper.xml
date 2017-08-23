@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperQuestion.mapper.PaperQuestionMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_question
+        (
+            id,
+            paper_id,
+            structure_id,
+            question_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{paperId},
+               #{structureId},
+               #{questionId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO tb_paper_question
+        (
+        id,
+        paper_id,
+        structure_id,
+        question_id,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        sort,
+        del_flag
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.paperId},
+            #{item.structureId},
+            #{item.questionId},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.remarks},
+            #{item.sort},
+            #{item.delFlag}
+            )
+        </foreach>
+    </insert>
+    <update id="update">
+        update tb_paper_question
+        set
+                id = #{id}
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="structureId!=null">
+                   ,structure_id = #{structureId}
+                </if>
+                <if test="questionId!=null">
+                   ,question_id = #{questionId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperQuestion.entity.PaperQuestionEntity">
+        select
+              tb_paper_question.id,
+              tb_paper_question.paper_id,
+              tb_paper_question.structure_id,
+              tb_paper_question.question_id,
+              tb_paper_question.create_date,
+              tb_paper_question.create_by,
+              tb_paper_question.update_date,
+              tb_paper_question.update_by,
+              tb_paper_question.remarks,
+              tb_paper_question.sort,
+              tb_paper_question.del_flag
+         from tb_paper_question
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_paper_question.id = #{id}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+              and  tb_paper_question.paper_id = #{paperId}
+            </if>
+            <if test="structureId!=null and structureId!=''">
+              and  tb_paper_question.structure_id = #{structureId}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+              and  tb_paper_question.question_id = #{questionId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_paper_question.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_paper_question.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_paper_question.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_paper_question.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_paper_question.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_paper_question.sort = #{sort}
+            </if>
+            <if test="paperIdList!=null">
+                and  tb_paper_question.paper_id  in (
+                <foreach collection="paperIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+                and  tb_paper_question.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paperQuestion.entity.PaperQuestionEntity">
+        select
+              tb_paper_question.id,
+              tb_paper_question.paper_id,
+              tb_paper_question.structure_id,
+              tb_paper_question.question_id,
+              tb_paper_question.create_date,
+              tb_paper_question.create_by,
+              tb_paper_question.update_date,
+              tb_paper_question.update_by,
+              tb_paper_question.remarks,
+              tb_paper_question.sort,
+              tb_paper_question.del_flag
+        from tb_paper_question
+        where id = #{id}
+            and  tb_paper_question.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperQuestion.entity.PaperQuestionEntity">
+        select
+              tb_paper_question.id,
+              tb_paper_question.paper_id,
+              tb_paper_question.structure_id,
+              tb_paper_question.question_id,
+              tb_paper_question.create_date,
+              tb_paper_question.create_by,
+              tb_paper_question.update_date,
+              tb_paper_question.update_by,
+              tb_paper_question.remarks,
+              tb_paper_question.sort,
+              tb_paper_question.del_flag
+        from tb_paper_question
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper_question.id = #{id}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_paper_question.paper_id = #{paperId}
+            </if>
+            <if test="structureId!=null and structureId!=''">
+                and  tb_paper_question.structure_id = #{structureId}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+                and  tb_paper_question.question_id = #{questionId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_paper_question.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_paper_question.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_paper_question.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_paper_question.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_paper_question.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_paper_question.sort = #{sort}
+            </if>
+            and  tb_paper_question.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_paper_question
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

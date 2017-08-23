@@ -1,0 +1,73 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+            <input type="hidden" id="isInit" value="1">
+            <input type="hidden" id="id" value="${banner.id}">
+            <input type="hidden" id="jumpTypeInit" value="${banner.jumpType}">
+            <input type="hidden" id="moduleTypeInit" value="${banner.moduleType}">
+            <input type="hidden" id="terminalTypeInit" value="${banner.terminalType}">
+            <input type="hidden" id="sectionCodeInit" value="${banner.sectionCode}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="jumpType" name="跳转类型" leftWidth="4" rightWidth="8">
+                        <option value="0">无跳转</option>
+                        <option value="1">自有富文本</option>
+                        <option value="2">外部链接</option>
+                        <option value="3">活动</option>
+                        <option value="4">资讯</option>
+                        <option value="5">图书</option>
+                        <option value="6">网课</option>
+                    </#select>
+                    <#select id="moduleType" name="模块类型" leftWidth="4" rightWidth="8">
+                        <option value="1">首页</option>
+                        <option value="2">资讯</option>
+                        <option value="3">网课</option>
+                        <option value="4">大礼包</option>
+                    </#select>
+                    <#input id="title" name="标题" leftWidth="4" rightWidth="8" value="${banner.title}" />
+                </div>
+                <div class="col-sm-6">
+                    <#select id="terminalType" name="终端类型" leftWidth="4" rightWidth="8">
+                        <option value="1">APP</option>
+                        <option value="2">PC</option>
+                    </#select>
+                    <#select id="sectionCode" name="学段" leftWidth="4" rightWidth="8">
+                        <option value="1">CET4</option>
+                        <option value="2">CET6</option>
+                        <option value="3">考研英语</option>
+                        <option value="4">英语专业</option>
+                        <option value="5">高中英语</option>
+                        <option value="6">初中英语</option>
+                        <option value="7">小学英语</option>
+                    </#select>
+                    <#input id="sort" name="排序" type="number" value="${banner.sort}" leftWidth="4" rightWidth="8" />
+                </div>
+                <div class="col-sm-12">
+                    <#uploadImg id="img" name="图片" underline="true" width="100px" height="50px"  url="${banner.img}"/>
+                </div>
+                <div class="col-sm-12">
+                    <#input id="url" name="跳转地址" leftWidth="2" rightWidth="10"  value="${banner.url}" />
+                </div>
+                <div class="col-sm-12">
+                    <#input id="contentTitle" name="跳转内容" value="${banner.contentTitle}" leftWidth="2" rightWidth="10" />
+                    <input id="contentId" type="hidden" value="${banner.contentId}">
+                </div>
+                <div class="col-sm-12">
+                    <#wangEditor id="content" name="内容" content="${banner.content}" leftWidth="2" rightWidth="10" height="300px" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="BannerInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="BannerInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/banner/banner_info.js"></script>
+@}

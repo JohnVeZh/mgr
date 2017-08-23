@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.words.mapper.WordsMapper">
+    <insert id="insert">
+        INSERT INTO tb_word
+        (
+            id,
+            catalog_id,
+            name,
+            phonetic,
+            pronunciation_url,
+            paraphrase,
+            sentence,
+            reference,
+            reference_audio_url,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{catalogId},
+               #{name},
+               #{phonetic},
+               #{pronunciationUrl},
+               #{paraphrase},
+               #{sentence},
+               #{reference},
+               #{referenceAudioUrl},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.sparke.modules.words.entity.WordsEntity">
+        insert into tb_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="catalogId != null">
+                catalog_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phonetic != null">
+                phonetic,
+            </if>
+            <if test="pronunciationUrl != null">
+                pronunciation_url,
+            </if>
+            <if test="referenceAudioUrl != null">
+                reference_audio_url,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="paraphrase != null">
+                paraphrase,
+            </if>
+            <if test="sentence != null">
+                sentence,
+            </if>
+            <if test="reference != null">
+                reference,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="catalogId != null">
+                #{catalogId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phonetic != null">
+                #{phonetic,jdbcType=VARCHAR},
+            </if>
+            <if test="pronunciationUrl != null">
+                #{pronunciationUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="referenceAudioUrl != null">
+                #{referenceAudioUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="paraphrase != null">
+                #{paraphrase,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="sentence != null">
+                #{sentence,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reference != null">
+                #{reference,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update tb_word
+        set
+                id = #{id}
+                <if test="catalogId!=null">
+                   ,catalog_id = #{catalogId}
+                </if>
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="phonetic!=null">
+                   ,phonetic = #{phonetic}
+                </if>
+                <if test="pronunciationUrl!=null">
+                   ,pronunciation_url = #{pronunciationUrl}
+                </if>
+                <if test="paraphrase!=null">
+                   ,paraphrase = #{paraphrase}
+                </if>
+                <if test="sentence!=null">
+                   ,sentence = #{sentence}
+                </if>
+                <if test="reference!=null">
+                   ,reference = #{reference}
+                </if>
+                <if test="referenceAudioUrl!=null">
+                   ,reference_audio_url = #{referenceAudioUrl}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+    <update id="deleteCatalogByCatalog">
+        update tb_word
+        set catalog_id = NULL
+        WHERE id = #{catalogId}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.words.entity.WordsEntity">
+        select
+              tb_word.id,
+        tb_word_catalog.id AS catalogId,
+        tb_word_catalog.name AS catalogName,
+              tb_word.name,
+              tb_word.phonetic,
+              tb_word.pronunciation_url,
+              tb_word.paraphrase,
+              tb_word.sentence,
+              tb_word.reference,
+              tb_word.reference_audio_url,
+              tb_word.create_date,
+              tb_word.create_by,
+              tb_word.update_date,
+              tb_word.update_by,
+              tb_word.remarks,
+              tb_word.sort,
+              tb_word.del_flag
+         from tb_word
+        LEFT JOIN tb_word_catalog  ON tb_word.catalog_id = tb_word_catalog.id AND tb_word_catalog.del_flag = 0
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_word.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+              and  tb_word.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_word.name like concat('%',#{name},'%')
+            </if>
+            <if test="phonetic!=null and phonetic!=''">
+              and  tb_word.phonetic = #{phonetic}
+            </if>
+            <if test="pronunciationUrl!=null and pronunciationUrl!=''">
+              and  tb_word.pronunciation_url = #{pronunciationUrl}
+            </if>
+            <if test="paraphrase!=null and paraphrase!=''">
+              and  tb_word.paraphrase = #{paraphrase}
+            </if>
+            <if test="sentence!=null and sentence!=''">
+              and  tb_word.sentence = #{sentence}
+            </if>
+            <if test="reference!=null and reference!=''">
+              and  tb_word.reference = #{reference}
+            </if>
+            <if test="referenceAudioUrl!=null and referenceAudioUrl!=''">
+              and  tb_word.reference_audio_url = #{referenceAudioUrl}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_word.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_word.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_word.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_word.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_word.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_word.sort = #{sort}
+            </if>
+                and  tb_word.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.words.entity.WordsEntity">
+        select
+              tb_word.id,
+            tb_word_catalog.id AS catalogId,
+            tb_word_catalog.name AS catalogName,
+              tb_word.name,
+              tb_word.phonetic,
+              tb_word.pronunciation_url,
+              tb_word.paraphrase,
+              tb_word.sentence,
+              tb_word.reference,
+              tb_word.reference_audio_url,
+              tb_word.create_date,
+              tb_word.create_by,
+              tb_word.update_date,
+              tb_word.update_by,
+              tb_word.remarks,
+              tb_word.sort,
+              tb_word.del_flag
+        from tb_word
+            LEFT JOIN tb_word_catalog  ON tb_word.catalog_id = tb_word_catalog.id AND tb_word_catalog.del_flag = 0
+        where tb_word.id = #{id}
+            and  tb_word.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.words.entity.WordsEntity">
+        select
+              tb_word.id,
+              tb_word.catalog_id,
+              tb_word.name,
+              tb_word.phonetic,
+              tb_word.pronunciation_url,
+              tb_word.paraphrase,
+              tb_word.sentence,
+              tb_word.reference,
+              tb_word.reference_audio_url,
+              tb_word.create_date,
+              tb_word.create_by,
+              tb_word.update_date,
+              tb_word.update_by,
+              tb_word.remarks,
+              tb_word.sort,
+              tb_word.del_flag
+        from tb_word
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_word.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+                and  tb_word.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_word.name = #{name}
+            </if>
+            <if test="phonetic!=null and phonetic!=''">
+                and  tb_word.phonetic = #{phonetic}
+            </if>
+            <if test="pronunciationUrl!=null and pronunciationUrl!=''">
+                and  tb_word.pronunciation_url = #{pronunciationUrl}
+            </if>
+            <if test="paraphrase!=null and paraphrase!=''">
+                and  tb_word.paraphrase = #{paraphrase}
+            </if>
+            <if test="sentence!=null and sentence!=''">
+                and  tb_word.sentence = #{sentence}
+            </if>
+            <if test="reference!=null and reference!=''">
+                and  tb_word.reference = #{reference}
+            </if>
+            <if test="referenceAudioUrl!=null and referenceAudioUrl!=''">
+                and  tb_word.reference_audio_url = #{referenceAudioUrl}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_word.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_word.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_word.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_word.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_word.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_word.sort = #{sort}
+            </if>
+            and  tb_word.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_word
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

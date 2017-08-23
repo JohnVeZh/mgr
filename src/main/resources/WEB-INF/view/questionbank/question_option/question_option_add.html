@@ -1,0 +1,37 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+            <input type="hidden" id="itemId" value="${itemId}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="name" name="选项名称"  value="" underline="true" />
+                    <#input id="content" name="选项内容"  value="" underline="true" />
+                    <#select id="isAnswer" name="是否为正确答案" value="">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="remarks" name="备注"  value="" underline="true" />
+                    <#input id="sort" name="排序"  value="" underline="true" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="Question_optionInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="Question_optionInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question_option/question_option_info.js"></script>
+@}

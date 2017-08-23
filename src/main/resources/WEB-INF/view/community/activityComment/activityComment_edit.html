@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="activityCommentForm">
+
+            <input type="hidden" id="id" value="${activityComment.id}">
+
+            <input type="hidden" id="activityCommentuserId" value="${activityComment.userId}">
+
+            <#input id="userName" name="用户名" underline="true"  readonly="true" value="${activityComment.userName}"/>
+
+            <#input id="praiseNum" name="点赞数量" underline="true"  readonly="true" value="${activityComment.praiseNum}"/>
+
+            <#input id="createDate" name="评论时间" underline="true"  readonly="true" value="${activityComment.createDate}"/>
+
+            <#uploadMultipleImg id="imgs" type="file" name="图片" underline="true"  value="${activityComment.imgs}"/>
+
+            <#textarea id="content" name="内容" underline="true" style="height:100px"  readonly="true" content="${activityComment.content}"/>
+
+            <#textarea id="replyContent" name="回复内容" style="height:100px" underline="true"   />
+
+            <#select id="userId" name="回复账号名称" underline="true" >
+                <option value="8a99720d58ca4e3e0158cd044f032de8">18253157918:星火君的小跟班</option>
+            </#select>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ActivityCommentInfoDlg.replyContent()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ActivityCommentInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/activityComment/activityComment_info.js"></script>
+<script type="application/javascript">
+    $(function (e) {
+        var config = {
+            $inputFile: $("#imgsUploader"),
+            uploadImgContainer: "uploadImgContainer",
+            $resUrl: $("#imgs")
+        };
+        ActivityCommentInfoDlg.uploadMultipleImg = new FileInputCustom(config, {
+            dataUrls: '${activityComment.imgs}'
+        });
+    })
+</script>
+@}

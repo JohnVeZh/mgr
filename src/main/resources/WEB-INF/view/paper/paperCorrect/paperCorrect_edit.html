@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="answerId" value="${answerId}">
+            
+            <center><strong style="font-size: large;" id="title">学生作答:</strong></center>
+            <div class="row">
+
+                <div class="col-sm-12 b-r">
+                    <center>
+                        <img id="userAnswer" src="" height="500" width="1000">
+                    </center>
+                </div>
+            </div>
+            <br><br>
+            <strong style="font-size: large;" >老师批改</strong>
+
+            <div class="row">
+                <br>
+                <div class="col-sm-12 b-r" id="rules">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#BookwangEditor id="content" name="" underline="true" content="" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paperCorrect/paperCorrect_info.js"></script>
+@}

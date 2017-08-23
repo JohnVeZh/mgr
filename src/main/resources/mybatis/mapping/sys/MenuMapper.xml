@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.system.menu.mapper.MenuMapper">
+
+    <select id="findList" resultType="cn.sparke.modules.system.menu.entity.Menu">
+        select
+        *
+        from sys_menu sys_menu
+        where del_flag = 0
+        <if test="name != null">
+            and (sys_menu.name like CONCAT('%',#{name},'%') or sys_menu.code like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="level != null">
+            and sys_menu.level = #{level}
+        </if>
+        <if test="pcodes!=null">
+            AND sys_menu.pcodes LIKE CONCAT('%[', #{pcodes}, ']%')
+        </if>
+    </select>
+
+    <select id="getMenuIdsByRoleId" resultType="string">
+        SELECT menuid
+        FROM
+            sys_role_menu
+        WHERE roleid = #{roleId}
+    </select>
+
+    <select id="menuTreeList" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+            m1.id AS id,
+            (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                    THEN
+                        '0'
+                ELSE
+                    m2.id
+                END
+            )     AS pId,
+            m1.NAME
+                  AS NAME,
+            (
+                CASE
+                WHEN (m2.id = '0' OR m2.id IS NULL)
+                    THEN
+                        'true'
+                ELSE
+                    'false'
+                END
+            )     AS isOpen
+        FROM
+            sys_menu m1
+            LEFT JOIN sys_menu m2 ON (m2.del_flag IS NULL OR (m1.pcode = m2.CODE AND m2.del_flag = 0))
+        WHERE m1.del_flag = 0
+        ORDER BY
+            m1.sort ASC
+    </select>
+
+    <select id="menuTreeListByMenuIds" resultType="cn.sparke.core.common.entity.ZTreeNode">
+        SELECT
+        m1.id AS id,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS NULL) THEN
+        '0'
+        ELSE
+        m2.id
+        END
+        ) AS pId,
+        m1. NAME AS NAME,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS
+        NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) as isOpen,
+        (
+        CASE
+        WHEN (m3.ID = '0' OR m3.ID
+        IS NULL) THEN
+        'false'
+        ELSE
+        'true'
+        END
+        ) "checked"
+        FROM
+        sys_menu m1
+        LEFT JOIN
+        sys_menu m2
+        ON m1.pcode = m2. CODE
+        left join (
+        SELECT
+        ID
+        FROM
+        sys_menu
+        WHERE
+        del_flag = 0
+        AND ID IN
+        <foreach collection="list" index="index" item="i" open="("
+                 separator="," close=")">
+            #{i}
+        </foreach>
+        ) m3 on m1.id = m3.id
+        ORDER BY
+        m1.sort ASC
+    </select>
+
+    <delete id="deleteRelationByMenu">
+        DELETE FROM sys_role_menu
+        WHERE menuid = #{menuId}
+    </delete>
+
+    <select id="getResUrlsByRoleId" resultType="string">
+        SELECT url
+        FROM
+            sys_role_menu rel
+            INNER JOIN sys_menu m ON rel.menuid = m.id
+        WHERE rel.roleid = #{roleId}
+    </select>
+
+    <select id="getMenusByRoleIds" resultType="cn.sparke.modules.system.menu.entity.MenuNode">
+        SELECT
+        m1.id AS id,
+        m1.icon AS icon,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS NULL) THEN
+        '0'
+        ELSE
+        m2.id
+        END
+        ) AS parentId,
+        m1.NAME as name,
+        m1.url as url,
+        m1.level,
+        m1.ismenu as ismenu,
+        m1.sort
+        FROM sys_menu m1
+        LEFT JOIN sys_menu m2 ON m1.pcode = m2. CODE
+        INNER JOIN (
+        SELECT
+        ID
+        FROM
+        sys_menu
+        WHERE
+        del_flag = 0
+        and ID IN (
+        SELECT
+        menuid
+        FROM
+        sys_role_menu rela
+        WHERE
+        rela.roleid IN
+        <foreach collection="list" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+        )
+        ) m3 ON m1.id = m3.id
+        where m1.ismenu = 1 AND m1.del_flag = 0
+        order by level,sort asc
+    </select>
+    <select id="getById" resultType="cn.sparke.modules.system.menu.entity.Menu">
+        SELECT
+            menu.*,
+            p_menu.id   AS pId,
+            p_menu.name AS pcodeName
+        FROM sys_menu menu
+            LEFT JOIN sys_menu p_menu
+                ON menu.pcode = p_menu.code
+        WHERE menu.id = #{id} AND menu.del_flag = 0
+    </select>
+    <update id="update">
+        UPDATE sys_menu
+        SET
+        <if test="code!=null">
+            code = #{code},
+        </if>
+        <if test="pcode!=null">
+            pcode = #{pcode},
+        </if>
+        <if test="pcodes!=null">
+            pcodes = #{pcodes},
+        </if>
+        <if test="name!=null">
+            name = #{name},
+        </if>
+        <if test="icon!=null">
+            icon = #{icon},
+        </if>
+        <if test="url!=null">
+            url = #{url},
+        </if>
+        <if test="sort!=null">
+            sort = #{sort},
+        </if>
+        <if test="level!=null">
+            level = #{level},
+        </if>
+        <if test="ismenu!=null">
+            ismenu = #{ismenu},
+        </if>
+        <if test="tips!=null">
+            tips = #{tips},
+        </if>
+        <if test="status!=null">
+            status = #{status},
+        </if>
+        <if test="isopen!=null">
+            isopen = #{isopen},
+        </if>
+        <if test="updateBy!=null">
+            update_by = #{updateBy},
+        </if>
+        update_date = #{updateDate}
+        WHERE id = #{id}
+    </update>
+    <select id="getByCode" resultType="cn.sparke.modules.system.menu.entity.Menu">
+        SELECT *
+        FROM sys_menu
+        WHERE code = #{code}
+              AND del_flag = 0
+    </select>
+    <update id="deleteById">
+        UPDATE sys_menu
+        SET del_flag = 1
+        WHERE id = #{id}
+    </update>
+    <insert id="insert">
+        INSERT INTO sys_menu (id, code, pcode, pcodes, name, icon, url, level, ismenu, tips, status, isopen, create_date, update_date, sort)
+        VALUES
+            (
+                #{id},
+                #{code},
+                #{pcode},
+                #{pcodes},
+                #{name},
+                #{icon},
+                #{url},
+                #{level},
+                #{ismenu},
+                #{tips},
+                #{status},
+                #{isopen},
+                #{createDate},
+                #{updateDate},
+                #{sort}
+            )
+    </insert>
+</mapper>

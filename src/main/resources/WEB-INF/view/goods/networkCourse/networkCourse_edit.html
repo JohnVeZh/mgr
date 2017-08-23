@@ -1,0 +1,144 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="networkCourseInfoForm">
+
+            <input type="hidden" id="id" value="${networkCourse.id}">
+            <input type="hidden" id="productId" value="${networkCourse.productId}">
+            <input type="hidden" id="sectionCodeValue" value="${networkCourse.sectionCode}">
+            <input type="hidden" id="courseTypeValue" value="${networkCourse.courseType}">
+            <input type="hidden" id="isLiveValue" value="${networkCourse.isLive}">
+            <input type="hidden" id="isFreeValue" value="${networkCourse.isFree}">
+            <input type="hidden" id="isLimitFreeValue" value="${networkCourse.isLimitFree}">
+            <input type="hidden" id="isFamousTeacherValue" value="${networkCourse.isFamousTeacher}">
+            <input type="hidden" id="isShowValue" value="${networkCourse.isShow}">
+            <input type="hidden" id="isPromotionValue" value="${networkCourse.isPromotion}">
+            <input type="hidden" id="isSendValue" value="${networkCourse.isSend}">
+            <input type="hidden" id="isPostageValue" value="${networkCourse.isPostage}">
+            <input type="hidden" id="hasCatalogValue" value="${networkCourse.hasCatalog}">
+            <input type="hidden" id="teachersValue" value="${networkCourse.teacherNames}">
+            <input type="hidden" id="contentImgsValue" value="${networkCourse.contentImgs}">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <#uploadImg id="listImg" name="列表图片"   width="200" height="100" url="${networkCourse.listImg}" />
+                    <#uploadImg id="coverImg" name="封面图片"  width="200" height="100" url="${networkCourse.coverImg}" />
+                    <#MuploadImg id="contentImgs" name="详情多图"  width="200" height="100"  />
+                    <#select id="sectionCode" name="课程级别"  >
+                        <option value="1">4级</option>
+                        <option value="2">6级</option>
+                        <option value="3">考研</option>
+                        <option value="4">英专</option>
+                        <option value="5">高中英语</option>
+                        <option value="6">初中英语</option>
+                        <option value="7">小学英语</option>
+                    </#select>
+                    <#select id="courseType" name="课程大类"  >
+                        <option value="1">系统课</option>
+                        <option value="2">公开课</option>
+                        <option value="3">微课</option>
+                    </#select>
+
+                    <#select id="isLive" name="课程形式" changeFun="NetworkCourseInfoDlg.changeIsLive(this.value)" >
+                        <option value="1">直播</option>
+                        <option value="0">录播</option>
+                    </#select>
+
+                    <#select id="isFree" name="是否免费"  >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+
+                    <#select id="isLimitFree" name="限时免费" changeFun="NetworkCourseInfoDlg.changeIsLimitFree(this.value)" >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+
+                    <#select id="isFamousTeacher" name="名师视频"  >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <#select id="isShow" name="是否展示"  >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+
+                    <#select id="isPromotion" name="是否促销"  >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <#select id="isSend" name="是否邮寄" changeFun="NetworkCourseInfoDlg.changeIsSend(this.value)" >
+                        <option value="0" selected = "selected">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <#select id="isPostage" name="是否包邮"  >
+                        <option value="0" selected = "selected">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <#select id="hasCatalog" name="存在目录"  >
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>
+                    <#input id="sort" name="课程排序" placeholder="请输入正整数" value="${networkCourse.sort}" />
+
+
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="name" name="课程名称" value="${networkCourse.name}" />
+                    <#input id="brief" name="课程简介" value="${networkCourse.brief}"  />
+                    <#input id="previewCcId" name="预告视频" placeholder="视频CCID" value="${networkCourse.previewCcId}"/>
+                    <#input id="liveRoomId" name="直播间ID" value="${networkCourse.liveRoomId}" />
+                    <#input id="originalPrice" name="课程原价" value="${networkCourse.originalPrice}"/>
+                    <#input id="presentPrice" name="课程现价" value="${networkCourse.presentPrice}" />
+                    <#input id="limitNumber" name="限购人数" value="${networkCourse.limitNumber}" />
+                    <#input id="catalogNumber" name="课程时数" placeholder="请输入正整数" value="${networkCourse.catalogNumber}" />
+                    <#input id="qqGroupNo" name="Q Q群聊" value="${networkCourse.qqGroupNo}" />
+                    <#input id="remarks" name="课程备注" value="${networkCourse.remarks}" />
+
+                    <#input id="reserveStartTime" name="预约时间" value="${networkCourse.reserveStartTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="shelfOnTime" name="上架时间" value="${networkCourse.shelfOnTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="shelfOffTime" name="下架时间" value="${networkCourse.shelfOffTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="startTime" name="开课时间" value="${networkCourse.startTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="endTime" name="停课时间" value="${networkCourse.endTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="saleStartTime" name="开售时间" value="${networkCourse.saleStartTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="saleEndTime" name="停售时间" value="${networkCourse.saleEndTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="limitStartTime" name="免费开始时间" value="${networkCourse.limitStartTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                    <#input id="limitEndTime" name="免费结束时间" value="${networkCourse.limitEndTime}" clickFun="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+
+
+                </div>
+
+            </div>
+
+            <div class="form-group" style="height: auto;">
+                <div class="col-sm-12" style="height: auto;">
+                    <strong class="control-label">选取老师</strong>
+                    &nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-chevron-down" onclick="NetworkCourseInfoDlg.showTeachers()" style="cursor:pointer" aria-hidden="true"></span>
+                    <br><br>
+                    <div id="teachers" class="form-control table-responsive" style="height: auto;border: hidden;display:none;">
+
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="content" name="详细介绍" underline="true" content="${networkCourse.content}" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NetworkCourseInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NetworkCourseInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/networkCourse/networkCourse_info.js"></script>
+@}

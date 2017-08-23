@@ -1,0 +1,68 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="type" name="类型" underline="true">
+                        <option value="1">全真考场</option>
+                        <option value="2">字幕听力</option>
+                        <option value="3">简系列</option>
+                        <option value="4">专项练习</option>
+                        <option value="5">扫码字幕听力</option>
+                    </#select>
+                    <#input id="name" name="名称" underline="true" />
+                    <#input id="code" name="code" underline="true"></#input>
+                    <#uploadImg id="img" name="图片" underline="true" width="100px" height="100px"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="catalogName" name="目录" underline="true"
+                            hidden="catalogId" readonly="readonly"
+                            clickFun="PaperInfoDlg.showMenuSelectTree(); return false;"
+                            style="background-color: #ffffff !important;"
+                            selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+                    <#input id="qrCode" name="二维码" underline="true" />
+                    <#select id="contentType" name="内容类型" underline="true">
+                        <option value="0">不区分</option>
+                        <option value="1">听力</option>
+                        <option value="2">阅读</option>
+                        <option value="3">翻译</option>
+                        <option value="4">写作</option>
+                    </#select>
+                    <#input id="sort" name="排序" underline="true" />
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" id="groupDiv">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <#NameCon id="groupName" name="试卷组名称" />
+                        </div>
+                        <div class="col-sm-3">
+                            <#button name="搜索" icon="fa-search" clickFun="PaperInfoDlg.searchGroup()"/>
+                            <#button name="重置" icon="fa-trash" clickFun="PaperInfoDlg.resetGroupSearch()" space="true"/>
+                        </div>
+                        <#table id="GroupTable"/>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PaperInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PaperInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paper/paper_info.js"></script>
+@}

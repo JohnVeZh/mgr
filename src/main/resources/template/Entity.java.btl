@@ -1,0 +1,28 @@
+package ${entity.packageName};
+
+<% for(import in entity.imports!){ %>
+import ${import};
+<% } %>
+
+/**
+ * ${context.bizChName}Entity
+ *
+ * @author spark
+ * @Date ${tool.currentTime()}
+ */
+public class ${context.bizEnBigName}Entity extends BaseEntity{
+<% for(property in context.entityPropertyList!){ %>
+    //${property.comments}
+    private ${property.javaType} ${property.javaName};
+<% } %>
+
+<% for(property in context.entityPropertyList!){ %>
+    public void set${tool.firstLetterToUpper(property.javaName)}(${property.javaType} ${property.javaName}){
+        this.${property.javaName} = ${property.javaName};
+    }
+    public ${property.javaType} get${tool.firstLetterToUpper(property.javaName)}(){
+        return this.${property.javaName};
+    }
+<% } %>
+
+}

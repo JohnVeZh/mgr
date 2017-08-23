@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.system.log.mapper.OperationLogMapper">
+
+    <select id="getById" resultType="cn.sparke.modules.system.log.entity.OperationLog">
+        SELECT
+            log.*,
+            u.name as userName
+        FROM sys_operation_log log
+            INNER JOIN sys_user u
+                ON log.userid = u.id
+        WHERE log.id = #{id}
+    </select>
+    <select id="findList" resultType="cn.sparke.modules.system.log.entity.OperationLog">
+        select * from sys_operation_log log
+        INNER JOIN sys_user u
+        ON log.userid = u.id
+        where 1 = 1
+        <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+            and (createTime between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+        <if test="logname != null and logname !=''">
+            and logname like CONCAT('%',#{logname},'%')
+        </if>
+        <if test="logtype != null and logtype !=''">
+            and logtype like CONCAT('%',#{logtype},'%')
+        </if>
+        order by createtime DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_operation_log (id, logtype, logname, userid, classname, method, createtime, succeed, message)
+        VALUES
+        (
+        #{id},
+        #{logtype},
+        #{logname},
+        #{userid},
+        #{classname},
+        #{method},
+        #{createtime},
+        #{succeed},
+        #{message}
+        )
+    </insert>
+
+</mapper>

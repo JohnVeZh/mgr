@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.questionbank.CaptionListening.mapper.CaptionListeningMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_caption_listening
+        (
+            id,
+            paper_id,
+            audio_url,
+            subtitle_url,
+            audio_size,
+            subtitle_size
+        )
+        VALUES
+        (
+               #{id},
+               #{paperId},
+               #{audioUrl},
+               #{subtitleUrl},
+               #{audioSize},
+               #{subtitleSize}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+
+        INSERT INTO tb_paper_caption_listening
+        (
+            id,
+            paper_id,
+            audio_url,
+            subtitle_url,
+            audio_size,
+            subtitle_size
+        )
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.paperId},
+            #{item.audioUrl},
+            #{item.subtitleUrl},
+            #{item.audioSize},
+            #{item.subtitleSize}
+            )
+
+        </foreach>
+
+
+    </insert>
+    <update id="update">
+        update tb_paper_caption_listening
+        set
+                id = #{id}
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="audioUrl!=null">
+                   ,audio_url = #{audioUrl}
+                </if>
+                <if test="subtitleUrl!=null">
+                   ,subtitle_url = #{subtitleUrl}
+                </if>
+                <if test="audioSize!=null">
+                    ,audio_size = #{audioSize}
+                </if>
+                <if test="subtitleSize!=null">
+                    ,subtitle_size = #{subtitleSize}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.questionbank.CaptionListening.entity.CaptionListeningEntity">
+        select
+              a.id,
+              a.paper_id,
+              a.audio_url,
+              a.subtitle_url,
+              b.content_type
+
+         from tb_paper_caption_listening a ,tb_paper b
+        where  a.paper_id = b.id
+        and  b.del_flag=0
+            <if test="id!=null and id!=''">
+              and  a.id = #{id}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+              and  a.paper_id = #{paperId}
+            </if>
+            <if test="audioUrl!=null and audioUrl!=''">
+              and  a.audio_url = #{audioUrl}
+            </if>
+            <if test="subtitleUrl!=null and subtitleUrl!=''">
+              and  a.subtitle_url = #{subtitleUrl}
+            </if>
+
+
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.questionbank.CaptionListening.entity.CaptionListeningEntity">
+        select
+              a.id,
+              a.paper_id,
+              a.audio_url,
+              a.subtitle_url,
+              b.content_type
+         from tb_paper_caption_listening a,tb_paper b
+        where  a.paper_id = b.id
+        and  b.del_flag=0
+        and  a.id=#{id}
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.questionbank.CaptionListening.entity.CaptionListeningEntity">
+        select
+              tb_paper_caption_listening.id,
+              tb_paper_caption_listening.paper_id,
+              tb_paper_caption_listening.audio_url,
+              tb_paper_caption_listening.subtitle_url
+        from tb_paper_caption_listening
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper_caption_listening.id = #{id}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_paper_caption_listening.paper_id = #{paperId}
+            </if>
+            <if test="audioUrl!=null and audioUrl!=''">
+                and  tb_paper_caption_listening.audio_url = #{audioUrl}
+            </if>
+            <if test="subtitleUrl!=null and subtitleUrl!=''">
+                and  tb_paper_caption_listening.subtitle_url = #{subtitleUrl}
+            </if>
+         limit 1
+     </select>
+
+    <delete id="deleteById">
+        DELETE  from tb_paper_caption_listening
+        where id = #{id}
+    </delete>
+</mapper>

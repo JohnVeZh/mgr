@@ -1,0 +1,52 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="planConfigForm">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="sectionCode" name="学段" leftWidth="4" rightWidth="8">
+                        <option value="1">4级</option>
+                        <option value="2">6级</option>
+                    </#select>
+                    <#input id="title" name="展示名称" leftWidth="4" rightWidth="8" />
+                    <#input id="scoreStart" name="起始分数" placeholder="请输入正整数" leftWidth="4" rightWidth="8"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="period" name="阶段" leftWidth="4" rightWidth="8">
+                        <option value="1">学前</option>
+                        <option value="2">学中</option>
+                        <option value="3">学末</option>
+                    </#select>
+                    <#input id="sort" name="排序" placeholder="请输入正整数" leftWidth="4" rightWidth="8"/>
+                    <#input id="scoreEnd" name="结束分数" placeholder="请输入正整数" leftWidth="4" rightWidth="8"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#textarea id="comment" style="height:80px" name="评语" leftWidth="2" rightWidth="10" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 " >
+                    <#BookwangEditor id="content" name="内容" underline="true" content="" height="500px" leftWidth="2" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PlanConfigInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PlanConfigInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/gift/planConfig/planConfig_info.js"></script>
+@}

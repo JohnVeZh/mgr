@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.sparke.modules.system.code.mapper.TableColumnMapper">
+    <select id="findList" resultType="cn.sparke.modules.system.code.bean.TableColumnBean">
+        SELECT
+            t.COLUMN_NAME             AS name,
+            (CASE WHEN t.IS_NULLABLE = 'YES'
+                THEN '1'
+             ELSE '0' END)            AS isNull,
+            t.COLUMN_COMMENT          AS comments,
+            t.COLUMN_TYPE             AS jdbcType
+        FROM information_schema.`COLUMNS` t
+        WHERE t.TABLE_SCHEMA = (SELECT database())
+              AND t.TABLE_NAME = #{name}
+        ORDER BY t.ORDINAL_POSITION
+    </select>
+</mapper>

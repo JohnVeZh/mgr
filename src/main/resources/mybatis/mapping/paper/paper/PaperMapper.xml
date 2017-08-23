@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paper.mapper.PaperMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper
+        (
+            id,
+            catalog_id,
+            qr_code,
+            name,
+            content_type,
+            code,
+            img,
+            question_num,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{catalogId},
+               #{qrCode},
+               #{name},
+               #{contentType},
+               #{code},
+               #{img},
+               #{questionNum},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_paper
+        set
+                id = #{id}
+                <if test="catalogId!=null">
+                   ,catalog_id = #{catalogId}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="contentType!=null">
+                   ,content_type = #{contentType}
+                </if>
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="img!=null and img!=''">
+                   ,img = #{img}
+                </if>
+                <if test="questionNum!=null">
+                   ,question_num = #{questionNum}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+              tb_paper.id,
+              tb_paper.catalog_id,
+              tb_paper.qr_code,
+              tb_paper.name,
+              tb_paper.content_type,
+              tb_paper.code,
+              tb_paper.img,
+              tb_paper.question_num,
+              tb_paper.create_date,
+              tb_paper.create_by,
+              tb_paper.update_date,
+              tb_paper.update_by,
+              tb_paper.remarks,
+              tb_paper.sort,
+              tb_paper.del_flag
+         from tb_paper
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_paper.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+              and  tb_paper.catalog_id = #{catalogId}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  tb_paper.qr_code = #{qrCode}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_paper.name = #{name}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+              and  tb_paper.content_type = #{contentType}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_paper.code = #{code}
+            </if>
+            <if test="img!=null and img!=''">
+              and  tb_paper.img = #{img}
+            </if>
+            <if test="questionNum!=null and questionNum!=''">
+              and  tb_paper.question_num = #{questionNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_paper.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_paper.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_paper.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_paper.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_paper.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_paper.sort = #{sort}
+            </if>
+            <if test="queryName!=null and queryName!=''">
+              and  tb_paper.name like CONCAT('%',#{queryName},'%')
+            </if>
+            <if test="paperIds!=null and paperIds!=''">
+                and  tb_paper.id in (
+                <foreach collection="paperIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+            <if test="catalogIdList!=null">
+                and  tb_paper.catalog_id  in (
+                <foreach collection="catalogIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+                and  tb_paper.del_flag = 0
+        ORDER BY tb_paper.sort ASC
+    </select>
+
+    <select id="list" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+        tb_paper.id,
+        tb_paper.catalog_id,
+        tb_paper.qr_code,
+        tb_paper.name,
+        tb_paper.content_type,
+        tb_paper.code,
+        tb_paper.img,
+        tb_paper.question_num,
+        tb_paper.create_date,
+        tb_paper.create_by,
+        tb_paper.update_date,
+        tb_paper.update_by,
+        tb_paper.remarks,
+        tb_paper.sort,
+        tb_paper.del_flag
+        from tb_paper
+        where tb_paper.del_flag = 0
+        and tb_paper.id in (
+          select pgr.paper_id from tb_paper_group pg,tb_paper_group_relation pgr
+          where pg.id=pgr.group_id and pg.catalog_id = #{catalogId} GROUP BY pgr.paper_id
+        )
+        ORDER BY tb_paper.sort ASC
+    </select>
+
+    <select id="queryList" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+        tb.id,
+        tb.catalog_id,
+        tb.qr_code,
+        tb.name,
+        tb.content_type,
+        tb.code,
+        tb.img,
+        tb.question_num,
+        tb.create_date,
+        tb.create_by,
+        tb.update_date,
+        tb.update_by,
+        tb.remarks,
+        tb.sort,
+        tb.del_flag
+        from tb_paper tb,tb_paper_catalog tbc
+        where tb.catalog_id=tbc.id and tb.del_flag = 0
+        <if test="catalogId!=null and catalogId!=''">
+            and  tb.catalog_id = #{catalogId}
+        </if>
+        <if test="catalogType!=null and catalogType!=''">
+            and  tbc.type = #{catalogType}
+        </if>
+        ORDER BY tb.sort ASC
+    </select>
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+              tb_paper.id,
+              tb_paper.catalog_id,
+              tb_paper.qr_code,
+              tb_paper.name,
+              tb_paper.content_type,
+              tb_paper.code,
+              tb_paper.img,
+              tb_paper.question_num,
+              tb_paper.create_date,
+              tb_paper.create_by,
+              tb_paper.update_date,
+              tb_paper.update_by,
+              tb_paper.remarks,
+              tb_paper.sort,
+              tb_paper.del_flag
+        from tb_paper
+        where id = #{id}
+            and  tb_paper.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paper.entity.PaperEntity">
+        select
+              tb_paper.id,
+              tb_paper.catalog_id,
+              tb_paper.qr_code,
+              tb_paper.name,
+              tb_paper.content_type,
+              tb_paper.code,
+              tb_paper.img,
+              tb_paper.question_num,
+              tb_paper.create_date,
+              tb_paper.create_by,
+              tb_paper.update_date,
+              tb_paper.update_by,
+              tb_paper.remarks,
+              tb_paper.sort,
+              tb_paper.del_flag
+        from tb_paper
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+                and  tb_paper.catalog_id = #{catalogId}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  tb_paper.qr_code = #{qrCode}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_paper.name = #{name}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+                and  tb_paper.content_type = #{contentType}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_paper.code = #{code}
+            </if>
+            <if test="img!=null and img!=''">
+                and  tb_paper.img = #{img}
+            </if>
+            <if test="questionNum!=null and questionNum!=''">
+                and  tb_paper.question_num = #{questionNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_paper.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_paper.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_paper.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_paper.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_paper.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_paper.sort = #{sort}
+            </if>
+            and  tb_paper.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_paper
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

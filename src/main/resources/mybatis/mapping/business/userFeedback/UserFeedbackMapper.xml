@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.business.userFeedback.mapper.UserFeedbackMapper">
+    <insert id="insert">
+        INSERT INTO tb_user_feedback
+        (
+        id,
+        user_id,
+        email,
+        content,
+        create_date,
+        update_date,
+        update_by,
+        del_flag
+        )
+        VALUES
+        (
+        #{id},
+        #{userId},
+        #{email},
+        #{content},
+        #{createDate},
+        #{updateDate},
+        #{updateBy},
+        #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user_feedback
+        set
+        id = #{id}
+        <if test="userId!=null">
+            ,user_id = #{userId}
+        </if>
+        <if test="email!=null">
+            ,email = #{email}
+        </if>
+        <if test="content!=null">
+            ,content = #{content}
+        </if>
+        <if test="isHandle!=null">
+            ,is_handle = #{isHandle}
+        </if>
+        <if test="handleResults!=null">
+            ,handle_results = #{handleResults}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.business.userFeedback.entity.UserFeedbackEntity">
+        select
+        feedback.id,
+        feedback.user_id,
+        user.nickname,
+        user.real_name,
+        user.phone,
+        feedback.email,
+        feedback.content,
+        feedback.is_handle,
+        feedback.handle_results,
+        feedback.create_date,
+        feedback.update_date,
+        feedback.update_by,
+        feedback.del_flag
+        from tb_user_feedback feedback LEFT JOIN  tb_user user
+        ON feedback.user_id = user.id
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  feedback.id = #{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and  feedback.user_id = #{userId}
+        </if>
+        <if test="email!=null and email!=''">
+            and  feedback.email = #{email}
+        </if>
+        <if test="content!=null and content!=''">
+            and  feedback.content = #{content}
+        </if>
+        <if test="btTime!=null and btTime!=''">
+            and  feedback.create_date &gt;= #{btTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and  feedback.create_date &lt;= #{endTime}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  feedback.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  feedback.update_by = #{updateBy}
+        </if>
+        <if test="isHandle!=null and isHandle!=''">
+            and  feedback.is_handle = #{isHandle}
+        </if>
+        <if test="handleResults!=null and handleResults!=''">
+            and  feedback.handle_results = #{handleResults}
+        </if>
+        and  feedback.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.business.userFeedback.entity.UserFeedbackEntity">
+        select
+        feedback.id,
+        feedback.user_id,
+        user.nickname,
+        user.real_name,
+        user.phone,
+        feedback.email,
+        feedback.content,
+        feedback.is_handle,
+        feedback.handle_results,
+        feedback.create_date,
+        feedback.update_date,
+        feedback.update_by,
+        feedback.del_flag
+        from tb_user_feedback feedback LEFT JOIN  tb_user user
+        ON feedback.user_id = user.id
+        where feedback.id = #{id}
+        and  feedback.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.business.userFeedback.entity.UserFeedbackEntity">
+        select
+        feedback.id,
+        feedback.user_id,
+        user.nickname,
+        user.real_name,
+        user.phone,
+        feedback.email,
+        feedback.content,
+        feedback.is_handle,
+        feedback.handle_results,
+        feedback.create_date,
+        feedback.update_date,
+        feedback.update_by,
+        feedback.del_flag
+        from tb_user_feedback feedback LEFT JOIN  tb_user user
+        ON feedback.user_id = user.id
+        where 1=1
+        <if test="id!=null and id!=''">
+            and  feedback.id = #{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and  feedback.user_id = #{userId}
+        </if>
+        <if test="email!=null and email!=''">
+            and  feedback.email = #{email}
+        </if>
+        <if test="content!=null and content!=''">
+            and  feedback.content = #{content}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and  feedback.create_date = #{createDate}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and  feedback.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  feedback.update_by = #{updateBy}
+        </if>
+        and  feedback.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_user_feedback
+        set del_flag = 1
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.redeemCode.mapper.RedeemCodeMapper">
+    <insert id="insert">
+        INSERT INTO tb_product_network_course_redeem_code
+        (
+            id,
+            user_id,
+            network_course_id,
+            code,
+            start_time,
+            end_time,
+            is_export,
+            is_enable,
+            status,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{networkCourseId},
+               #{code},
+               #{startTime},
+               #{endTime},
+               #{isExport},
+               #{isEnable},
+               #{status},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        update tb_product_network_course_redeem_code
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="networkCourseId!=null">
+                   ,network_course_id = #{networkCourseId}
+                </if>
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="startTime!=null">
+                   ,start_time = #{startTime}
+                </if>
+                <if test="endTime!=null">
+                   ,end_time = #{endTime}
+                </if>
+                <if test="isExport!=null">
+                   ,is_export = #{isExport}
+                </if>
+                <if test="isEnable!=null">
+                   ,is_enable = #{isEnable}
+                </if>
+                <if test="status!=null">
+                   ,status = #{status}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.redeemCode.entity.RedeemCodeEntity">
+        select
+              tb_product_network_course_redeem_code.id,
+              tb_product_network_course_redeem_code.user_id,
+              tb_product_network_course_redeem_code.network_course_id,
+              tb_product_network_course_redeem_code.code,
+              tb_product_network_course_redeem_code.start_time,
+              tb_product_network_course_redeem_code.end_time,
+              tb_product_network_course_redeem_code.is_export,
+              tb_product_network_course_redeem_code.is_enable,
+              tb_product_network_course_redeem_code.status,
+              tb_product_network_course_redeem_code.create_date,
+              tb_product_network_course_redeem_code.create_by,
+              tb_product_network_course_redeem_code.update_date,
+              tb_product_network_course_redeem_code.update_by,
+              tb_product_network_course_redeem_code.remarks,
+              tb_product_network_course_redeem_code.sort,
+              tb_product_network_course_redeem_code.del_flag
+         from tb_product_network_course_redeem_code
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_product_network_course_redeem_code.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tb_product_network_course_redeem_code.user_id = #{userId}
+            </if>
+            <if test="networkCourseId!=null and networkCourseId!=''">
+              and  tb_product_network_course_redeem_code.network_course_id = #{networkCourseId}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_product_network_course_redeem_code.code = #{code}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+              and  tb_product_network_course_redeem_code.start_time = #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+              and  tb_product_network_course_redeem_code.end_time = #{endTime}
+            </if>
+            <if test="isExport!=null and isExport!=''">
+              and  tb_product_network_course_redeem_code.is_export = #{isExport}
+            </if>
+            <if test="isEnable!=null and isEnable!=''">
+              and  tb_product_network_course_redeem_code.is_enable = #{isEnable}
+            </if>
+            <if test="status!=null">
+              and  tb_product_network_course_redeem_code.status = #{status}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_product_network_course_redeem_code.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_product_network_course_redeem_code.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_product_network_course_redeem_code.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_product_network_course_redeem_code.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_product_network_course_redeem_code.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_product_network_course_redeem_code.sort = #{sort}
+            </if>
+                and  tb_product_network_course_redeem_code.del_flag = 0
+    </select>
+
+    <select id="getById" resultType="cn.sparke.modules.goods.redeemCode.entity.RedeemCodeEntity">
+        select
+              tb_product_network_course_redeem_code.id,
+              tb_product_network_course_redeem_code.user_id,
+              tb_product_network_course_redeem_code.network_course_id,
+              tb_product_network_course_redeem_code.code,
+              tb_product_network_course_redeem_code.start_time,
+              tb_product_network_course_redeem_code.end_time,
+              tb_product_network_course_redeem_code.is_export,
+              tb_product_network_course_redeem_code.is_enable,
+              tb_product_network_course_redeem_code.status,
+              tb_product_network_course_redeem_code.create_date,
+              tb_product_network_course_redeem_code.create_by,
+              tb_product_network_course_redeem_code.update_date,
+              tb_product_network_course_redeem_code.update_by,
+              tb_product_network_course_redeem_code.remarks,
+              tb_product_network_course_redeem_code.sort,
+              tb_product_network_course_redeem_code.del_flag
+        from tb_product_network_course_redeem_code
+        where id = #{id}
+            and  tb_product_network_course_redeem_code.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.redeemCode.entity.RedeemCodeEntity">
+        select
+              tb_product_network_course_redeem_code.id,
+              tb_product_network_course_redeem_code.user_id,
+              tb_product_network_course_redeem_code.network_course_id,
+              tb_product_network_course_redeem_code.code,
+              tb_product_network_course_redeem_code.start_time,
+              tb_product_network_course_redeem_code.end_time,
+              tb_product_network_course_redeem_code.is_export,
+              tb_product_network_course_redeem_code.is_enable,
+              tb_product_network_course_redeem_code.status,
+              tb_product_network_course_redeem_code.create_date,
+              tb_product_network_course_redeem_code.create_by,
+              tb_product_network_course_redeem_code.update_date,
+              tb_product_network_course_redeem_code.update_by,
+              tb_product_network_course_redeem_code.remarks,
+              tb_product_network_course_redeem_code.sort,
+              tb_product_network_course_redeem_code.del_flag
+        from tb_product_network_course_redeem_code
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_product_network_course_redeem_code.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_product_network_course_redeem_code.user_id = #{userId}
+            </if>
+            <if test="networkCourseId!=null and networkCourseId!=''">
+                and  tb_product_network_course_redeem_code.network_course_id = #{networkCourseId}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_product_network_course_redeem_code.code = #{code}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and  tb_product_network_course_redeem_code.start_time = #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and  tb_product_network_course_redeem_code.end_time = #{endTime}
+            </if>
+            <if test="isExport!=null and isExport!=''">
+                and  tb_product_network_course_redeem_code.is_export = #{isExport}
+            </if>
+            <if test="isEnable!=null and isEnable!=''">
+                and  tb_product_network_course_redeem_code.is_enable = #{isEnable}
+            </if>
+            <if test="status!=null and status!=''">
+                and  tb_product_network_course_redeem_code.status = #{status}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_product_network_course_redeem_code.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_product_network_course_redeem_code.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_product_network_course_redeem_code.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_product_network_course_redeem_code.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_product_network_course_redeem_code.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_product_network_course_redeem_code.sort = #{sort}
+            </if>
+            and  tb_product_network_course_redeem_code.del_flag = 0
+         limit 1
+     </select>
+
+    <update id="deleteById">
+            update tb_product_network_course_redeem_code
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+    <!--兑换码列表查询-->
+    <select id="queryCodeList" resultType="cn.sparke.modules.goods.redeemCode.entity.QueryVo">
+        SELECT
+                rc.*,
+                concat_ws( '-', CASE p.section_code
+                                    WHEN '1' THEN '四级'
+                                    WHEN '2' THEN '六级'
+                                    WHEN '3' THEN '考研'
+                                    WHEN '4' THEN '英专'
+                                    WHEN '5' THEN '高中英语'
+                                    WHEN '6' THEN '初中英语'
+                                    WHEN '7' THEN '小学英语' END,
+                                case nc.course_type
+                                    WHEN '1' THEN '系统课'
+                                    WHEN '2' THEN '公开课'
+                                    WHEN '3' THEN '微课' END,
+                                case nc.is_live
+                                    WHEN '0' THEN '录播'
+                                    WHEN '1' THEN '直播' END ) mold,
+                p. NAME ncName,
+                u.phone
+        FROM
+	          tb_product_network_course_redeem_code rc
+	    LEFT JOIN tb_product_network_course nc ON rc.network_course_id = nc.id
+	    LEFT JOIN tb_product p ON p.id = nc.product_id
+        LEFT JOIN tb_user u ON u.id=rc.user_id
+	    WHERE rc.del_flag = 0
+	    <if test="code!=null and code!=''">
+            AND  rc.code = #{code}
+        </if>
+        <if test="ncName!=null and ncName!=''">
+            AND  P.NAME like CONCAT('%',#{ncName},'%')
+        </if>
+        <if test="status!=null">
+            AND  rc.status = #{status}
+        </if>
+        ORDER by rc.create_date DESC
+    </select>
+    <!--批量插入数据-->
+    <select id="insertAll" parameterType="java.util.List">
+        INSERT INTO tb_product_network_course_redeem_code
+        (
+            id,
+            user_id,
+            network_course_id,
+            code,
+            start_time,
+            end_time,
+            is_export,
+            is_enable,
+            status,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        <foreach collection="list" item="redeemCode" index="s" separator=",">
+            (
+              #{redeemCode.id},
+              null,
+              #{redeemCode.networkCourseId},
+              #{redeemCode.code},
+              #{redeemCode.startTime},
+              #{redeemCode.endTime},
+              #{redeemCode.isExport},
+              0,
+              0,
+              #{redeemCode.createDate},
+              #{redeemCode.createBy},
+              #{redeemCode.updateDate},
+              null,
+              null,
+              0,
+              0
+            )
+        </foreach>
+    </select>
+</mapper>

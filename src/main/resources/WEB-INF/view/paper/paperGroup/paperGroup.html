@@ -1,0 +1,39 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>试卷组管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="PaperGroup.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="PaperGroup.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="PaperGroupTableToolbar" role="group">
+                            @if(shiro.hasPermission("/paper/paperGroup/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="PaperGroup.openAddPaperGroup()"/>
+                            @}
+                            @if(shiro.hasPermission("/paper/paperGroup/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="PaperGroup.openPaperGroupDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/paper/paperGroup/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="PaperGroup.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="PaperGroupTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paperGroup/paperGroup.js"></script>
+@}

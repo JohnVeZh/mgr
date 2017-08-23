@@ -1,0 +1,29 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="catalogInfoForm">
+
+            <input type="hidden" id="id" value="${catalog.id}">
+
+            <input type="hidden" id="networkCourseId" value="${catalog.networkCourseId}">
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#input id="name" name="目录名称" value="${catalog.name}"  />
+                    <#input id="sort" name="排序" placeholder="输入正整数" value="${catalog.sort}" />
+                    <#input id="remarks" name="备注" value="${catalog.remarks}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CatalogInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CatalogInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/catalog/catalog_info.js"></script>
+@}

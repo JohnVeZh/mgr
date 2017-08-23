@@ -1,0 +1,76 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>二维码管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <#SelectCon id="sectionCode" name="学段">
+                                    <option value="">全部</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-4">
+                                <#SelectCon id="targetType" name="目标类型">
+                                    <option value="">全部</option>
+                                    <option value="1">列表</option>
+                                    <option value="2">详情</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="内容" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <#SelectCon id="type" name="类型">
+                                    <option value="">全部</option>
+                                    <option value="1">简系列考场原音</option>
+                                    <option value="2">简系列碎片</option>
+                                    <option value="3">简系列学习视频</option>
+                                    <option value="4">简系列简写作</option>
+                                    <option value="5">简系列词汇</option>
+                                    <option value="6">简系列字幕听力</option>
+                                    <option value="7">简系列写作翻译</option>
+                                    <option value="8">配套专区全真考场</option>
+                                    <option value="9">配套专区名师视频</option>
+                                    <option value="10">配套专区常用词汇</option>
+                                    <option value="11">配套专区字幕听力</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-4">
+                                <#SelectCon id="useScene" name="使用场景">
+                                    <option value="">全部</option>
+                                    <option value="1">简系列</option>
+                                    <option value="2">配套专区</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="QrCode.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="QrCode.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="QrCodeTableToolbar" role="group">
+                            @if(shiro.hasPermission("/qrCode/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="QrCode.openAddQrCode()"/>
+                            @}
+                            @if(shiro.hasPermission("/qrCode/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="QrCode.openQrCodeDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/qrCode/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="QrCode.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="QrCodeTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/qrcode/qrCode/qrCode.js"></script>
+@}

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.questionError.mapper.QuestionErrorMapper">
+    <insert id="insert">
+        INSERT INTO tb_question_error
+        (
+            id,
+            user_id,
+            section_code,
+            paper_id,
+            question_id,
+            content,
+            is_solved,
+            type,
+            create_date
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{sectionCode},
+               #{paperId},
+               #{questionId},
+               #{content},
+               #{isSolved},
+               #{type},
+               #{createDate}
+        )
+    </insert>
+    <update id="update">
+        update tb_question_error
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="questionId!=null">
+                   ,question_id = #{questionId}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="isSolved!=null">
+                   ,is_solved = #{isSolved}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.questionError.entity.QuestionErrorEntity">
+        select
+        error.id,
+        error.user_id,
+        error.section_code,
+        error.paper_id,
+        error.question_id,
+        error.content,
+        error.is_solved,
+        error.type,
+        error.create_date,
+        question.name as questionName,
+        question.type as questionType,
+        user.nickname,
+        user.phone,
+        structure.name AS structureName
+        from tb_question_error error
+        INNER JOIN tb_question question ON error.question_id = question.id
+        INNER JOIN tb_paper_question pq ON  question.id = pq.question_id
+        INNER JOIN tb_paper_structure structure ON structure.id = pq.structure_id
+        LEFT JOIN tb_user user on user.id = error.user_id
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  error.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  error.user_id = #{userId}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  error.section_code = #{sectionCode}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+              and  error.paper_id = #{paperId}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+              and  error.question_id = #{questionId}
+            </if>
+            <if test="content!=null and content!=''">
+              and  instr(error.content ,#{content})>0
+            </if>
+            <if test="isSolved!=null">
+              and  error.is_solved = #{isSolved}
+            </if>
+            <if test="type!=null and type!=''">
+              and  error.type = #{type}
+            </if>
+        <if test="questionType!=null and questionType!=''">
+            and  question.type = #{questionType}
+        </if>
+            <if test="createDate!=null and createDate!=''">
+              and  error.create_date = #{createDate}
+            </if>
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.questionError.entity.QuestionErrorEntity">
+        select
+            error.id,
+            error.user_id,
+            error.section_code,
+            error.paper_id,
+            error.question_id,
+            error.content,
+            error.is_solved,
+            error.type,
+            error.create_date,
+            question.name as questionName,
+            question.type as questionType,
+            user.nickname,
+            user.phone,
+            structure.name AS structureName
+        from tb_question_error error
+            INNER JOIN tb_question question ON error.question_id = question.id
+            INNER JOIN tb_paper_question pq ON  question.id = pq.question_id
+            INNER JOIN tb_paper_structure structure ON structure.id = pq.structure_id
+            LEFT JOIN tb_user user on user.id = error.user_id
+        where error.id = #{id}
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.questionError.entity.QuestionErrorEntity">
+        select
+              tb_question_error.id,
+              tb_question_error.user_id,
+              tb_question_error.section_code,
+              tb_question_error.paper_id,
+              tb_question_error.question_id,
+              tb_question_error.content,
+              tb_question_error.is_solved,
+              tb_question_error.type,
+              tb_question_error.create_date
+        from tb_question_error
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_question_error.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_question_error.user_id = #{userId}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_question_error.section_code = #{sectionCode}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_question_error.paper_id = #{paperId}
+            </if>
+            <if test="questionId!=null and questionId!=''">
+                and  tb_question_error.question_id = #{questionId}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_question_error.content = #{content}
+            </if>
+            <if test="isSolved!=null and isSolved!=''">
+                and  tb_question_error.is_solved = #{isSolved}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_question_error.type = #{type}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_question_error.create_date = #{createDate}
+            </if>
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_question_error
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

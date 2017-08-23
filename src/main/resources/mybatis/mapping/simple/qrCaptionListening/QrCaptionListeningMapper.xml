@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.sparke.modules.simple.qrCaptionListening.mapper.SimpleCaptionListeningMapper" >
+  <resultMap id="BaseResultMap" type="cn.sparke.modules.simple.qrCaptionListening.entity.SimpleCaptionListeningEntity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="use_scene" property="useScene" jdbcType="TINYINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="section_code" property="sectionCode" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="target_type" property="targetType" jdbcType="TINYINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
+    <association property="qrCaptionListeningEntity" javaType="cn.sparke.modules.qrcode.QrCaptionListening.entity.QrCaptionListeningEntity">
+      <result column="qpl_id" property="id"/>
+      <result column="caption_listening_id" property="captionListeningId"/>
+    </association>
+    <association property="captionListeningEntity" javaType="cn.sparke.modules.questionbank.CaptionListening.entity.CaptionListeningEntity">
+      <result column="pl_id" property="id"/>
+      <result column="audio_url" property="audioUrl"/>
+      <result column="audio_size" property="audioSize"/>
+      <result column="subtitle_url" property="subtitleUrl"/>
+      <result column="subtitle_size" property="subtitleSize"/>
+    </association>
+  </resultMap>
+
+  <select id="findList" resultMap="BaseResultMap">
+
+    select c.id,c.use_scene,c.`code`,c.section_code,c.type,c.target_type,c.create_by,c.create_date,c.update_by,c.update_date,c.remarks,c.sort,c.del_flag,
+    qpl.caption_listening_id,qpl.id qpl_id,
+    pl.id pl_id,pl.audio_url, pl.audio_size,pl.subtitle_url,pl.subtitle_size
+     from tb_qr_code c
+        LEFT JOIN tb_qr_paper_caption_listening qpl ON qpl.qr_code = c.`code` and qpl.del_flag=0
+        LEFT JOIN tb_paper_caption_listening pl on pl.id = qpl.caption_listening_id
+    where c.type=6 and c.del_flag = 0
+    <if test="id!=null and id!=''">
+      and  c.id = #{id}
+    </if>
+    <if test="useScene!=null and useScene!=''">
+      and  c.use_scene = #{useScene}
+    </if>
+    <if test="code!=null and code!=''">
+      and  c.code like concat('%',#{code},'%')
+    </if>
+    <if test="sectionCode!=null and sectionCode!=''">
+      and  c.section_code = #{sectionCode}
+    </if>
+    <if test="type!=null and type!=''">
+      and  c.type = #{type}
+    </if>
+    <if test="targetType!=null and targetType!=''">
+      and  c.target_type = #{targetType}
+    </if>
+    <if test="createDate!=null and createDate!=''">
+      and  c.create_date = #{createDate}
+    </if>
+    <if test="createBy!=null and createBy!=''">
+      and  c.create_by = #{createBy}
+    </if>
+    <if test="updateDate!=null and updateDate!=''">
+      and  c.update_date = #{updateDate}
+    </if>
+    <if test="updateBy!=null and updateBy!=''">
+      and  c.update_by = #{updateBy}
+    </if>
+    <if test="remarks!=null and remarks!=''">
+      and  c.remarks = #{remarks}
+    </if>
+    <if test="sort!=null and sort!=''">
+      and  c.sort = #{sort}
+    </if>
+
+
+
+  </select>
+</mapper>

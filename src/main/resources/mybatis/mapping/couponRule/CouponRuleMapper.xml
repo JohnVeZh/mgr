@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.coupon.couponRule.mapper.CouponRuleMapper">
+    <insert id="insert">
+        INSERT INTO tb_coupon_rule
+        (
+            id,
+            title,
+            effect_date,
+            invalid_date,
+            min_money,
+            discount_money,
+            status,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{effectDate},
+               #{invalidDate},
+               #{minMoney},
+               #{discountMoney},
+               #{status},
+               #{createBy},
+               #{createDate},
+               #{updateBy},
+               #{updateDate},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_coupon_rule
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="effectDate!=null">
+                   ,effect_date = #{effectDate}
+                </if>
+                <if test="invalidDate!=null">
+                   ,invalid_date = #{invalidDate}
+                </if>
+                <if test="minMoney!=null">
+                   ,min_money = #{minMoney}
+                </if>
+                <if test="discountMoney!=null">
+                   ,discount_money = #{discountMoney}
+                </if>
+                <if test="status!=null">
+                   ,status = #{status}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.coupon.couponRule.entity.CouponRuleEntity">
+        select
+              tb_coupon_rule.id,
+              tb_coupon_rule.title,
+              tb_coupon_rule.effect_date,
+              tb_coupon_rule.invalid_date,
+              tb_coupon_rule.min_money,
+              tb_coupon_rule.discount_money,
+              tb_coupon_rule.status,
+              tb_coupon_rule.create_by,
+              tb_coupon_rule.create_date,
+              tb_coupon_rule.update_by,
+              tb_coupon_rule.update_date,
+              tb_coupon_rule.remarks,
+              tb_coupon_rule.del_flag
+         from tb_coupon_rule
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_coupon_rule.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+              and  tb_coupon_rule.title like concat('%',#{title},'%')
+            </if>
+            <if test="effectDate!=null">
+              and  tb_coupon_rule.effect_date = #{effectDate}
+            </if>
+            <if test="invalidDate!=null">
+              and  tb_coupon_rule.invalid_date = #{invalidDate}
+            </if>
+            <if test="minMoney!=null and minMoney!=''">
+              and  tb_coupon_rule.min_money = #{minMoney}
+            </if>
+            <if test="discountMoney!=null and discountMoney!=''">
+              and  tb_coupon_rule.discount_money = #{discountMoney}
+            </if>
+            <if test="status!=null">
+              and  tb_coupon_rule.status = #{status}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_coupon_rule.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null">
+              and  tb_coupon_rule.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_coupon_rule.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null">
+              and  tb_coupon_rule.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_coupon_rule.remarks = #{remarks}
+            </if>
+                and  tb_coupon_rule.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.coupon.couponRule.entity.CouponRuleEntity">
+        select
+              tb_coupon_rule.id,
+              tb_coupon_rule.title,
+              tb_coupon_rule.effect_date,
+              tb_coupon_rule.invalid_date,
+              tb_coupon_rule.min_money,
+              tb_coupon_rule.discount_money,
+              tb_coupon_rule.status,
+              tb_coupon_rule.create_by,
+              tb_coupon_rule.create_date,
+              tb_coupon_rule.update_by,
+              tb_coupon_rule.update_date,
+              tb_coupon_rule.remarks,
+              tb_coupon_rule.del_flag
+        from tb_coupon_rule
+        where id = #{id}
+            and  tb_coupon_rule.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.coupon.couponRule.entity.CouponRuleEntity">
+        select
+              tb_coupon_rule.id,
+              tb_coupon_rule.title,
+              tb_coupon_rule.effect_date,
+              tb_coupon_rule.invalid_date,
+              tb_coupon_rule.min_money,
+              tb_coupon_rule.discount_money,
+              tb_coupon_rule.status,
+              tb_coupon_rule.create_by,
+              tb_coupon_rule.create_date,
+              tb_coupon_rule.update_by,
+              tb_coupon_rule.update_date,
+              tb_coupon_rule.remarks,
+              tb_coupon_rule.del_flag
+        from tb_coupon_rule
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_coupon_rule.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_coupon_rule.title = #{title}
+            </if>
+            <if test="effectDate!=null and effectDate!=''">
+                and  tb_coupon_rule.effect_date = #{effectDate}
+            </if>
+            <if test="invalidDate!=null and invalidDate!=''">
+                and  tb_coupon_rule.invalid_date = #{invalidDate}
+            </if>
+            <if test="minMoney!=null and minMoney!=''">
+                and  tb_coupon_rule.min_money = #{minMoney}
+            </if>
+            <if test="discountMoney!=null and discountMoney!=''">
+                and  tb_coupon_rule.discount_money = #{discountMoney}
+            </if>
+            <if test="status!=null and status!=''">
+                and  tb_coupon_rule.status = #{status}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_coupon_rule.create_by = #{createBy}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_coupon_rule.create_date = #{createDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_coupon_rule.update_by = #{updateBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_coupon_rule.update_date = #{updateDate}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_coupon_rule.remarks = #{remarks}
+            </if>
+            and  tb_coupon_rule.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_coupon_rule
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

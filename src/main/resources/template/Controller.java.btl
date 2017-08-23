@@ -1,0 +1,96 @@
+package ${controller.packageName};
+
+<% for(import in controller.imports!){ %>
+import ${import};
+<% } %>
+
+/**
+ * ${context.bizChName}控制器
+ *
+ * @author spark
+ * @Date ${tool.currentTime()}
+ */
+@Controller
+@RequestMapping("/${context.bizEnName}")
+public class ${context.bizEnBigName}Controller extends BaseController {
+
+    private String PREFIX = "/${context.bizEnName}/";
+
+     @Autowired
+     private ${context.bizEnBigName}Service ${controller.serviceName};
+
+    /**
+     * 跳转到${context.bizChName}首页
+     */
+    @RequestMapping("")
+    public String index() {
+        return PREFIX + "${context.bizEnName}.html";
+    }
+
+    /**
+     * 跳转到添加${context.bizChName}
+     */
+    @RequestMapping("/${context.bizEnName}_add")
+    public String ${context.bizEnName}Add() {
+        return PREFIX + "${context.bizEnName}_add.html";
+    }
+
+    /**
+     * 跳转到修改${context.bizChName}
+     */
+    @RequestMapping("/${context.bizEnName}_update/{${context.bizEnName}Id}")
+    public String ${context.bizEnName}Update(@PathVariable String ${context.bizEnName}Id, Model model) {
+       ${context.bizEnBigName}Entity bean = ${controller.serviceName}.getById(${context.bizEnName}Id);
+        model.addAttribute("${context.bizEnName}",bean);
+        return PREFIX + "${context.bizEnName}_edit.html";
+    }
+
+    /**
+     * 获取${context.bizChName}列表
+     */
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public Object list(${context.bizEnBigName}Entity entity) {
+        return ${controller.serviceName}.findList(entity);
+    }
+
+    /**
+     * 新增${context.bizChName}
+     */
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public Object add(@Validated ${context.bizEnBigName}Entity entity) {
+        ${controller.serviceName}.save(entity);
+        return super.SUCCESS_TIP;
+    }
+
+    /**
+     * 删除${context.bizChName}
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public Object delete(String ${context.bizEnName}Id) {
+        ${controller.serviceName}.deleteById(${context.bizEnName}Id);
+        return SUCCESS_TIP;
+    }
+
+
+    /**
+     * 修改${context.bizChName}
+     */
+    @RequestMapping(value = "/update")
+    @ResponseBody
+    public Object update(@Validated ${context.bizEnBigName}Entity entity) {
+        ${controller.serviceName}.update(entity);
+        return super.SUCCESS_TIP;
+    }
+
+    /**
+     * ${context.bizChName}详情
+     */
+    @RequestMapping(value = "/detail/{id}")
+    @ResponseBody
+    public Object detail(@PathVariable String id) {
+        return ${controller.serviceName}.getById(id);
+    }
+}

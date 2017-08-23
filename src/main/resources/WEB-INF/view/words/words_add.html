@@ -1,0 +1,45 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="wordsForm">
+
+            <input type="hidden" id="id" value="">
+
+            <#input id="catalogId" name="目录id" underline="true"
+                    hidden="pId" readonly="readonly"
+                    clickFun="WordsInfoDlg.showWordCatalogLayer(); return false;"
+                    style="background-color: #ffffff !important;"
+                    selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+            <!--
+            <#input id="catalogName" name="目录" underline="true" />
+            -->
+
+            <#input id="name" name="单词名称" underline="true"  />
+
+            <#input id="phonetic" name="音标" underline="true" />
+
+            <#uploadAudio id="pronunciationUrl" name="发音文件地址" underline="true"   />
+
+            <#input id="paraphrase" name="释义" underline="true" />
+
+            <#input id="sentence" name="例句" underline="true"  />
+
+            <#input id="reference" name="例句翻译" underline="true" />
+
+            <#uploadAudio id="referenceAudioUrl" name="例句发音" underline="true"  />
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="WordsInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="WordsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/words/words_info.js"></script>
+<script type="application/javascript">
+
+</script>
+@}

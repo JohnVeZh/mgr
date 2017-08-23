@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.user.mapper.MemberMapper">
+    <insert id="insert">
+        INSERT INTO tb_user
+        (
+            id,
+            phone,
+            password,
+            qq_open_id,
+            weixin_open_id,
+            weibo_open_id,
+            header_img,
+            nickname,
+            sex,
+            real_name,
+            user_status,
+            school_name,
+            enroll_year,
+            birthday,
+            reg_type,
+            is_push,
+            last_login_date,
+            section_code,
+            is_auto_remove,
+            create_date,
+            update_date,
+            update_by,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{phone},
+               #{password},
+               #{qqOpenId},
+               #{weixinOpenId},
+               #{weiboOpenId},
+               #{headerImg},
+               #{nickname},
+               #{sex},
+               #{realName},
+               #{userStatus},
+               #{schoolName},
+               #{enrollYear},
+               #{birthday},
+               #{regType},
+               #{isPush},
+               #{lastLoginDate},
+               #{sectionCode},
+               #{isAutoRemove},
+               #{createDate},
+               #{updateDate},
+               #{updateBy},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user
+        set
+                id = #{id}
+                <if test="phone!=null">
+                   ,phone = #{phone}
+                </if>
+                <if test="password!=null">
+                   ,password = #{password}
+                </if>
+                <if test="qqOpenId!=null">
+                   ,qq_open_id = #{qqOpenId}
+                </if>
+                <if test="weixinOpenId!=null">
+                   ,weixin_open_id = #{weixinOpenId}
+                </if>
+                <if test="weiboOpenId!=null">
+                   ,weibo_open_id = #{weiboOpenId}
+                </if>
+                <if test="headerImg!=null">
+                   ,header_img = #{headerImg}
+                </if>
+                <if test="nickname!=null">
+                   ,nickname = #{nickname}
+                </if>
+                <if test="sex!=null">
+                   ,sex = #{sex}
+                </if>
+                <if test="realName!=null">
+                   ,real_name = #{realName}
+                </if>
+                <if test="userStatus!=null">
+                   ,user_status = #{userStatus}
+                </if>
+                <if test="schoolName!=null">
+                   ,school_name = #{schoolName}
+                </if>
+                <if test="enrollYear!=null">
+                   ,enroll_year = #{enrollYear}
+                </if>
+                <if test="birthday!=null">
+                   ,birthday = #{birthday}
+                </if>
+                <if test="regType!=null">
+                   ,reg_type = #{regType}
+                </if>
+                <if test="isPush!=null">
+                   ,is_push = #{isPush}
+                </if>
+                <if test="lastLoginDate!=null">
+                   ,last_login_date = #{lastLoginDate}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="isAutoRemove!=null">
+                   ,is_auto_remove = #{isAutoRemove}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.user.entity.UserEntity">
+        select
+              tb_user.id,
+              tb_user.phone,
+              tb_user.password,
+              tb_user.qq_open_id,
+              tb_user.weixin_open_id,
+              tb_user.weibo_open_id,
+              tb_user.header_img,
+              tb_user.nickname,
+              tb_user.sex,
+              tb_user.real_name,
+              tb_user.user_status,
+              tb_user.school_name,
+              tb_user.enroll_year,
+              tb_user.birthday,
+              tb_user.reg_type,
+              tb_user.is_push,
+              tb_user.last_login_date,
+              tb_user.section_code,
+              tb_user.is_auto_remove,
+              tb_user.create_date,
+              tb_user.update_date,
+              tb_user.update_by,
+              tb_user.del_flag
+         from tb_user
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_user.id = #{id}
+            </if>
+            <if test="phone!=null and phone!=''">
+              and  tb_user.phone = #{phone}
+            </if>
+            <if test="password!=null and password!=''">
+              and  tb_user.password = #{password}
+            </if>
+            <if test="qqOpenId!=null and qqOpenId!=''">
+              and  tb_user.qq_open_id = #{qqOpenId}
+            </if>
+            <if test="weixinOpenId!=null and weixinOpenId!=''">
+              and  tb_user.weixin_open_id = #{weixinOpenId}
+            </if>
+            <if test="weiboOpenId!=null and weiboOpenId!=''">
+              and  tb_user.weibo_open_id = #{weiboOpenId}
+            </if>
+            <if test="headerImg!=null and headerImg!=''">
+              and  tb_user.header_img = #{headerImg}
+            </if>
+            <if test="nickname!=null and nickname!=''">
+              and  tb_user.nickname = #{nickname}
+            </if>
+            <if test="sex!=null and sex!=''">
+              and  tb_user.sex = #{sex}
+            </if>
+            <if test="realName!=null and realName!=''">
+              and  tb_user.real_name = #{realName}
+            </if>
+            <if test="userStatus!=null and userStatus!=''">
+              and  tb_user.user_status = #{userStatus}
+            </if>
+            <if test="schoolName!=null and schoolName!=''">
+              and  tb_user.school_name = #{schoolName}
+            </if>
+            <if test="enrollYear!=null and enrollYear!=''">
+              and  tb_user.enroll_year = #{enrollYear}
+            </if>
+            <if test="birthday!=null and birthday!=''">
+              and  tb_user.birthday = #{birthday}
+            </if>
+            <if test="regType!=null and regType!=''">
+              and  tb_user.reg_type = #{regType}
+            </if>
+            <if test="isPush!=null and isPush!=''">
+              and  tb_user.is_push = #{isPush}
+            </if>
+            <if test="lastLoginDate!=null and lastLoginDate!=''">
+              and  tb_user.last_login_date = #{lastLoginDate}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_user.section_code = #{sectionCode}
+            </if>
+            <if test="isAutoRemove!=null and isAutoRemove!=''">
+              and  tb_user.is_auto_remove = #{isAutoRemove}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_user.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_user.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_user.update_by = #{updateBy}
+            </if>
+                and  tb_user.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.user.entity.UserEntity">
+        select
+              tb_user.id,
+              tb_user.phone,
+              tb_user.password,
+              tb_user.qq_open_id,
+              tb_user.weixin_open_id,
+              tb_user.weibo_open_id,
+              tb_user.header_img,
+              tb_user.nickname,
+              tb_user.sex,
+              tb_user.real_name,
+              tb_user.user_status,
+              tb_user.school_name,
+              tb_user.enroll_year,
+              tb_user.birthday,
+              tb_user.reg_type,
+              tb_user.is_push,
+              tb_user.last_login_date,
+              tb_user.section_code,
+              tb_user.is_auto_remove,
+              tb_user.create_date,
+              tb_user.update_date,
+              tb_user.update_by,
+              tb_user.del_flag
+        from tb_user
+        where id = #{id}
+            and  tb_user.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.user.entity.UserEntity">
+        select
+              tb_user.id,
+              tb_user.phone,
+              tb_user.password,
+              tb_user.qq_open_id,
+              tb_user.weixin_open_id,
+              tb_user.weibo_open_id,
+              tb_user.header_img,
+              tb_user.nickname,
+              tb_user.sex,
+              tb_user.real_name,
+              tb_user.user_status,
+              tb_user.school_name,
+              tb_user.enroll_year,
+              tb_user.birthday,
+              tb_user.reg_type,
+              tb_user.is_push,
+              tb_user.last_login_date,
+              tb_user.section_code,
+              tb_user.is_auto_remove,
+              tb_user.create_date,
+              tb_user.update_date,
+              tb_user.update_by,
+              tb_user.del_flag
+        from tb_user
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_user.id = #{id}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and  tb_user.phone = #{phone}
+            </if>
+            <if test="password!=null and password!=''">
+                and  tb_user.password = #{password}
+            </if>
+            <if test="qqOpenId!=null and qqOpenId!=''">
+                and  tb_user.qq_open_id = #{qqOpenId}
+            </if>
+            <if test="weixinOpenId!=null and weixinOpenId!=''">
+                and  tb_user.weixin_open_id = #{weixinOpenId}
+            </if>
+            <if test="weiboOpenId!=null and weiboOpenId!=''">
+                and  tb_user.weibo_open_id = #{weiboOpenId}
+            </if>
+            <if test="headerImg!=null and headerImg!=''">
+                and  tb_user.header_img = #{headerImg}
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                and  tb_user.nickname = #{nickname}
+            </if>
+            <if test="sex!=null and sex!=''">
+                and  tb_user.sex = #{sex}
+            </if>
+            <if test="realName!=null and realName!=''">
+                and  tb_user.real_name = #{realName}
+            </if>
+            <if test="userStatus!=null and userStatus!=''">
+                and  tb_user.user_status = #{userStatus}
+            </if>
+            <if test="schoolName!=null and schoolName!=''">
+                and  tb_user.school_name = #{schoolName}
+            </if>
+            <if test="enrollYear!=null and enrollYear!=''">
+                and  tb_user.enroll_year = #{enrollYear}
+            </if>
+            <if test="birthday!=null and birthday!=''">
+                and  tb_user.birthday = #{birthday}
+            </if>
+            <if test="regType!=null and regType!=''">
+                and  tb_user.reg_type = #{regType}
+            </if>
+            <if test="isPush!=null and isPush!=''">
+                and  tb_user.is_push = #{isPush}
+            </if>
+            <if test="lastLoginDate!=null and lastLoginDate!=''">
+                and  tb_user.last_login_date = #{lastLoginDate}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_user.section_code = #{sectionCode}
+            </if>
+            <if test="isAutoRemove!=null and isAutoRemove!=''">
+                and  tb_user.is_auto_remove = #{isAutoRemove}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_user.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_user.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_user.update_by = #{updateBy}
+            </if>
+            and  tb_user.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_user
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

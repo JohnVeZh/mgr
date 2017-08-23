@@ -1,0 +1,57 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <input type="hidden" id="userId" value="${userId}" >
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiver" name="姓名" underline="true"  />
+                    <#input id="zipcode" name="邮编" underline="true"  />
+                    <#input id="mobile" name="电话" underline="true"  />
+                </div>
+                <div class="col-sm-6 b-r">
+                    <div data-toggle="distpicker" class="form-group">
+                        <div class="form-group" style="vertical-align: middle">
+                            <label class="col-sm-3 control-label" style="vertical-align: middle;">省</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" data-province="---- 选择省 ----" id="province"></select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group" style="vertical-align: middle">
+                            <label class="col-sm-3 control-label" style="vertical-align: middle;">市</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" data-city="---- 选择市 ----" id="city"></select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group" style="vertical-align: middle">
+                            <label class="col-sm-3 control-label" style="vertical-align: middle;">区</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" data-district="---- 选择区 ----" id="county"></select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                       <#input id="detailAddress" name="详细地址" leftWidth="2" rightWidth="9" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+            </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="UserAddressInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="UserAddressInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/user/userAddress/userAddress_info.js"></script>
+@}

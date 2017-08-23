@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.simple.qrCodeStudyMaterialsWriting.mapper.QrCodeStudyMaterialsWritingMapper">
+    <insert id="insert">
+        INSERT INTO tb_qr_code_study_materials_writing
+        (
+            id,
+            title,
+            content,
+            qr_code,
+            type,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{content},
+               #{qrCode},
+               #{type},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_qr_code_study_materials_writing
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.simple.qrCodeStudyMaterialsWriting.entity.QrCodeStudyMaterialsWritingEntity">
+        select
+              tb_qr_code_study_materials_writing.id,
+              tb_qr_code_study_materials_writing.title,
+              /*tb_qr_code_study_materials_writing.content,*/
+              tb_qr_code_study_materials_writing.qr_code,
+              tb_qr_code_study_materials_writing.type,
+              tb_qr_code_study_materials_writing.create_date,
+              tb_qr_code_study_materials_writing.create_by,
+              tb_qr_code_study_materials_writing.update_date,
+              tb_qr_code_study_materials_writing.update_by,
+              tb_qr_code_study_materials_writing.sort,
+              tb_qr_code_study_materials_writing.del_flag
+         from tb_qr_code_study_materials_writing
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_qr_code_study_materials_writing.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+              and  tb_qr_code_study_materials_writing.title like concat('%', #{title} ,'%')
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_qr_code_study_materials_writing.content = #{content}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  tb_qr_code_study_materials_writing.qr_code = #{qrCode}
+            </if>
+            <if test="type!=null and type!=-1">
+              and  tb_qr_code_study_materials_writing.type = #{type}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_qr_code_study_materials_writing.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_qr_code_study_materials_writing.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_qr_code_study_materials_writing.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_qr_code_study_materials_writing.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_qr_code_study_materials_writing.sort = #{sort}
+            </if>
+                and  tb_qr_code_study_materials_writing.del_flag = 0
+        ORDER BY sort ASC ,create_date DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.simple.qrCodeStudyMaterialsWriting.entity.QrCodeStudyMaterialsWritingEntity">
+        select
+              tb_qr_code_study_materials_writing.id,
+              tb_qr_code_study_materials_writing.title,
+              tb_qr_code_study_materials_writing.content,
+              tb_qr_code_study_materials_writing.qr_code,
+              tb_qr_code_study_materials_writing.type,
+              tb_qr_code_study_materials_writing.create_date,
+              tb_qr_code_study_materials_writing.create_by,
+              tb_qr_code_study_materials_writing.update_date,
+              tb_qr_code_study_materials_writing.update_by,
+              tb_qr_code_study_materials_writing.sort,
+              tb_qr_code_study_materials_writing.del_flag
+        from tb_qr_code_study_materials_writing
+        where id = #{id}
+            and  tb_qr_code_study_materials_writing.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.simple.qrCodeStudyMaterialsWriting.entity.QrCodeStudyMaterialsWritingEntity">
+        select
+              tb_qr_code_study_materials_writing.id,
+              tb_qr_code_study_materials_writing.title,
+              tb_qr_code_study_materials_writing.content,
+              tb_qr_code_study_materials_writing.qr_code,
+              tb_qr_code_study_materials_writing.type,
+              tb_qr_code_study_materials_writing.create_date,
+              tb_qr_code_study_materials_writing.create_by,
+              tb_qr_code_study_materials_writing.update_date,
+              tb_qr_code_study_materials_writing.update_by,
+              tb_qr_code_study_materials_writing.sort,
+              tb_qr_code_study_materials_writing.del_flag
+        from tb_qr_code_study_materials_writing
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_qr_code_study_materials_writing.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_qr_code_study_materials_writing.title = #{title}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_qr_code_study_materials_writing.content = #{content}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  tb_qr_code_study_materials_writing.qr_code = #{qrCode}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_qr_code_study_materials_writing.type = #{type}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_qr_code_study_materials_writing.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_qr_code_study_materials_writing.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_qr_code_study_materials_writing.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_qr_code_study_materials_writing.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_qr_code_study_materials_writing.sort = #{sort}
+            </if>
+            and  tb_qr_code_study_materials_writing.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_qr_code_study_materials_writing
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

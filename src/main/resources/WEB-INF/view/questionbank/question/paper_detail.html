@@ -1,0 +1,39 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <input type="hidden" id="type" value="${type}">
+        <input type="hidden" id="paperId" value="${id}">
+        <input type="hidden" id="contentType" value="${contentType}">
+        <input type="hidden" id="structureId" value="">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>题目管理</h5>
+            </div>
+            <div class="ibox-content">
+                        <div class="row row-lg">
+                            <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-1 col-sm-2" style="width:20%">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">试卷结构</div>
+                                    <div class="panel-body dept-tree"  style="overflow-x:auto;overflow-y: auto;height: 350px">
+                                        <ul id="paperCatalogTree" class="ztree"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-sm-10" style="height: 390px;width: 80%">
+                                <iframe id="myIframe" width="100%" height="100%" src="" frameborder="0"   style="display: inline;background-color: transparent">
+
+                                </iframe>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question/paper_detail.js"></script>
+@}

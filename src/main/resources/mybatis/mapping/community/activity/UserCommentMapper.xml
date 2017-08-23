@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.community.comment.mapper.UserCommentMapper">
+    <insert id="insert">
+        INSERT INTO tb_user_comment
+        (
+            id,
+            user_id,
+            content_type,
+            content_id,
+            praise_num,
+            content,
+            imgs,
+            is_top,
+            reply_num,
+            create_date,
+            update_date,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{contentType},
+               #{contentId},
+               #{praiseNum},
+               #{content},
+               #{imgs},
+               #{isTop},
+               #{replyNum},
+               #{createDate},
+               #{updateDate},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user_comment
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="contentType!=null">
+                   ,content_type = #{contentType}
+                </if>
+                <if test="contentId!=null">
+                   ,content_id = #{contentId}
+                </if>
+                <if test="praiseNum!=null">
+                   ,praise_num = #{praiseNum}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="imgs!=null">
+                   ,imgs = #{imgs}
+                </if>
+                <if test="isTop!=null">
+                   ,is_top = #{isTop}
+                </if>
+                <if test="replyNum!=null">
+                   ,reply_num = #{replyNum}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.community.comment.entity.po.UserCommentEntity">
+        select
+              tb_user_comment.id,
+              tb_user_comment.user_id,
+              tb_user_comment.content_type,
+              tb_user_comment.content_id,
+              tb_user_comment.praise_num,
+              tb_user_comment.content,
+              tb_user_comment.imgs,
+              tb_user_comment.is_top,
+              tb_user_comment.reply_num,
+              tb_user_comment.create_date,
+              tb_user_comment.update_date,
+              tb_user_comment.del_flag
+         from tb_user_comment
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_user_comment.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tb_user_comment.user_id = #{userId}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+              and  tb_user_comment.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+              and  tb_user_comment.content_id = #{contentId}
+            </if>
+            <if test="praiseNum!=null and praiseNum!=''">
+              and  tb_user_comment.praise_num = #{praiseNum}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_user_comment.content = CONCAT('%',#{content},'%')
+            </if>
+            <if test="imgs!=null and imgs!=''">
+              and  tb_user_comment.imgs = #{imgs}
+            </if>
+            <if test="isTop!=null">
+              and  tb_user_comment.is_top = #{isTop}
+            </if>
+            <if test="replyNum!=null and replyNum!=''">
+              and  tb_user_comment.reply_num = #{replyNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_user_comment.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_user_comment.update_date = #{updateDate}
+            </if>
+                and  tb_user_comment.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.community.comment.entity.po.UserCommentEntity">
+        select
+              tb_user_comment.id,
+              tb_user_comment.user_id,
+              tb_user_comment.content_type,
+              tb_user_comment.content_id,
+              tb_user_comment.praise_num,
+              tb_user_comment.content,
+              tb_user_comment.imgs,
+              tb_user_comment.is_top,
+              tb_user_comment.reply_num,
+              tb_user_comment.create_date,
+              tb_user_comment.update_date,
+              tb_user_comment.del_flag
+        from tb_user_comment
+        where id = #{id}
+            and  tb_user_comment.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.community.comment.entity.po.UserCommentEntity">
+        select
+              tb_user_comment.id,
+              tb_user_comment.user_id,
+              tb_user_comment.content_type,
+              tb_user_comment.content_id,
+              tb_user_comment.praise_num,
+              tb_user_comment.content,
+              tb_user_comment.imgs,
+              tb_user_comment.is_top,
+              tb_user_comment.reply_num,
+              tb_user_comment.create_date,
+              tb_user_comment.update_date,
+              tb_user_comment.del_flag
+        from tb_user_comment
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_user_comment.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_user_comment.user_id = #{userId}
+            </if>
+            <if test="contentType!=null and contentType!=''">
+                and  tb_user_comment.content_type = #{contentType}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+                and  tb_user_comment.content_id = #{contentId}
+            </if>
+            <if test="praiseNum!=null and praiseNum!=''">
+                and  tb_user_comment.praise_num = #{praiseNum}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_user_comment.content = #{content}
+            </if>
+            <if test="imgs!=null and imgs!=''">
+                and  tb_user_comment.imgs = #{imgs}
+            </if>
+            <if test="isTop!=null and isTop!=''">
+                and  tb_user_comment.is_top = #{isTop}
+            </if>
+            <if test="replyNum!=null and replyNum!=''">
+                and  tb_user_comment.reply_num = #{replyNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_user_comment.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_user_comment.update_date = #{updateDate}
+            </if>
+            and  tb_user_comment.del_flag = 0
+         limit 1
+     </select>
+    <select id="findVoList" resultType="cn.sparke.modules.community.comment.entity.vo.UserCommentVoEntity">
+        select
+           <if test="contentType == 2">
+               tb_community_news.title,
+           </if>
+            <if test="contentType == 3">
+                tb_community_activity.title,
+            </if>
+        tb_user_comment.id,
+        tb_user.nickname AS userName,
+        tb_user_comment.user_id,
+        tb_user_comment.content_type,
+        tb_user_comment.content_id,
+        tb_user_comment.praise_num,
+        tb_user_comment.content,
+        tb_user_comment.imgs,
+        tb_user_comment.is_top,
+        tb_user_comment.reply_num,
+        tb_user_comment.create_date,
+        tb_user_comment.update_date,
+        tb_user_comment.del_flag
+        from tb_user_comment
+              INNER JOIN tb_user on tb_user.id = tb_user_comment.user_id
+            <if test="contentType == 2">
+              INNER JOIN tb_community_news ON tb_community_news.id = tb_user_comment.content_id
+            </if>
+            <if test="contentType == 3">
+                INNER JOIN tb_community_activity on tb_community_activity.id = tb_user_comment.content_id
+            </if>
+        where 1=1
+        <if test="userName!=null and userName!=''">
+            and tb_user.nickname LIKE concat('%',#{userName},'%')
+        </if>
+        <if test="userPhone!=null and userPhone!=''">
+            and  tb_user.phone = #{userPhone}
+        </if>
+        <if test="id!=null and id!=''">
+            and  tb_user_comment.id = #{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and  tb_user_comment.user_id = #{userId}
+        </if>
+        <if test="contentType!=null">
+            and  tb_user_comment.content_type = #{contentType}
+        </if>
+        <if test="contentId!=null and contentId!=''">
+            and  tb_user_comment.content_id = #{contentId}
+        </if>
+        <if test="praiseNum!=null">
+            and  tb_user_comment.praise_num = #{praiseNum}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_user_comment.content like  concat('%',#{content},'%')
+        </if>
+        <if test="imgs!=null and imgs!=''">
+            and  tb_user_comment.imgs = #{imgs}
+        </if>
+        <if test="isTop!=null">
+            and  tb_user_comment.is_top = #{isTop}
+        </if>
+        <if test="replyNum!=null and replyNum!=''">
+            and  tb_user_comment.reply_num = #{replyNum}
+        </if>
+        <if test="createDate!=null">
+            and  tb_user_comment.create_date = #{createDate}
+        </if>
+        <if test="updateDate!=null">
+            and  tb_user_comment.update_date = #{updateDate}
+        </if>
+        and  tb_user_comment.del_flag = 0
+    </select>
+    <select id="getVoById" resultType="cn.sparke.modules.community.comment.entity.vo.UserCommentVoEntity">
+        select
+        tb_user_comment.id,
+        tb_user.nickname AS userName,
+        tb_user_comment.user_id,
+        tb_user_comment.content_type,
+        tb_user_comment.content_id,
+        tb_user_comment.praise_num,
+        tb_user_comment.content,
+        tb_user_comment.imgs,
+        tb_user_comment.is_top,
+        tb_user_comment.reply_num,
+        tb_user_comment.create_date,
+        tb_user_comment.update_date,
+        tb_user_comment.del_flag
+        from tb_user_comment
+        INNER JOIN tb_user on tb_user.id = tb_user_comment.user_id AND tb_user.del_flag = 0
+        where  tb_user_comment.id = #{id} and  tb_user_comment.del_flag = 0
+    </select>
+
+    <update id="deleteById">
+            update tb_user_comment
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

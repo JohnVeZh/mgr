@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperGroupRelation.mapper.PaperGroupRelationMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_group_relation
+        (
+            id,
+            group_id,
+            paper_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{groupId},
+               #{paperId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO tb_paper_group_relation
+        (
+        id,
+        group_id,
+        paper_id,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        sort,
+        del_flag
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.groupId},
+            #{item.paperId},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.remarks},
+            #{item.sort},
+            #{item.delFlag}
+            )
+        </foreach>
+    </insert>
+    <update id="update">
+        update tb_paper_group_relation
+        set
+                id = #{id}
+                <if test="groupId!=null">
+                   ,group_id = #{groupId}
+                </if>
+                <if test="paperId!=null">
+                   ,paper_id = #{paperId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperGroupRelation.entity.PaperGroupRelationEntity">
+        select
+              tb_paper_group_relation.id,
+              tb_paper_group_relation.group_id,
+              tb_paper_group_relation.paper_id,
+              tb_paper_group_relation.create_date,
+              tb_paper_group_relation.create_by,
+              tb_paper_group_relation.update_date,
+              tb_paper_group_relation.update_by,
+              tb_paper_group_relation.remarks,
+              tb_paper_group_relation.sort,
+              tb_paper_group_relation.del_flag
+         from tb_paper_group_relation
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_paper_group_relation.id = #{id}
+            </if>
+            <if test="groupId!=null and groupId!=''">
+              and  tb_paper_group_relation.group_id = #{groupId}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+              and  tb_paper_group_relation.paper_id = #{paperId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_paper_group_relation.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_paper_group_relation.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_paper_group_relation.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_paper_group_relation.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_paper_group_relation.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_paper_group_relation.sort = #{sort}
+            </if>
+                and  tb_paper_group_relation.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paperGroupRelation.entity.PaperGroupRelationEntity">
+        select
+              tb_paper_group_relation.id,
+              tb_paper_group_relation.group_id,
+              tb_paper_group_relation.paper_id,
+              tb_paper_group_relation.create_date,
+              tb_paper_group_relation.create_by,
+              tb_paper_group_relation.update_date,
+              tb_paper_group_relation.update_by,
+              tb_paper_group_relation.remarks,
+              tb_paper_group_relation.sort,
+              tb_paper_group_relation.del_flag
+        from tb_paper_group_relation
+        where id = #{id}
+            and  tb_paper_group_relation.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperGroupRelation.entity.PaperGroupRelationEntity">
+        select
+              tb_paper_group_relation.id,
+              tb_paper_group_relation.group_id,
+              tb_paper_group_relation.paper_id,
+              tb_paper_group_relation.create_date,
+              tb_paper_group_relation.create_by,
+              tb_paper_group_relation.update_date,
+              tb_paper_group_relation.update_by,
+              tb_paper_group_relation.remarks,
+              tb_paper_group_relation.sort,
+              tb_paper_group_relation.del_flag
+        from tb_paper_group_relation
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper_group_relation.id = #{id}
+            </if>
+            <if test="groupId!=null and groupId!=''">
+                and  tb_paper_group_relation.group_id = #{groupId}
+            </if>
+            <if test="paperId!=null and paperId!=''">
+                and  tb_paper_group_relation.paper_id = #{paperId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_paper_group_relation.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_paper_group_relation.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_paper_group_relation.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_paper_group_relation.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_paper_group_relation.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_paper_group_relation.sort = #{sort}
+            </if>
+            and  tb_paper_group_relation.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_paper_group_relation
+            set del_flag = 1
+            where id = #{id}
+      </update>
+    <update id="deleteByGroupId">
+        update tb_paper_group_relation
+        set del_flag = 1
+        where group_id = #{id}
+    </update>
+    <update id="deleteByPaperId">
+        update tb_paper_group_relation
+        set del_flag = 1
+        where paper_id = #{id}
+    </update>
+</mapper>

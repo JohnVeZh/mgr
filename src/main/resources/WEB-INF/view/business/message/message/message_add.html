@@ -1,0 +1,27 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+            <input type="hidden" id="targetType" value="2">
+            <input type="hidden" id="jumpType" value="1">
+            <input type="hidden" id="pushStatus" value="0">
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <#input id="title" name="标题" underline="true" leftWidth="1" rightWidth="11"  />
+                    <#input id="intro" name="简介" underline="true" leftWidth="1" rightWidth="11"  />
+                    <#uploadImg id="img" name="图片" underline="true" width="100px" height="100px"/>
+                    <#wangEditor  id="content" name="内容"  leftWidth="1" rightWidth="11"  height="300px" />
+                </div>
+            </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MessageInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MessageInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/business/message/message/message_info.js"></script>
+@}

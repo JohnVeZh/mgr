@@ -1,0 +1,27 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="logisticsInfoForm">
+
+            <form name="logisticsForm" action="" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-2 b-r">&nbsp;</div>
+                    <div class="col-sm-6" style="align-content: center">
+                        <input id="excelFile" name="excelFile" type="file" size="20" style="height: 30px; width: 300px;"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 b-r">&nbsp;</div>
+                    <div class="col-sm-4 b-6">
+                        <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OrderInfoDlg.importLogisticsSubmit()"/>
+                        <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/order/order_info.js"></script>
+@}

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperGroup.mapper.PaperGroupMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_group
+        (
+            id,
+            catalog_id,
+            name,
+            img,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{catalogId},
+               #{name},
+               #{img},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_paper_group
+        set
+                id = #{id}
+                <if test="catalogId!=null">
+                   ,catalog_id = #{catalogId}
+                </if>
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="img!=null and img!=''">
+                   ,img = #{img}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperGroup.entity.PaperGroupEntity">
+        select
+              tb_paper_group.id,
+              tb_paper_group.catalog_id,
+              tb_paper_group.name,
+              tb_paper_group.img,
+              tb_paper_group.create_date,
+              tb_paper_group.create_by,
+              tb_paper_group.update_date,
+              tb_paper_group.update_by,
+              tb_paper_group.remarks,
+              tb_paper_group.sort,
+              tb_paper_group.del_flag
+         from tb_paper_group
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_paper_group.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+              and  tb_paper_group.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_paper_group.name = #{name}
+            </if>
+            <if test="img!=null and img!=''">
+              and  tb_paper_group.img = #{img}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_paper_group.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_paper_group.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_paper_group.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_paper_group.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_paper_group.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_paper_group.sort = #{sort}
+            </if>
+            <if test="condition!=null and condition!=''">
+                and  tb_paper_group.name like CONCAT('%',#{condition},'%')
+            </if>
+            <if test="groupIds!=null and groupIds!=''">
+                and  tb_paper_group.id in (
+                <foreach collection="groupIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+            <if test="catalogIdList!=null">
+                and  tb_paper_group.catalog_id in (
+                <foreach collection="catalogIdList" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+                and  tb_paper_group.del_flag = 0
+        ORDER BY tb_paper_group.sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paperGroup.entity.PaperGroupEntity">
+        select
+              tb_paper_group.id,
+              tb_paper_group.catalog_id,
+              tb_paper_group.name,
+              tb_paper_group.img,
+              tb_paper_group.create_date,
+              tb_paper_group.create_by,
+              tb_paper_group.update_date,
+              tb_paper_group.update_by,
+              tb_paper_group.remarks,
+              tb_paper_group.sort,
+              tb_paper_group.del_flag
+        from tb_paper_group
+        where id = #{id}
+            and  tb_paper_group.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperGroup.entity.PaperGroupEntity">
+        select
+              tb_paper_group.id,
+              tb_paper_group.catalog_id,
+              tb_paper_group.name,
+              tb_paper_group.img,
+              tb_paper_group.create_date,
+              tb_paper_group.create_by,
+              tb_paper_group.update_date,
+              tb_paper_group.update_by,
+              tb_paper_group.remarks,
+              tb_paper_group.sort,
+              tb_paper_group.del_flag
+        from tb_paper_group
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_paper_group.id = #{id}
+            </if>
+            <if test="catalogId!=null and catalogId!=''">
+                and  tb_paper_group.catalog_id = #{catalogId}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_paper_group.name = #{name}
+            </if>
+            <if test="img!=null and img!=''">
+                and  tb_paper_group.img = #{img}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_paper_group.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_paper_group.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_paper_group.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_paper_group.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_paper_group.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_paper_group.sort = #{sort}
+            </if>
+            and  tb_paper_group.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_paper_group
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>课程目录管理</h5>
+            </div>
+            <input type="hidden" id="networkCourseId" value="${networkCourseId}">
+
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+
+                        </div>
+                        <div class="hidden-xs" id="CatalogTableToolbar" role="group">
+                            @if(shiro.hasPermission("/goods/catalog/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="Catalog.openAddCatalog()"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/catalog/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="Catalog.openCatalogDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/catalog/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="Catalog.delete()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/goods/video")){
+                            <#button name="视频管理" icon="fa-film" clickFun="Catalog.openVideoList()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="CatalogTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/goods/catalog/catalog.js"></script>
+@}

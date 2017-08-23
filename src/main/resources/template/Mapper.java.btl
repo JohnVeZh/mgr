@@ -1,0 +1,16 @@
+package ${mapper.packageName};
+
+<% for(import in mapper.imports!){ %>
+import ${import};
+<% } %>
+
+/**
+ * ${context.bizChName}Dao
+ *
+ * @author spark
+ * @Date ${tool.currentTime()}
+ */
+public interface ${context.bizEnBigName}Mapper extends BaseMapper<${context.bizEnBigName}Entity>{
+
+
+}

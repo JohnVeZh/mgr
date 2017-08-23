@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.gift.planConfig.mapper.PlanConfigMapper">
+    <insert id="insert">
+        INSERT INTO tb_gift_plan_config
+        (
+            id,
+            section_code,
+            period,
+            title,
+            score_start,
+            score_end,
+            comment,
+            content,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{sectionCode},
+               #{period},
+               #{title},
+               #{scoreStart},
+               #{scoreEnd},
+               #{comment},
+               #{content},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        update tb_gift_plan_config
+        set
+                id = #{id}
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="period!=null">
+                   ,period = #{period}
+                </if>
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="scoreStart!=null">
+                   ,score_start = #{scoreStart}
+                </if>
+                <if test="scoreEnd!=null">
+                   ,score_end = #{scoreEnd}
+                </if>
+                <if test="comment!=null">
+                   ,comment = #{comment}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.gift.planConfig.entity.PlanConfigEntity">
+        select
+              tb_gift_plan_config.id,
+              tb_gift_plan_config.section_code,
+              tb_gift_plan_config.period,
+              tb_gift_plan_config.title,
+              tb_gift_plan_config.score_start,
+              tb_gift_plan_config.score_end,
+              tb_gift_plan_config.comment,
+              tb_gift_plan_config.content,
+              tb_gift_plan_config.create_date,
+              tb_gift_plan_config.create_by,
+              tb_gift_plan_config.update_date,
+              tb_gift_plan_config.update_by,
+              tb_gift_plan_config.remarks,
+              tb_gift_plan_config.sort,
+              tb_gift_plan_config.del_flag
+         from tb_gift_plan_config
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_gift_plan_config.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_gift_plan_config.section_code = #{sectionCode}
+            </if>
+            <if test="period!=null and period!=''">
+              and  tb_gift_plan_config.period = #{period}
+            </if>
+            <if test="title!=null and title!=''">
+              and  tb_gift_plan_config.title like CONCAT('%',#{title},'%')
+            </if>
+            <if test="scoreStart!=null and scoreStart!=''">
+              and  tb_gift_plan_config.score_start = #{scoreStart}
+            </if>
+            <if test="scoreEnd!=null and scoreEnd!=''">
+              and  tb_gift_plan_config.score_end = #{scoreEnd}
+            </if>
+            <if test="comment!=null and comment!=''">
+              and  tb_gift_plan_config.comment = #{comment}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_gift_plan_config.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_gift_plan_config.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_gift_plan_config.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_gift_plan_config.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_gift_plan_config.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_gift_plan_config.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_gift_plan_config.sort = #{sort}
+            </if>
+                and  tb_gift_plan_config.del_flag = 0
+        ORDER BY tb_gift_plan_config.section_code ASC ,tb_gift_plan_config.sort DESC
+    </select>
+
+    <select id="getById" resultType="cn.sparke.modules.gift.planConfig.entity.PlanConfigEntity">
+        select
+              tb_gift_plan_config.id,
+              tb_gift_plan_config.section_code,
+              tb_gift_plan_config.period,
+              tb_gift_plan_config.title,
+              tb_gift_plan_config.score_start,
+              tb_gift_plan_config.score_end,
+              tb_gift_plan_config.comment,
+              tb_gift_plan_config.content,
+              tb_gift_plan_config.create_date,
+              tb_gift_plan_config.create_by,
+              tb_gift_plan_config.update_date,
+              tb_gift_plan_config.update_by,
+              tb_gift_plan_config.remarks,
+              tb_gift_plan_config.sort,
+              tb_gift_plan_config.del_flag
+        from tb_gift_plan_config
+        where id = #{id}
+            and  tb_gift_plan_config.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.gift.planConfig.entity.PlanConfigEntity">
+        select
+              tb_gift_plan_config.id,
+              tb_gift_plan_config.section_code,
+              tb_gift_plan_config.period,
+              tb_gift_plan_config.title,
+              tb_gift_plan_config.score_start,
+              tb_gift_plan_config.score_end,
+              tb_gift_plan_config.comment,
+              tb_gift_plan_config.content,
+              tb_gift_plan_config.create_date,
+              tb_gift_plan_config.create_by,
+              tb_gift_plan_config.update_date,
+              tb_gift_plan_config.update_by,
+              tb_gift_plan_config.remarks,
+              tb_gift_plan_config.sort,
+              tb_gift_plan_config.del_flag
+        from tb_gift_plan_config
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_gift_plan_config.id = #{id}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_gift_plan_config.section_code = #{sectionCode}
+            </if>
+            <if test="period!=null and period!=''">
+                and  tb_gift_plan_config.period = #{period}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_gift_plan_config.title = #{title}
+            </if>
+            <if test="scoreStart!=null and scoreStart!=''">
+                and  tb_gift_plan_config.score_start = #{scoreStart}
+            </if>
+            <if test="scoreEnd!=null and scoreEnd!=''">
+                and  tb_gift_plan_config.score_end = #{scoreEnd}
+            </if>
+            <if test="comment!=null and comment!=''">
+                and  tb_gift_plan_config.comment = #{comment}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_gift_plan_config.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_gift_plan_config.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_gift_plan_config.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_gift_plan_config.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_gift_plan_config.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_gift_plan_config.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_gift_plan_config.sort = #{sort}
+            </if>
+            and  tb_gift_plan_config.del_flag = 0
+         limit 1
+     </select>
+
+    <update id="deleteById">
+            update tb_gift_plan_config
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

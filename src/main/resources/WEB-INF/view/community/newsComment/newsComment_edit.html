@@ -1,0 +1,46 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${newsComment.id}">
+
+
+            <input type="hidden" id="userId" value="${newsComment.userId}">
+
+            <#input id="userName" name="用户名" underline="true"  readonly="true" value="${newsComment.userName}"/>
+
+            <#input id="praiseNum" name="点赞数量" underline="true"  readonly="true" value="${newsComment.praiseNum}"/>
+
+            <#TimeCon2 id="createDate" name="评论时间" isTime="true" underline="true" pattern="YYYY-MM-DD hh:mm:ss"  readonly="true" value="${newsComment.createDate}"/>
+
+            <#uploadMultipleImg id="imgs" name="图片"  type="file" underline="true"  value="${newsComment.imgs}"/>
+
+            <#textarea id="content" name="内容" underline="true" style="height:100px"  readonly="true" content="${newsComment.content}"/>
+
+
+            <!--<div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NewsCommentInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NewsCommentInfoDlg.close()"/>
+                </div>
+            </div>-->
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/newsComment/newsComment_info.js"></script>
+
+<script type="application/javascript">
+    $(function (e) {
+        var config = {
+            $inputFile: $("#imgsUploader"),
+            uploadImgContainer: "uploadImgContainer",
+            $resUrl: $("#imgs")
+        };
+        NewsCommentInfoDlg.uploadMultipleImg = new FileInputCustom(config, {
+            dataUrls: '${newsComment.imgs}'
+        });
+    })
+</script>
+@}

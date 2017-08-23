@@ -1,0 +1,30 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="${CaptionListeningVideo.id}">
+            <input type="hidden" id="paperId" value="${CaptionListeningVideo.paperId}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="name" name="视频名称" value="${CaptionListeningVideo.name}" underline="true" />
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="ccId" name="cc视频id" value="${CaptionListeningVideo.ccId}" underline="true" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CaptionListeningVideoInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CaptionListeningVideoInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/CaptionListeningVideo/CaptionListeningVideo_info.js"></script>
+@}

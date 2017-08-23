@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.simple.qrCatalog.mapper.QrCatalogMapper">
+    <insert id="insert">
+        INSERT INTO tb_qr_catalog
+        (
+            id,
+            name,
+            qr_code,
+            type,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{qrCode},
+               #{type},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_qr_catalog
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="qrCode!=null">
+                   ,qr_code = #{qrCode}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.simple.qrCatalog.entity.QrCatalogEntity">
+        select
+              tb_qr_catalog.id,
+              tb_qr_catalog.name,
+              tb_qr_catalog.qr_code,
+              tb_qr_catalog.type,
+              tb_qr_catalog.create_date,
+              tb_qr_catalog.create_by,
+              tb_qr_catalog.update_date,
+              tb_qr_catalog.update_by,
+              tb_qr_catalog.sort,
+              tb_qr_catalog.del_flag
+         from tb_qr_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_qr_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_qr_catalog.name like concat('%',#{name} ,'%')
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+              and  tb_qr_catalog.qr_code = #{qrCode}
+            </if>
+            <if test="type!=null and type!=0">
+              and  tb_qr_catalog.type = #{type}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_qr_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_qr_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_qr_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_qr_catalog.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_qr_catalog.sort = #{sort}
+            </if>
+                and  tb_qr_catalog.del_flag = 0
+        order by sort ASC , create_date DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.simple.qrCatalog.entity.QrCatalogEntity">
+        select
+              tb_qr_catalog.id,
+              tb_qr_catalog.name,
+              tb_qr_catalog.qr_code,
+              tb_qr_catalog.type,
+              tb_qr_catalog.create_date,
+              tb_qr_catalog.create_by,
+              tb_qr_catalog.update_date,
+              tb_qr_catalog.update_by,
+              tb_qr_catalog.sort,
+              tb_qr_catalog.del_flag
+        from tb_qr_catalog
+        where id = #{id}
+            and  tb_qr_catalog.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.simple.qrCatalog.entity.QrCatalogEntity">
+        select
+              tb_qr_catalog.id,
+              tb_qr_catalog.name,
+              tb_qr_catalog.qr_code,
+              tb_qr_catalog.type,
+              tb_qr_catalog.create_date,
+              tb_qr_catalog.create_by,
+              tb_qr_catalog.update_date,
+              tb_qr_catalog.update_by,
+              tb_qr_catalog.sort,
+              tb_qr_catalog.del_flag
+        from tb_qr_catalog
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_qr_catalog.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_qr_catalog.name = #{name}
+            </if>
+            <if test="qrCode!=null and qrCode!=''">
+                and  tb_qr_catalog.qr_code = #{qrCode}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_qr_catalog.type = #{type}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_qr_catalog.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_qr_catalog.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_qr_catalog.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_qr_catalog.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_qr_catalog.sort = #{sort}
+            </if>
+            and  tb_qr_catalog.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_qr_catalog
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

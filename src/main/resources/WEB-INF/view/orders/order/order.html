@@ -1,0 +1,103 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>订单管理</h5>
+            </div>
+
+            <form name="excelForm" style="display: none;" scope="request" action="" method="post">
+                <input type="hidden" name="eOrderCode"  id="eOrderCode"  />
+                <input type="hidden" name="eStartTime"  id="eStartTime"  />
+                <input type="hidden"  name="eEndTime" id="eEndTime" />
+                <input type="hidden"  name="eOrderStatus" id="eOrderStatus" />
+                <input type="hidden"  name="eFromType" id="eFromType" />
+                <input type="hidden"  name="eReceiver" id="eReceiver" />
+                <input type="hidden"  name="eExportType" id="eExportType" />
+                <input type="submit" id="exportUtil" value="导出excel" onclick="Order.openExportExcel()"/>&nbsp;&nbsp;
+            </form>
+
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#NameConStyle id="qOrderCode" name="订单/交易号" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#NameConStyle id="qReceiver" name="收货人" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="qOrderStatus" name="状态" style="width: 120px;">
+                                    <option selected="selected" disabled="disabled"  style='display: none' value=''></option>
+                                    <option value="1">待支付</option>
+                                    <option value="2">待发货</option>
+                                    <option value="3">待收货</option>
+                                    <option value="4">待评论</option>
+                                    <option value="5">已完成</option>
+                                    <option value="6">已取消</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="qFromType" name="来源" style="width: 120px;">
+                                    <option selected="selected" disabled="disabled"  style='display: none' value=''></option>
+                                    <option value="0">老数据</option>
+                                    <option value="1">Android</option>
+                                    <option value="2">iOS</option>
+                                    <option value="3">M站</option>
+                                    <option value="4">PC站</option>
+                                    <option value="5">知米</option>
+                                </#SelectCon>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#TimeCon id="qStartTime" name="开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#TimeCon id="qEndTime" name="结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Order.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="Order.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="OrderTableToolbar" role="group">
+                            @if(shiro.hasPermission("/orders/order/update")){
+                                <#button name="修改" icon="fa-edit" clickFun="Order.openOrderUpdate()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/details")){
+                                <#button name="查看" icon="fa-info-circle" clickFun="Order.openOrderDetails()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/evaluate")){
+                                <#button name="评价" icon="fa-comments" clickFun="Order.openOrderEvaluate()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/deliver")){
+                                <#button name="发货" icon="fa-paper-plane-o" clickFun="Order.openOrderDeliver()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/cancel")){
+                                <#button name="取消订单" icon="fa-ban" clickFun="Order.openOrderCancel()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/updateStatus")){
+                                <#button name="修改状态" icon="fa-edit" clickFun="Order.openOrderUpdateStatus()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/export_book")){
+                                <#button name="导出图书订单" title="如果不选择导出时间段，默认只导出本月图书订单" icon="fa-download" btnCss="info" clickFun="Order.openExportBook()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/export_course")){
+                                <#button name="导出网课订单" title="如果不选择导出时间段，默认只导出本月网课订单" icon="fa-download" btnCss="info" clickFun="Order.openExportCourse()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/orders/order/import_logistics")){
+                                <#button name="导入物流单号" icon="fa-upload" btnCss="warning" clickFun="Order.openImportLogistics()" space="true"/>
+                            @}
+
+                        </div>
+                        <#table id="OrderTable" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/order/order.js"></script>
+@}

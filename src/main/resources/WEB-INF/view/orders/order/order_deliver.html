@@ -1,0 +1,59 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="orderDeliverInfoForm">
+
+            <input type="hidden" id="id" value="${order.id!}">
+            <input type="hidden" id="olId" value="${order.orderLogistics.id!}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiver" name="收货人" readonly="readonly" underline="false" value="${order.orderLogistics.receiver!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="receiveMobile" name="收货人电话" readonly="readonly" underline="false" value="${order.orderLogistics.receiveMobile!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="orderCode"  name="订单号" readonly="readonly" underline="false" value="${order.orderCode!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="zipcode"  name="邮编" readonly="readonly" underline="false" value="${order.orderLogistics.zipcode!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="receiveAddress" name="详细地址" readonly="readonly" underline="true" value="${order.orderLogistics.receiveAddress!}" />
+                </div>
+                <div class="col-sm-6">
+                    <#input id="provinceCityCn" name="省-市-区/县" readonly="readonly" underline="true" value="${order.orderLogistics.provinceCityCn!}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#select id="expressCode" name="物流公司" >
+                        @ if(expressList != null){
+                            @ for(express in expressList){
+                                <option value = "${express.code!}" ${express.code! ==order.orderLogistics.expressCode!?"selected='selected'":""} >${express.name!}</option>
+                            @ }
+                        @ }
+                    </#select>
+                </div>
+                <div class="col-sm-6">
+                    <#input id="logisticsCode" name="物流单号" underline="false" value="${order.orderLogistics.logisticsCode!}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-4" style="align-items: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OrderInfoDlg.orderDeliverSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/orders/order/order_info.js"></script>
+@}

@@ -1,0 +1,70 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="Form">
+
+            <input type="hidden" id="id" value="">
+            <input type="hidden" id="type" value="1">
+            <input type="hidden" id="paperId2" value="${paperId}">
+            <input type="hidden" id="paperId" value="${paperId}">
+            <input type="hidden" id="sectionCode" value="${sectionCode}">
+            <input type="hidden" id="hasItem" value="0">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="structureName" name="试卷结构名称" underline="true" />
+                    <!--<#select id="hasItem" name="是否存在小题">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </#select>-->
+
+                </div>
+
+                <div class="col-sm-6">
+
+                    <#input id="alias" name="试卷结构别名" underline="true" />
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-6 b-r">
+                        <#input id="name" name="题目名称" underline="true" />
+                        <#input id="remarks" name="备注" underline="true" />
+                        <!--<#select id="hasItem" name="是否存在小题">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </#select>-->
+                    </div>
+
+                    <div class="col-sm-6">
+                    <#input id="questionNum" name="题目数量" underline="true" />
+                        <#input id="sort" name="排序" underline="true" />
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="content" name="题干" underline="true" content="" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" >
+                    <#BookwangEditor id="analysis" name="解析" underline="true" content="" height="500px" leftWidth="1"/>
+                </div>
+            </div>
+
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="QuestionInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="QuestionInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionbank/question/question_info.js"></script>
+@}

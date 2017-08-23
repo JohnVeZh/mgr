@@ -1,0 +1,56 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="communityNewsForm">
+
+            <input type="hidden" id="id" value="${communityNews.id}">
+
+            <#input id="title" name="标题" underline="true" value="${communityNews.title}"/>
+
+            <#input id="subtitle" name="副标题" underline="true" value="${communityNews.subtitle}"/>
+
+            <#input id="author" name="作者" underline="true" value="${communityNews.author}"/>
+
+            <#TimeCon2 id="publishTime" name="发布时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss"  underline="true" value="${communityNews.publishTime}"/>
+
+            <#uploadMultipleImg id="listImg" name="图片地址" type="file" underline="true" value="${communityNews.listImg}"/>
+
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+
+                <div class="col-sm-3">
+                    <label>是否存为草稿&nbsp;</label><input name="isShow" type="checkbox" value="1"
+                                                      @if(communityNews.isShow == 1){
+                                                      checked
+                                                      @}
+                />
+                </div>
+                <div class="col-sm-6"></div>
+            </div>
+
+            <#wangEditor id="content" name="内容" underline="true" height="500px" content="${communityNews.content}" />
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CommunityNewsInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CommunityNewsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/community/news/communityNews_info.js"></script>
+<script type="application/javascript">
+    $(function (e) {
+        var config = {
+            $inputFile: $("#listImgUploader"),
+            uploadImgContainer: "uploadImgContainer",
+            $resUrl: $("#listImg")
+        };
+        CommunityNewsInfoDlg.uploadMultipleImg = new FileInputCustom(config, {
+            dataUrls: '${communityNews.listImg}'
+        });
+    })
+</script>
+@}

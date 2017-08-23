@@ -1,0 +1,57 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+            <input type="hidden" id="id" value="${questionError.id}">
+            <input type="hidden" id="isSolved" value="${questionError.isSolved}">
+            <input type="hidden" id="type" value="${questionError.type}">
+            <input type="hidden" id="questionType" value="${questionError.questionType}">
+            <input type="hidden" id="sectionCode" value="${questionError.sectionCode}">
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td width="10%" >昵称</td>
+                            <td width="40%" >${questionError.nickname}</td>
+                            <td width="10%"  >手机号</td>
+                            <td width="40%" >${questionError.phone}</td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >题目类型</td>
+                            <td id="questionTypeValue"></td>
+                            <td width="50px" >学段</td>
+                            <td id="sectionValue"></td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >分类</td>
+                            <td >${questionError.structureName}</td>
+                            <td width="50px" >题目名称</td>
+                            <td >${questionError.questionName}</td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >创建时间</td>
+                            <td>${questionError.createDate}</td>
+                            <td width="50px" >是否解决</td>
+                            <td id="solvedValue"></td>
+                        </tr>
+                        <tr>
+                            <td width="50px" >反馈内容</td>
+                            <td colspan="3">${questionError.content}</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10" style="text-align: center;">
+                    <#button btnCss="info" name="解决" id="ensure" icon="fa-check" clickFun="QuestionErrorInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="QuestionErrorInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/questionError/questionError_info.js"></script>
+@}

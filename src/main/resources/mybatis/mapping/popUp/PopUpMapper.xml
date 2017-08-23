@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.popUp.mapper.PopUpMapper">
+    <insert id="insert">
+        INSERT INTO tb_popup
+        (
+            id,
+            title,
+            img,
+            jump_type,
+            url,
+            start_time,
+            end_time,
+            show_module,
+            status,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+            (
+                #{id},
+                #{title},
+                #{img},
+                #{jumpType},
+                #{url},
+                #{startTime},
+                #{endTime},
+                #{showModule},
+                #{status},
+                #{createDate},
+                #{createBy},
+                #{updateDate},
+                #{updateBy},
+                #{sort},
+                #{delFlag}
+            )
+    </insert>
+    <update id="update">
+        update tb_popup
+        set
+        id = #{id}
+        <if test="title!=null">
+            ,title = #{title}
+        </if>
+        <if test="img!=null">
+            ,img = #{img}
+        </if>
+        <if test="jumpType!=null">
+            ,jump_type = #{jumpType}
+        </if>
+        <if test="url!=null">
+            ,url = #{url}
+        </if>
+        <if test="startTime!=null">
+            ,start_time = #{startTime}
+        </if>
+        <if test="endTime!=null">
+            ,end_time = #{endTime}
+        </if>
+        <if test="showModule!=null">
+            ,show_module = #{showModule}
+        </if>
+        <if test="status!=null">
+            ,status = #{status}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="sort!=null">
+            ,sort = #{sort}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.popUp.entity.PopUpEntity">
+        select
+        tb_popup.id,
+        tb_popup.title,
+        tb_popup.img,
+        tb_popup.jump_type,
+        tb_popup.url,
+        tb_popup.start_time,
+        tb_popup.end_time,
+        tb_popup.show_module,
+        tb_popup.status,
+        tb_popup.create_date,
+        tb_popup.create_by,
+        tb_popup.update_date,
+        tb_popup.update_by,
+        tb_popup.sort,
+        tb_popup.del_flag,
+        sys_user.name AS operationName
+        from tb_popup,
+        sys_user
+        where 1=1
+        AND  tb_popup.create_by=sys_user.id
+        <if test="id!=null and id!=''">
+            and tb_popup.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and tb_popup.title LIKE concat('%',#{title},'%')
+        </if>
+        <if test="img!=null and img!=''">
+            and tb_popup.img = #{img}
+        </if>
+        <if test="jumpType!=null and jumpType!=''">
+            and tb_popup.jump_type = #{jumpType}
+        </if>
+        <if test="url!=null and url!=''">
+            and tb_popup.url = #{url}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and tb_popup.start_time = #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and tb_popup.end_time = #{endTime}
+        </if>
+        <if test="showModule!=null and showModule!=''">
+            and tb_popup.show_module = #{showModule}
+        </if>
+        <if test="status!=null and status!=''">
+            and tb_popup.status = #{status}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and tb_popup.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and tb_popup.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and tb_popup.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and tb_popup.update_by = #{updateBy}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and tb_popup.sort = #{sort}
+        </if>
+        and tb_popup.del_flag = 0 ORDER BY tb_popup.start_time DESC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.popUp.entity.PopUpEntity">
+        SELECT
+            tb_popup.id,
+            tb_popup.title,
+            tb_popup.img,
+            tb_popup.jump_type,
+            tb_popup.url,
+            tb_popup.start_time,
+            tb_popup.end_time,
+            tb_popup.show_module,
+            tb_popup.status,
+            tb_popup.create_date,
+            tb_popup.create_by,
+            tb_popup.update_date,
+            tb_popup.update_by,
+            tb_popup.sort,
+            tb_popup.del_flag
+        FROM tb_popup
+        WHERE id = #{id}
+              AND tb_popup.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.popUp.entity.PopUpEntity">
+        select
+        tb_popup.id,
+        tb_popup.title,
+        tb_popup.img,
+        tb_popup.jump_type,
+        tb_popup.url,
+        tb_popup.start_time,
+        tb_popup.end_time,
+        tb_popup.show_module,
+        tb_popup.status,
+        tb_popup.create_date,
+        tb_popup.create_by,
+        tb_popup.update_date,
+        tb_popup.update_by,
+        tb_popup.sort,
+        tb_popup.del_flag
+        from tb_popup
+        where 1=1
+        <if test="id!=null and id!=''">
+            and tb_popup.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and tb_popup.title = #{title}
+        </if>
+        <if test="img!=null and img!=''">
+            and tb_popup.img = #{img}
+        </if>
+        <if test="jumpType!=null and jumpType!=''">
+            and tb_popup.jump_type = #{jumpType}
+        </if>
+        <if test="url!=null and url!=''">
+            and tb_popup.url = #{url}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and tb_popup.start_time = #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and tb_popup.end_time = #{endTime}
+        </if>
+        <if test="showModule!=null and showModule!=''">
+            and tb_popup.show_module = #{showModule}
+        </if>
+        <if test="status!=null and status!=''">
+            and tb_popup.status = #{status}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and tb_popup.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and tb_popup.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and tb_popup.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and tb_popup.update_by = #{updateBy}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and tb_popup.sort = #{sort}
+        </if>
+        and tb_popup.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        UPDATE tb_popup
+        SET del_flag = 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM tb_popup tp
+        WHERE
+            (
+                (#{startTime} BETWEEN tp.start_time AND tp.end_time)
+                OR (#{endTime} BETWEEN tp.start_time AND tp.end_time)
+            )
+            AND tp.show_module = #{showModule}
+            AND tp.status = 1
+            AND tp.del_flag = 0
+    </select>
+
+    <select id="getExpiredList" resultType="cn.sparke.modules.popUp.entity.PopUpEntity">
+        SELECT
+            tp.id,
+            tp.title,
+            tp.img,
+            tp.jump_type,
+            tp.url,
+            tp.start_time,
+            tp.end_time,
+            tp.show_module,
+            tp.status,
+            tp.create_date,
+            tp.create_by,
+            tp.update_date,
+            tp.update_by,
+            tp.sort,
+            tp.del_flag
+        FROM
+            tb_popup tp
+        WHERE
+            tp.`status` = 1
+            AND tp.del_flag = 0
+            AND tp.end_time &lt;= NOW()
+    </select>
+
+    <update id="expired">
+        UPDATE tb_popup
+        SET status = 2
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

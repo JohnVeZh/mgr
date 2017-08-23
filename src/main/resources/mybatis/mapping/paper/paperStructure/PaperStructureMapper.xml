@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.paper.paperStructure.mapper.PaperStructureMapper">
+    <insert id="insert">
+        INSERT INTO tb_paper_structure
+        (
+        id,
+        paper_id,
+        name,
+        content,
+        content_type,
+        alias,
+        parent_id,
+        parent_ids,
+        level,
+        is_leaf,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        sort,
+        del_flag
+        )
+        VALUES
+        (
+        #{id},
+        #{paperId},
+        #{name},
+        #{content},
+        #{contentType},
+        #{alias},
+        #{parentId},
+        #{parentIds},
+        #{level},
+        #{isLeaf},
+        #{createDate},
+        #{createBy},
+        #{updateDate},
+        #{updateBy},
+        #{remarks},
+        #{sort},
+        #{delFlag}
+        )
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO tb_paper_structure
+        (
+        id,
+        paper_id,
+        name,
+        content,
+        content_type,
+        alias,
+        parent_id,
+        parent_ids,
+        level,
+        is_leaf,
+        create_date,
+        create_by,
+        update_date,
+        update_by,
+        remarks,
+        sort,
+        del_flag
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.paperId},
+            #{item.name},
+            #{item.content},
+            #{item.contentType},
+            #{item.alias},
+            #{item.parentId},
+            #{item.parentIds},
+            #{item.level},
+            #{item.isLeaf},
+            #{item.createDate},
+            #{item.createBy},
+            #{item.updateDate},
+            #{item.updateBy},
+            #{item.remarks},
+            #{item.sort},
+            #{item.delFlag}
+            )
+        </foreach>
+    </insert>
+    <update id="update">
+        update tb_paper_structure
+        set
+        id = #{id}
+        <if test="paperId!=null">
+            ,paper_id = #{paperId}
+        </if>
+        <if test="name!=null">
+            ,name = #{name}
+        </if>
+        <if test="content!=null">
+            ,content = #{content}
+        </if>
+        <if test="contentType!=null">
+            ,content_type = #{contentType}
+        </if>
+        <if test="alias!=null">
+            ,alias = #{alias}
+        </if>
+        <if test="parentId!=null">
+            ,parent_id = #{parentId}
+        </if>
+        <if test="parentIds!=null">
+            ,parent_ids = #{parentIds}
+        </if>
+        <if test="level!=null">
+            ,level = #{level}
+        </if>
+        <if test="isLeaf!=null">
+            ,is_leaf = #{isLeaf}
+        </if>
+        <if test="createDate!=null">
+            ,create_date = #{createDate}
+        </if>
+        <if test="createBy!=null">
+            ,create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null">
+            ,update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null">
+            ,remarks = #{remarks}
+        </if>
+        <if test="sort!=null">
+            ,sort = #{sort}
+        </if>
+        <if test="delFlag!=null">
+            ,del_flag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.paper.paperStructure.entity.PaperStructureEntity">
+        select
+        tb_paper_structure.id,
+        tb_paper_structure.paper_id,
+        tb_paper_structure.name,
+        tb_paper_structure.content,
+        tb_paper_structure.content_type,
+        tb_paper_structure.alias,
+        tb_paper_structure.parent_id,
+        tb_paper_structure.parent_ids,
+        tb_paper_structure.level,
+        tb_paper_structure.is_leaf,
+        tb_paper_structure.create_date,
+        tb_paper_structure.create_by,
+        tb_paper_structure.update_date,
+        tb_paper_structure.update_by,
+        tb_paper_structure.remarks,
+        tb_paper_structure.sort,
+        tb_paper_structure.del_flag
+        from tb_paper_structure
+        where 1=1
+        <if test="id!=null and id!=''">
+            and tb_paper_structure.id = #{id}
+        </if>
+        <if test="paperId!=null and paperId!=''">
+            and tb_paper_structure.paper_id = #{paperId}
+        </if>
+        <if test="name!=null and name!=''">
+            and tb_paper_structure.name = #{name}
+        </if>
+        <if test="content!=null and content!=''">
+            and tb_paper_structure.content = #{content}
+        </if>
+        <if test="contentType!=null and contentType!=''">
+            and tb_paper_structure.content_type = #{contentType}
+        </if>
+        <if test="alias!=null and alias!=''">
+            and tb_paper_structure.alias = #{alias}
+        </if>
+        <if test="parentId!=null and parentId!=''">
+            and tb_paper_structure.parent_id = #{parentId}
+        </if>
+        <if test="parentIds!=null and parentIds!=''">
+            and tb_paper_structure.parent_ids = #{parentIds}
+        </if>
+        <if test="level!=null and level!=''">
+            and tb_paper_structure.level = #{level}
+        </if>
+        <if test="isLeaf!=null and isLeaf!=''">
+            and tb_paper_structure.is_leaf = #{isLeaf}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and tb_paper_structure.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and tb_paper_structure.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and tb_paper_structure.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and tb_paper_structure.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and tb_paper_structure.remarks = #{remarks}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and tb_paper_structure.sort = #{sort}
+        </if>
+        <if test="condition!=null and condition!=''">
+            and  tb_paper_structure.name like CONCAT('%',#{condition},'%')
+        </if>
+        and tb_paper_structure.del_flag = 0
+        ORDER BY tb_paper_structure.sort ASC
+    </select>
+
+    <select id="structureTreeList" resultType="cn.sparke.modules.paper.paperStructure.entity.StructureTreeNode">
+        SELECT
+        m1.id AS id,
+        (
+        CASE
+        WHEN (m2.id = '0' OR m2.id IS NULL) THEN
+        0
+        ELSE
+        m2.id
+        END
+        ) AS pId,
+        m1. NAME AS NAME,
+        'false' AS isOpen,
+        m1.content_type
+        FROM
+        tb_paper_structure m1
+        LEFT JOIN tb_paper_structure m2 ON (
+        m2.del_flag IS NULL
+        OR (
+        m1.parent_id = m2.id
+        AND m2.del_flag = 0
+        )
+        )
+        WHERE
+        m1.del_flag = 0
+        and m1.paper_id = #{paperId}
+        <!--<if test="list!=null">-->
+            <!--AND m1.content_type in (-->
+            <!--<foreach collection="list" index="index" item="item" separator=",">-->
+                <!--#{item}-->
+            <!--</foreach>-->
+            <!--)-->
+        <!--</if>-->
+        ORDER BY
+        m1.sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.paper.paperStructure.entity.PaperStructureEntity">
+        select
+        tb_paper_structure.id,
+        tb_paper_structure.paper_id,
+        tb_paper_structure.name,
+        tb_paper_structure.content,
+        tb_paper_structure.content_type,
+        tb_paper_structure.alias,
+        tb_paper_structure.parent_id,
+        tb_paper_structure.parent_ids,
+        tb_paper_structure.level,
+        tb_paper_structure.is_leaf,
+        tb_paper_structure.create_date,
+        tb_paper_structure.create_by,
+        tb_paper_structure.update_date,
+        tb_paper_structure.update_by,
+        tb_paper_structure.remarks,
+        tb_paper_structure.sort,
+        tb_paper_structure.del_flag
+        from tb_paper_structure
+        where id = #{id}
+        and  tb_paper_structure.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.paper.paperStructure.entity.PaperStructureEntity">
+        select
+        tb_paper_structure.id,
+        tb_paper_structure.paper_id,
+        tb_paper_structure.name,
+        tb_paper_structure.content,
+        tb_paper_structure.content_type,
+        tb_paper_structure.alias,
+        tb_paper_structure.parent_id,
+        tb_paper_structure.parent_ids,
+        tb_paper_structure.level,
+        tb_paper_structure.is_leaf,
+        tb_paper_structure.create_date,
+        tb_paper_structure.create_by,
+        tb_paper_structure.update_date,
+        tb_paper_structure.update_by,
+        tb_paper_structure.remarks,
+        tb_paper_structure.sort,
+        tb_paper_structure.del_flag
+        from tb_paper_structure
+        where 1=1
+        <if test="id!=null and id!=''">
+            and tb_paper_structure.id = #{id}
+        </if>
+        <if test="paperId!=null and paperId!=''">
+            and tb_paper_structure.paper_id = #{paperId}
+        </if>
+        <if test="name!=null and name!=''">
+            and tb_paper_structure.name = #{name}
+        </if>
+        <if test="content!=null and content!=''">
+            and tb_paper_structure.content = #{content}
+        </if>
+        <if test="contentType!=null and contentType!=''">
+            and tb_paper_structure.content_type = #{contentType}
+        </if>
+        <if test="alias!=null and alias!=''">
+            and tb_paper_structure.alias = #{alias}
+        </if>
+        <if test="parentId!=null and parentId!=''">
+            and tb_paper_structure.parent_id = #{parentId}
+        </if>
+        <if test="parentIds!=null and parentIds!=''">
+            and tb_paper_structure.parent_ids = #{parentIds}
+        </if>
+        <if test="level!=null and level!=''">
+            and tb_paper_structure.level = #{level}
+        </if>
+        <if test="isLeaf!=null and isLeaf!=''">
+            and tb_paper_structure.is_leaf = #{isLeaf}
+        </if>
+        <if test="createDate!=null and createDate!=''">
+            and tb_paper_structure.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and tb_paper_structure.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null and updateDate!=''">
+            and tb_paper_structure.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and tb_paper_structure.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and tb_paper_structure.remarks = #{remarks}
+        </if>
+        <if test="sort!=null and sort!=''">
+            and tb_paper_structure.sort = #{sort}
+        </if>
+        and tb_paper_structure.del_flag = 0
+        limit 1
+    </select>
+
+    <update id="deleteById">
+        update tb_paper_structure
+        set del_flag = 1
+        where id = #{id}
+    </update>
+
+    <select id="treeList" resultType="cn.sparke.core.common.entity.ZTreeNode" parameterType="java.lang.String">
+        SELECT
+        t1.id AS id,
+        t1. NAME AS NAME,
+        t1.parent_id AS pId,
+        (
+        CASE
+        WHEN (t1.parent_id = 0) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) AS isOpen
+        FROM
+        `tb_paper_structure` t1
+        LEFT JOIN tb_paper_structure t2 ON (t1.parent_id = t2.id)
+        WHERE
+        <!-- <foreach collection="list" item="item" index="index" separator=",">
+             t1.paper_id = #{item}
+         </foreach>-->
+        t1.paper_id = #{paperId}
+        AND t1.del_flag = 0
+    </select>
+
+
+    <select id="getParentStructure" parameterType="java.lang.String"
+            resultType="cn.sparke.modules.paper.paperStructure.entity.PaperStructureEntity">
+        select
+        tb_paper_structure.id,
+        tb_paper_structure.paper_id,
+        tb_paper_structure.name,
+        tb_paper_structure.content,
+        tb_paper_structure.content_type,
+        tb_paper_structure.alias,
+        tb_paper_structure.parent_id,
+        tb_paper_structure.parent_ids,
+        tb_paper_structure.level,
+        tb_paper_structure.is_leaf,
+        tb_paper_structure.create_date,
+        tb_paper_structure.create_by,
+        tb_paper_structure.update_date,
+        tb_paper_structure.update_by,
+        tb_paper_structure.remarks,
+        tb_paper_structure.sort,
+        tb_paper_structure.del_flag
+        from tb_paper_structure
+        where tb_paper_structure.id = #{parentId}
+    </select>
+
+    <select id="getChildStructure" parameterType="String" resultType="String">
+        select id from tb_paper_structure where parent_id = #{parentId}
+    </select>
+</mapper>

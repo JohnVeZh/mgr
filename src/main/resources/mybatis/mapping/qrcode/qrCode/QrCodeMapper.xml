@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.qrcode.qrCode.mapper.QrCodeMapper">
+    <insert id="insert">
+        INSERT INTO tb_qr_code
+        (
+            id,
+            use_scene,
+            code,
+            section_code,
+            type,
+            target_type,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{useScene},
+               #{code},
+               #{sectionCode},
+               #{type},
+               #{targetType},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_qr_code
+        set
+                id = #{id}
+                <if test="useScene!=null">
+                   ,use_scene = #{useScene}
+                </if>
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="sectionCode!=null">
+                   ,section_code = #{sectionCode}
+                </if>
+                <if test="type!=null">
+                   ,type = #{type}
+                </if>
+                <if test="targetType!=null">
+                   ,target_type = #{targetType}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.qrcode.qrCode.entity.QrCodeEntity">
+        select
+              tb_qr_code.id,
+              tb_qr_code.use_scene,
+              tb_qr_code.code,
+              tb_qr_code.section_code,
+              tb_qr_code.type,
+              tb_qr_code.target_type,
+              tb_qr_code.create_date,
+              tb_qr_code.create_by,
+              tb_qr_code.update_date,
+              tb_qr_code.update_by,
+              tb_qr_code.remarks,
+              tb_qr_code.sort,
+              tb_qr_code.del_flag
+         from tb_qr_code
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_qr_code.id = #{id}
+            </if>
+            <if test="useScene!=null and useScene!=''">
+              and  tb_qr_code.use_scene = #{useScene}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_qr_code.code = #{code}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+              and  tb_qr_code.section_code = #{sectionCode}
+            </if>
+            <if test="type!=null and type!=''">
+              and  tb_qr_code.type = #{type}
+            </if>
+            <if test="targetType!=null and targetType!=''">
+              and  tb_qr_code.target_type = #{targetType}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_qr_code.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_qr_code.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_qr_code.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_qr_code.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_qr_code.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_qr_code.sort = #{sort}
+            </if>
+            <if test="condition!=null and condition!=''">
+                and  tb_qr_code.code like CONCAT('%',#{condition},'%')
+            </if>
+                and  tb_qr_code.del_flag = 0
+        ORDER BY tb_qr_code.sort ASC
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.qrcode.qrCode.entity.QrCodeEntity">
+        select
+              tb_qr_code.id,
+              tb_qr_code.use_scene,
+              tb_qr_code.code,
+              tb_qr_code.section_code,
+              tb_qr_code.type,
+              tb_qr_code.target_type,
+              tb_qr_code.create_date,
+              tb_qr_code.create_by,
+              tb_qr_code.update_date,
+              tb_qr_code.update_by,
+              tb_qr_code.remarks,
+              tb_qr_code.sort,
+              tb_qr_code.del_flag
+        from tb_qr_code
+        where id = #{id}
+            and  tb_qr_code.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.qrcode.qrCode.entity.QrCodeEntity">
+        select
+              tb_qr_code.id,
+              tb_qr_code.use_scene,
+              tb_qr_code.code,
+              tb_qr_code.section_code,
+              tb_qr_code.type,
+              tb_qr_code.target_type,
+              tb_qr_code.create_date,
+              tb_qr_code.create_by,
+              tb_qr_code.update_date,
+              tb_qr_code.update_by,
+              tb_qr_code.remarks,
+              tb_qr_code.sort,
+              tb_qr_code.del_flag
+        from tb_qr_code
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_qr_code.id = #{id}
+            </if>
+            <if test="useScene!=null and useScene!=''">
+                and  tb_qr_code.use_scene = #{useScene}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_qr_code.code = #{code}
+            </if>
+            <if test="sectionCode!=null and sectionCode!=''">
+                and  tb_qr_code.section_code = #{sectionCode}
+            </if>
+            <if test="type!=null and type!=''">
+                and  tb_qr_code.type = #{type}
+            </if>
+            <if test="targetType!=null and targetType!=''">
+                and  tb_qr_code.target_type = #{targetType}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_qr_code.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_qr_code.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_qr_code.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_qr_code.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_qr_code.remarks = #{remarks}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_qr_code.sort = #{sort}
+            </if>
+            and  tb_qr_code.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_qr_code
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

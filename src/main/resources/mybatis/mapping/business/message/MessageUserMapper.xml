@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.business.message.mapper.MessageUserMapper">
+    <insert id="insert">
+        INSERT INTO tb_message_user
+        (
+            id,
+            user_id,
+            msg_id,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{userId},
+               #{msgId},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_message_user
+        set
+                id = #{id}
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="msgId!=null">
+                   ,msg_id = #{msgId}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.business.message.entity.MessageUserEntity">
+        select
+              tb_message_user.id,
+              tb_message_user.user_id,
+              tb_message_user.msg_id,
+              tb_message_user.create_date,
+              tb_message_user.create_by,
+              tb_message_user.update_date,
+              tb_message_user.update_by,
+              tb_message_user.del_flag
+         from tb_message_user
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_message_user.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tb_message_user.user_id = #{userId}
+            </if>
+            <if test="msgId!=null and msgId!=''">
+              and  tb_message_user.msg_id = #{msgId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_message_user.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_message_user.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_message_user.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_message_user.update_by = #{updateBy}
+            </if>
+                and  tb_message_user.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.business.message.entity.MessageUserEntity">
+        select
+              tb_message_user.id,
+              tb_message_user.user_id,
+              tb_message_user.msg_id,
+              tb_message_user.create_date,
+              tb_message_user.create_by,
+              tb_message_user.update_date,
+              tb_message_user.update_by,
+              tb_message_user.del_flag
+        from tb_message_user
+        where id = #{id}
+            and  tb_message_user.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.business.message.entity.MessageUserEntity">
+        select
+              tb_message_user.id,
+              tb_message_user.user_id,
+              tb_message_user.msg_id,
+              tb_message_user.create_date,
+              tb_message_user.create_by,
+              tb_message_user.update_date,
+              tb_message_user.update_by,
+              tb_message_user.del_flag
+        from tb_message_user
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_message_user.id = #{id}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_message_user.user_id = #{userId}
+            </if>
+            <if test="msgId!=null and msgId!=''">
+                and  tb_message_user.msg_id = #{msgId}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_message_user.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_message_user.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_message_user.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_message_user.update_by = #{updateBy}
+            </if>
+            and  tb_message_user.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_message_user
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

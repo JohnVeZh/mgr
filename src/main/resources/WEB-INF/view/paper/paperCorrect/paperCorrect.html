@@ -1,0 +1,77 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>大礼包试卷批改管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="phone" name="手机号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="period" name="试卷类型"  >
+                                    <option value="" selected="selected">全部</option>
+                                    <option value="1">学前测试</option>
+                                    <option value="2">学中测试</option>
+                                    <option value="3">学末测试</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="questionType" name="作业类型"  >
+                                    <option value="" selected="selected">全部</option>
+                                    <option value="3">翻译</option>
+                                    <option value="4">写作</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="replyStatus" name="批改状态"  >
+                                    <option value="" selected="selected">全部</option>
+                                    <option value="1">已批改</option>
+                                    <option value="0">未批改</option>
+                                </#SelectCon>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <#TimeCon id="commitTimeStart" name="提交开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-4">
+                                <#TimeCon id="commitTimeEnd" name="提交结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="sectionCode" name="四六级"  >
+                                    <option value="" selected="selected">全部</option>
+                                    <option value="1">四级</option>
+                                    <option value="2">六级</option>
+                                </#SelectCon>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <#TimeCon id="correctTimeStart" name="批改开始时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-4">
+                                <#TimeCon id="correctTimeEnd" name="批改结束时间" isTime="true" pattern="YYYY-MM-DD hh:mm:ss" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="PaperCorrect.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="PaperCorrect.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="PaperCorrectTableToolbar" role="group">
+                        </div>
+                        <#table id="PaperCorrectTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paperCorrect/paperCorrect.js"></script>
+@}

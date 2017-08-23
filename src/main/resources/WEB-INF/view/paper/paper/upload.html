@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="专项练习听力模板" id="ensure" icon="fa-download" clickFun="PaperUploadDlg.template('1')"/>
+                    <#button btnCss="info" name="专项练习阅读模板" id="ensure" icon="fa-download" clickFun="PaperUploadDlg.template('2')"/>
+                    <#button btnCss="info" name="专项练习写作模板" id="ensure" icon="fa-download" clickFun="PaperUploadDlg.template('3')"/>
+                    <#button btnCss="info" name="专项练习翻译模板" id="ensure" icon="fa-download" clickFun="PaperUploadDlg.template('4')"/>
+                    <#button btnCss="info" name="简系列听力模板" id="ensure" icon="fa-download" clickFun="PaperUploadDlg.template('5')"/>
+                </div>
+            </div>
+            <!--听力-->
+            <form id="uploadForm" action="/paper/upload/df87b9efd3ed11e68bac00163e0c8sd4" method="post" enctype="multipart/form-data">
+            <!--阅读-->
+            <!--<form id="uploadForm" action="/paper/upload/df87b9efd3ed11e68bac00163e0d3sf8" method="post" enctype="multipart/form-data">-->
+            <!--翻译-->
+            <!--<form id="uploadForm" action="/paper/upload/df87b9efd3ed11e68bac00163r5c8sf4" method="post" enctype="multipart/form-data">-->
+            <!--写作-->
+            <!--<form id="uploadForm" action="/paper/upload/df87b9efd3ed11e68bac00163e458sf4" method="post" enctype="multipart/form-data">-->
+            <!--听力-->
+            <!--<form id="uploadForm" action="/paper/upload/df87b9efd3ed11e68b00163e0c8sd422" method="post" enctype="multipart/form-data">-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <#input type="file" id="file" name="file"></#input>
+                </div>
+
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PaperUploadDlg.upload()"/>
+                    <!--<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PaperUploadDlg.close()"/>-->
+                    <!--<input class="btn btn-primary" value="提交" type="submit" />-->
+                </div>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/paper/paper/paper_upload.js"></script>
+@}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.orders.orderEvaluate.mapper.OrderEvaluateMapper">
+
+    <select id="getOrderEvaluateList" resultType="cn.sparke.modules.orders.orderEvaluate.entity.OrderEvaluateEntity">
+        SELECT
+            toe.id,
+            toe.order_id,
+            toe.content,
+            toe.imgs,
+            toe.thinking_score,
+            toe.style_score,
+            toe.curriculum_score,
+            toe.average_score,
+            tu.nickname,
+            tu.phone,
+            tp.name     AS productName,
+            tp.list_img AS productImg
+        FROM
+            tb_order_evaluate AS toe
+            LEFT JOIN tb_user AS tu ON tu.id = toe.user_id
+            LEFT JOIN tb_product AS tp ON tp.id = toe.product_id
+        WHERE
+            toe.order_id = #{orderId} AND
+            toe.del_flag = 0
+        ORDER BY toe.create_date DESC
+    </select>
+
+
+    <update id="deleteById">
+        UPDATE tb_order_evaluate SET del_flag = 1 WHERE id = #{evaluateId}
+    </update>
+</mapper>

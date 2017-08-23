@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.community.news.mapper.CommunityNewsMapper">
+    <insert id="insert">
+        INSERT INTO tb_community_news
+        (
+            id,
+            title,
+            subtitle,
+            publish_time,
+            author,
+            list_img,
+            content,
+            is_show,
+            read_num,
+            is_top,
+            top_time,
+            is_recommend,
+            recommend_time,
+            comment_num,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{subtitle},
+               #{publishTime},
+               #{author},
+               #{listImg},
+               #{content},
+               #{isShow},
+               #{readNum},
+               #{isTop},
+               #{topTime},
+               #{isRecommend},
+               #{recommendTime},
+               #{commentNum},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.sparke.modules.community.news.entity.CommunityNewsEntity">
+        insert into tb_community_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="subtitle != null">
+                subtitle,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="listImg != null">
+                list_img,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="readNum != null">
+                read_num,
+            </if>
+            <if test="isTop != null">
+                is_top,
+            </if>
+            <if test="topTime != null">
+                top_time,
+            </if>
+            <if test="isRecommend != null">
+                is_recommend,
+            </if>
+            <if test="recommendTime != null">
+                recommend_time,
+            </if>
+            <if test="commentNum != null">
+                comment_num,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="listImg != null">
+                #{listImg,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="readNum != null">
+                #{readNum,jdbcType=INTEGER},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=TINYINT},
+            </if>
+            <if test="topTime != null">
+                #{topTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isRecommend != null">
+                #{isRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="recommendTime != null">
+                #{recommendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentNum != null">
+                #{commentNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update tb_community_news
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="subtitle!=null">
+                   ,subtitle = #{subtitle}
+                </if>
+                <if test="publishTime!=null">
+                   ,publish_time = #{publishTime}
+                </if>
+                <if test="author!=null">
+                   ,author = #{author}
+                </if>
+                <if test="listImg!=null">
+                   ,list_img = #{listImg}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="isShow!=null">
+                   ,is_show = #{isShow}
+                </if>
+                <if test="readNum!=null">
+                   ,read_num = #{readNum}
+                </if>
+                <if test="isTop!=null">
+                   ,is_top = #{isTop}
+                </if>
+                <if test="topTime!=null">
+                   ,top_time = #{topTime}
+                </if>
+                <if test="isRecommend!=null">
+                   ,is_recommend = #{isRecommend}
+                </if>
+                <if test="recommendTime!=null">
+                   ,recommend_time = #{recommendTime}
+                </if>
+                <if test="commentNum!=null">
+                   ,comment_num = #{commentNum}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+
+    <select id="findListWithoutContent" resultType="cn.sparke.modules.community.news.entity.CommunityNewsEntity">
+        select
+        tb_community_news.id,
+        tb_community_news.title,
+        tb_community_news.subtitle,
+        tb_community_news.publish_time,
+        tb_community_news.author,
+        tb_community_news.list_img,
+        tb_community_news.is_show,
+        tb_community_news.read_num,
+        tb_community_news.is_top,
+        tb_community_news.top_time,
+        tb_community_news.is_recommend,
+        tb_community_news.recommend_time,
+        tb_community_news.comment_num,
+        tb_community_news.create_date,
+        tb_community_news.create_by,
+        tb_community_news.update_date,
+        tb_community_news.update_by,
+        tb_community_news.remarks,
+        tb_community_news.del_flag
+        from tb_community_news
+        where 1=1
+        <include refid="findListCondition"/>
+        and  tb_community_news.del_flag = 0
+        order by tb_community_news.is_top desc,tb_community_news.top_time desc,tb_community_news.is_recommend desc ,tb_community_news.recommend_time desc
+    </select>
+
+
+    <select id="findList" resultType="cn.sparke.modules.community.news.entity.CommunityNewsEntity">
+        select
+              tb_community_news.id,
+              tb_community_news.title,
+              tb_community_news.subtitle,
+              tb_community_news.publish_time,
+              tb_community_news.author,
+              tb_community_news.list_img,
+              tb_community_news.content,
+              tb_community_news.is_show,
+              tb_community_news.read_num,
+              tb_community_news.is_top,
+              tb_community_news.top_time,
+              tb_community_news.is_recommend,
+              tb_community_news.recommend_time,
+              tb_community_news.comment_num,
+              tb_community_news.create_date,
+              tb_community_news.create_by,
+              tb_community_news.update_date,
+              tb_community_news.update_by,
+              tb_community_news.remarks,
+              tb_community_news.del_flag
+         from tb_community_news
+        where 1=1
+            <include refid="findListCondition"/>
+                and  tb_community_news.del_flag = 0
+        order by tb_community_news.is_top desc,tb_community_news.top_time desc,tb_community_news.is_recommend desc ,tb_community_news.recommend_time desc
+    </select>
+
+    <sql id="findListCondition">
+        <if test="id!=null and id!=''">
+            and  tb_community_news.id = #{id}
+        </if>
+        <if test="title!=null and title!=''">
+            and  tb_community_news.title like concat('%',#{title},'%')
+        </if>
+        <if test="subtitle!=null and subtitle!=''">
+            and  tb_community_news.subtitle = #{subtitle}
+        </if>
+        <if test="publishTime!=null">
+            and  tb_community_news.publish_time = #{publishTime}
+        </if>
+        <if test="author!=null and author!=''">
+            and  tb_community_news.author like concat('%',#{author},'%')
+        </if>
+        <if test="listImg!=null and listImg!=''">
+            and  tb_community_news.list_img = #{listImg}
+        </if>
+        <if test="content!=null and content!=''">
+            and  tb_community_news.content = #{content}
+        </if>
+        <if test="isShow!=null">
+            and  tb_community_news.is_show = #{isShow}
+        </if>
+        <if test="readNum!=null">
+            and  tb_community_news.read_num = #{readNum}
+        </if>
+        <if test="isTop!=null">
+            and  tb_community_news.is_top = #{isTop}
+        </if>
+        <if test="topTime!=null">
+            and  tb_community_news.top_time = #{topTime}
+        </if>
+        <if test="isRecommend!=null">
+            and  tb_community_news.is_recommend = #{isRecommend}
+        </if>
+        <if test="recommendTime!=null">
+            and  tb_community_news.recommend_time = #{recommendTime}
+        </if>
+        <if test="commentNum!=null">
+            and  tb_community_news.comment_num = #{commentNum}
+        </if>
+        <if test="createDate!=null">
+            and  tb_community_news.create_date = #{createDate}
+        </if>
+        <if test="createBy!=null and createBy!=''">
+            and  tb_community_news.create_by = #{createBy}
+        </if>
+        <if test="updateDate!=null">
+            and  tb_community_news.update_date = #{updateDate}
+        </if>
+        <if test="updateBy!=null and updateBy!=''">
+            and  tb_community_news.update_by = #{updateBy}
+        </if>
+        <if test="remarks!=null and remarks!=''">
+            and  tb_community_news.remarks = #{remarks}
+        </if>
+    </sql>
+
+
+    <select id="getById" resultType="cn.sparke.modules.community.news.entity.CommunityNewsEntity">
+        select
+              tb_community_news.id,
+              tb_community_news.title,
+              tb_community_news.subtitle,
+              tb_community_news.publish_time,
+              tb_community_news.author,
+              tb_community_news.list_img,
+              tb_community_news.content,
+              tb_community_news.is_show,
+              tb_community_news.read_num,
+              tb_community_news.is_top,
+              tb_community_news.top_time,
+              tb_community_news.is_recommend,
+              tb_community_news.recommend_time,
+              tb_community_news.comment_num,
+              tb_community_news.create_date,
+              tb_community_news.create_by,
+              tb_community_news.update_date,
+              tb_community_news.update_by,
+              tb_community_news.remarks,
+              tb_community_news.del_flag
+        from tb_community_news
+        where id = #{id}
+            and  tb_community_news.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.community.news.entity.CommunityNewsEntity">
+        select
+              tb_community_news.id,
+              tb_community_news.title,
+              tb_community_news.subtitle,
+              tb_community_news.publish_time,
+              tb_community_news.author,
+              tb_community_news.list_img,
+              tb_community_news.content,
+              tb_community_news.is_show,
+              tb_community_news.read_num,
+              tb_community_news.is_top,
+              tb_community_news.top_time,
+              tb_community_news.is_recommend,
+              tb_community_news.recommend_time,
+              tb_community_news.comment_num,
+              tb_community_news.create_date,
+              tb_community_news.create_by,
+              tb_community_news.update_date,
+              tb_community_news.update_by,
+              tb_community_news.remarks,
+              tb_community_news.del_flag
+        from tb_community_news
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_community_news.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_community_news.title = #{title}
+            </if>
+            <if test="subtitle!=null and subtitle!=''">
+                and  tb_community_news.subtitle = #{subtitle}
+            </if>
+            <if test="publishTime!=null and publishTime!=''">
+                and  tb_community_news.publish_time = #{publishTime}
+            </if>
+            <if test="author!=null and author!=''">
+                and  tb_community_news.author = #{author}
+            </if>
+            <if test="listImg!=null and listImg!=''">
+                and  tb_community_news.list_img = #{listImg}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_community_news.content = #{content}
+            </if>
+            <if test="isShow!=null and isShow!=''">
+                and  tb_community_news.is_show = #{isShow}
+            </if>
+            <if test="readNum!=null and readNum!=''">
+                and  tb_community_news.read_num = #{readNum}
+            </if>
+            <if test="isTop!=null and isTop!=''">
+                and  tb_community_news.is_top = #{isTop}
+            </if>
+            <if test="topTime!=null and topTime!=''">
+                and  tb_community_news.top_time = #{topTime}
+            </if>
+            <if test="isRecommend!=null and isRecommend!=''">
+                and  tb_community_news.is_recommend = #{isRecommend}
+            </if>
+            <if test="recommendTime!=null and recommendTime!=''">
+                and  tb_community_news.recommend_time = #{recommendTime}
+            </if>
+            <if test="commentNum!=null and commentNum!=''">
+                and  tb_community_news.comment_num = #{commentNum}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_community_news.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_community_news.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_community_news.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_community_news.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_community_news.remarks = #{remarks}
+            </if>
+            and  tb_community_news.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_community_news
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>简系列视频管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="name" name="视频名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="QrNetworkVideo.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="QrNetworkVideoTableToolbar" role="group">
+                            @if(shiro.hasPermission("/simple/qrNetworkVideo/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="QrNetworkVideo.openAddQrNetworkVideo()"/>
+                            @}
+                            @if(shiro.hasPermission("/simple/qrNetworkVideo/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="QrNetworkVideo.openQrNetworkVideoDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/simple/qrNetworkVideo/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="QrNetworkVideo.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="QrNetworkVideoTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/simple/qrNetworkVideo/qrNetworkVideo.js"></script>
+@}

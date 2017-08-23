@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>常见问题管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="title" name="标题" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="CommonQuestion.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="CommonQuestionTableToolbar" role="group">
+                            @if(shiro.hasPermission("/commonQuestion/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="CommonQuestion.openAddCommonQuestion()"/>
+                            @}
+                            @if(shiro.hasPermission("/commonQuestion/update")){
+                                <#button name="修改" icon="fa-pencil" clickFun="CommonQuestion.openCommonQuestionDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/commonQuestion/delete")){
+                                <#button name="删除" icon="fa-trash" clickFun="CommonQuestion.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="CommonQuestionTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/commonQuestion/commonQuestion.js"></script>
+@}

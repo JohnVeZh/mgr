@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sparke.modules.gift.activationCode.mapper.ActivationCodeMapper">
+
+    <resultMap id="findListResultMap" type="cn.sparke.modules.gift.activationCode.entity.ActivationCodeEntity">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="sectionCode" property="sectionCode"/>
+        <result column="activateTime" property="activateTime"/>
+        <result column="address" property="address"/>
+        <result column="createDate" property="createDate"/>
+        <result column="updateDate" property="updateDate"/>
+        <result column="updateBy" property="updateBy"/>
+        <result column="sort" property="sort"/>
+        <result column="phone" property="phone"/>
+        <association property="subjectiveSubmitRecord" javaType="cn.sparke.modules.gift.activationCode.entity.SubjectiveSubmitRecordBean">
+            <id column="subId" property="id"/>
+            <result column="preTranslateTotal" property="preTranslateTotal"/>
+            <result column="preTranslateUse" property="preTranslateUse"/>
+            <result column="midTranslateTotal" property="midTranslateTotal"/>
+            <result column="midTranslateUse" property="midTranslateUse"/>
+            <result column="postTranslateTotal" property="postTranslateTotal"/>
+            <result column="postTranslateUse" property="postTranslateUse"/>
+            <result column="preWriteTotal" property="preWriteTotal"/>
+            <result column="preWriteUse" property="preWriteUse"/>
+            <result column="midWriteTotal" property="midWriteTotal"/>
+            <result column="midWriteUse" property="midWriteUse"/>
+            <result column="postWriteTotal" property="postWriteTotal"/>
+            <result column="postWriteUse" property="postWriteUse"/>
+        </association>
+    </resultMap>
+
+    <select id="findList" resultMap="findListResultMap">
+        SELECT
+            tgac.id,
+            tgac.`code`,
+            tgac.section_code AS sectionCode,
+            tgac.activate_time AS activateTime,
+            tgac.address,
+            tgac.create_date AS createDate,
+            tgac.update_date AS updateDate,
+            tgac.update_by AS updateBy,
+            tgac.sort,
+            tu.phone,
+            tgssr.id AS subId,
+            tgssr.pre_translate_total AS preTranslateTotal,
+            tgssr.pre_translate_use AS preTranslateUse,
+            tgssr.mid_translate_total AS midTranslateTotal,
+            tgssr.mid_translate_use AS midTranslateUse,
+            tgssr.post_translate_total AS postTranslateTotal,
+            tgssr.post_translate_use AS postTranslateUse,
+            tgssr.pre_write_total AS preWriteTotal,
+            tgssr.pre_write_use AS preWriteUse,
+            tgssr.mid_write_total AS midWriteTotal,
+            tgssr.mid_write_use AS midWriteUse,
+            tgssr.post_write_total AS postWriteTotal,
+            tgssr.post_write_use AS postWriteUse
+        FROM
+            tb_gift_activation_code AS tgac
+            LEFT JOIN tb_gift_subjective_submit_record AS tgssr ON tgssr.code_id = tgac.id
+            LEFT JOIN tb_user AS tu ON tu.id = tgac.activate_user_id
+        WHERE
+            tgac.del_flag = 0
+            <if test="qCode !=null and qCode !=''">
+                AND tgac.code LIKE CONCAT('%',#{qCode},'%')
+            </if>
+            <if test="qSectionCode !=null">
+                AND tgac.section_code = #{qSectionCode}
+            </if>
+            <if test="qPhone !=null and qPhone !=''">
+                AND tu.phone LIKE CONCAT('%',#{qPhone},'%')
+            </if>
+            <if test="qAddress !=null and qAddress !=''">
+                AND tgac.address LIKE CONCAT('%',#{qAddress},'%')
+            </if>
+            <if test="qIsActivated !=null">
+                AND tgac.is_activated = #{qIsActivated}
+            </if>
+            <if test="qImportStartTime !=null and qImportStartTime !=''">
+                AND tgac.create_date &gt; #{qImportStartTime}
+            </if>
+            <if test="qImportEndTime !=null and qImportEndTime !=''">
+                AND tgac.create_date &lt; #{qImportEndTime}
+            </if>
+            <if test="qActivateStartTime !=null and qActivateStartTime !=''">
+                AND tgac.activate_time &gt; #{qActivateStartTime}
+            </if>
+            <if test="qActivateEndTime !=null and qActivateEndTime !=''">
+                AND tgac.activate_time &lt; #{qActivateEndTime}
+            </if>
+        ORDER BY
+            tgac.update_date DESC,
+            tgac.activate_time DESC,
+            tgac.sort DESC
+    </select>
+
+    <insert id="batchInsert">
+        INSERT INTO tb_gift_activation_code(id, `code`, section_code, create_date, update_date)
+        VALUES
+        <foreach collection="codeList" item="item" index="index" separator=",">
+            (REPLACE(UUID(),'-',''), #{item}, #{sectionCode}, now(), now())
+        </foreach>
+    </insert>
+
+
+
+</mapper>

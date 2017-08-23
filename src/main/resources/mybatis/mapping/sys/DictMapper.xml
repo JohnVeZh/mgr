@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.system.dict.mapper.DictMapper">
+
+    <resultMap id="getByIdMap" type="cn.sparke.modules.system.dict.entity.DictEntity">
+        <id property="id" column="id"/>
+        <result column="value" property="value"/>
+        <result column="label" property="label"/>
+        <result column="type" property="type"/>
+        <result column="description" property="description"/>
+        <result column="sort" property="sort"/>
+        <collection property="children" ofType="cn.sparke.modules.system.dict.entity.DictEntity">
+            <id column="cId" property="id"/>
+            <result column="cValue" property="value"/>
+            <result column="cLabel" property="label"/>
+            <result column="cType" property="type"/>
+            <result column="cDesciption" property="description"/>
+            <result column="cSort" property="sort"/>
+            <result column="cParentId" property="parentId"/>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="getByIdMap">
+        SELECT
+            dict.*,
+            children.id             cId,
+            children.value          cValue,
+            children.label          cLabel,
+            children.type        AS cType,
+            children.description AS cDesciption,
+            children.sort        AS cSort,
+            children.parent_id   AS cParentId
+        FROM sys_dict dict
+            LEFT JOIN sys_dict children
+                ON dict.id = children.parent_id
+        WHERE dict.id = #{id}
+    </select>
+
+    <select id="findList" resultType="cn.sparke.modules.system.dict.entity.DictEntity">
+        select *
+        from sys_dict
+        where (parent_id = '0' or parent_id is NULL ) AND del_flag = 0
+        <if test="condition != null and condition!=''">
+            AND (value like CONCAT('%',#{condition},'%')
+            or
+            label like CONCAT('%',#{condition},'%')
+            OR
+            type like CONCAT('%',#{condition},'%')
+            OR
+            description like CONCAT('%',#{condition},'%')
+            )
+        </if>
+        order by sort ASC
+    </select>
+    <select id="findAllList" resultType="cn.sparke.modules.system.dict.entity.DictEntity">
+        select *
+        from sys_dict
+        where del_flag = 0
+        <if test="condition != null and condition!=''">
+            AND (value like CONCAT('%',#{condition},'%')
+            or
+            label like CONCAT('%',#{condition},'%')
+            OR
+            type like CONCAT('%',#{condition},'%')
+            OR
+            description like CONCAT('%',#{condition},'%')
+            )
+        </if>
+        order by sort ASC
+    </select>
+
+    <select id="existDict" resultType="cn.sparke.modules.system.dict.entity.DictEntity">
+        SELECT *
+        FROM sys_dict
+        WHERE del_flag = 0
+              AND label = #{label}
+              AND type = #{type}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_dict (id, value, label, type, description, sort, parent_id, create_by, create_date, update_by, update_date)
+        VALUES
+            (
+                #{id},
+                #{value},
+                #{label},
+                #{type},
+                #{description},
+                #{sort},
+                #{parentId},
+                #{createBy},
+                #{createDate},
+                #{updateBy},
+                #{updateDate}
+            )
+    </insert>
+
+    <update id="deleteById">
+        UPDATE sys_dict
+        SET del_flag = 1
+        WHERE id = #{id}
+    </update>
+    <update id="deleteRealById">
+        DELETE FROM sys_dict
+        WHERE id = #{id}
+    </update>
+    <select id="get" resultType="cn.sparke.modules.system.dict.entity.DictEntity">
+        SELECT
+        dict.*
+        FROM sys_dict dict
+        WHERE dict.type = #{type}
+    </select>
+
+    <select id="findChannelList" resultType="cn.sparke.modules.system.dict.entity.DictEntity">
+        select *
+        from sys_dict
+        where del_flag = 0
+        <if test="label != null and label!=''">
+            AND label like CONCAT('%',#{label},'%')
+        </if>
+        <if test="type != null and type!=''">
+            AND type = #{type}
+        </if>
+        order by sort ASC
+    </select>
+</mapper>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.startPage.mapper.StartPageMapper">
+    <insert id="insert">
+        INSERT INTO tb_start_page
+        (
+            id,
+            title,
+            img,
+            jump_type,
+            url,
+            is_show,
+            content_id,
+            content,
+            sort,
+            create_date,
+            create_by,
+            update_date,
+            update_by,
+            remarks,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{title},
+               #{img},
+               #{jumpType},
+               #{url},
+               #{isShow},
+               #{contentId},
+               #{content},
+               #{sort},
+               #{createDate},
+               #{createBy},
+               #{updateDate},
+               #{updateBy},
+               #{remarks},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_start_page
+        set
+                id = #{id}
+                <if test="title!=null">
+                   ,title = #{title}
+                </if>
+                <if test="img!=null">
+                   ,img = #{img}
+                </if>
+                <if test="jumpType!=null">
+                   ,jump_type = #{jumpType}
+                </if>
+                <!--<if test="url!=null">-->
+                   ,url = #{url}
+                <!--</if>-->
+                <if test="isShow!=null">
+                   ,is_show = #{isShow}
+                </if>
+                <!--<if test="contentId!=null">-->
+                   ,content_id = #{contentId}
+                <!--</if>-->
+                <!--<if test="content!=null">-->
+                   ,content = #{content}
+                <!--</if>-->
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="createBy!=null">
+                   ,create_by = #{createBy}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="remarks!=null">
+                   ,remarks = #{remarks}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+    <update id="updateIsShow">
+        update tb_start_page
+        set
+        id = #{id}
+        <if test="isShow!=null">
+            ,is_show = #{isShow}
+        </if>
+        <if test="updateDate!=null">
+            ,update_date = #{updateDate}
+        </if>
+        where id = #{id}
+    </update>
+    <resultMap id="starPageMap" type="cn.sparke.modules.startPage.entity.StartPageEntity">
+        <id  property="id"  column="id"/>
+        <result  property="title"  column="title"/>
+        <result  property="img"  column="img"/>
+        <result  property="jumpType"  column="jump_type"/>
+        <result  property="url"  column="url"/>
+        <result  property="isShow"  column="is_show"/>
+        <result  property="contentId"  column="content_id"/>
+        <result  property="content"  column="content"/>
+        <result  property="sort"  column="sort"/>
+        <association property="contentTitle"  column="{contentId=content_id,jumpType=jump_type}"
+                     javaType="java.lang.String" select="getTitle"/>
+    </resultMap>
+    <select id="findList" resultMap="starPageMap">
+        select
+              tb_start_page.id,
+              tb_start_page.title,
+              tb_start_page.img,
+              tb_start_page.jump_type,
+              tb_start_page.url,
+              tb_start_page.is_show,
+              tb_start_page.content_id,
+              tb_start_page.content,
+              tb_start_page.sort,
+              tb_start_page.create_date,
+              tb_start_page.create_by,
+              tb_start_page.update_date,
+              tb_start_page.update_by,
+              tb_start_page.remarks,
+              tb_start_page.del_flag
+         from tb_start_page
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_start_page.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+              and  tb_start_page.title = #{title}
+            </if>
+            <if test="img!=null and img!=''">
+              and  tb_start_page.img = #{img}
+            </if>
+            <if test="jumpType!=null and jumpType!=''">
+              and  tb_start_page.jump_type = #{jumpType}
+            </if>
+            <if test="url!=null and url!=''">
+              and  tb_start_page.url = #{url}
+            </if>
+            <if test="isShow!=null and isShow!=''">
+              and  tb_start_page.is_show = #{isShow}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+              and  tb_start_page.content_id = #{contentId}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_start_page.content = #{content}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_start_page.sort = #{sort}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_start_page.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+              and  tb_start_page.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_start_page.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_start_page.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+              and  tb_start_page.remarks = #{remarks}
+            </if>
+                and  tb_start_page.del_flag = 0
+              ORDER BY tb_start_page.sort
+    </select>
+
+    <select id="getTitle" resultType="java.lang.String">
+        <if test="jumpType != 3 and jumpType != 4 and jumpType != 5 and jumpType != 6 ">
+            SELECT '';
+        </if>
+        <if test="jumpType == 3">
+            SELECT `title`  FROM tb_community_activity  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 4">
+            SELECT `title`  FROM tb_community_news  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 5">
+            SELECT `name` FROM tb_product  WHERE id = #{contentId};
+        </if>
+        <if test="jumpType == 6">
+            SELECT `name`  FROM tb_product  WHERE id = #{contentId};
+        </if>
+    </select>
+    <select id="getById"  resultMap="starPageMap">
+        select
+              tb_start_page.id,
+              tb_start_page.title,
+              tb_start_page.img,
+              tb_start_page.jump_type,
+              tb_start_page.url,
+              tb_start_page.is_show,
+              tb_start_page.content_id,
+              tb_start_page.content,
+              tb_start_page.sort,
+              tb_start_page.create_date,
+              tb_start_page.create_by,
+              tb_start_page.update_date,
+              tb_start_page.update_by,
+              tb_start_page.remarks,
+              tb_start_page.del_flag
+        from tb_start_page
+        where id = #{id}
+            and  tb_start_page.del_flag = 0
+    </select>
+
+    <select id="get"  resultMap="starPageMap">
+        select
+              tb_start_page.id,
+              tb_start_page.title,
+              tb_start_page.img,
+              tb_start_page.jump_type,
+              tb_start_page.url,
+              tb_start_page.is_show,
+              tb_start_page.content_id,
+              tb_start_page.content,
+              tb_start_page.sort,
+              tb_start_page.create_date,
+              tb_start_page.create_by,
+              tb_start_page.update_date,
+              tb_start_page.update_by,
+              tb_start_page.remarks,
+              tb_start_page.del_flag
+        from tb_start_page
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_start_page.id = #{id}
+            </if>
+            <if test="title!=null and title!=''">
+                and  tb_start_page.title = #{title}
+            </if>
+            <if test="img!=null and img!=''">
+                and  tb_start_page.img = #{img}
+            </if>
+            <if test="jumpType!=null and jumpType!=''">
+                and  tb_start_page.jump_type = #{jumpType}
+            </if>
+            <if test="url!=null and url!=''">
+                and  tb_start_page.url = #{url}
+            </if>
+            <if test="isShow!=null and isShow!=''">
+                and  tb_start_page.is_show = #{isShow}
+            </if>
+            <if test="contentId!=null and contentId!=''">
+                and  tb_start_page.content_id = #{contentId}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_start_page.content = #{content}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_start_page.sort = #{sort}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_start_page.create_date = #{createDate}
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                and  tb_start_page.create_by = #{createBy}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_start_page.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_start_page.update_by = #{updateBy}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                and  tb_start_page.remarks = #{remarks}
+            </if>
+            and  tb_start_page.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_start_page
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

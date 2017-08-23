@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.section.mapper.SectionMapper">
+    <insert id="insert">
+        INSERT INTO tb_section
+        (
+            id,
+            name,
+            code,
+            create_date,
+            update_date,
+            update_by,
+            sort,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{name},
+               #{code},
+               #{createDate},
+               #{updateDate},
+               #{updateBy},
+               #{sort},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_section
+        set
+                id = #{id}
+                <if test="name!=null">
+                   ,name = #{name}
+                </if>
+                <if test="code!=null">
+                   ,code = #{code}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="updateDate!=null">
+                   ,update_date = #{updateDate}
+                </if>
+                <if test="updateBy!=null">
+                   ,update_by = #{updateBy}
+                </if>
+                <if test="sort!=null">
+                   ,sort = #{sort}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.section.entity.SectionEntity">
+        select
+              tb_section.id,
+              tb_section.name,
+              tb_section.code,
+              tb_section.create_date,
+              tb_section.update_date,
+              tb_section.update_by,
+              tb_section.sort,
+              tb_section.del_flag
+         from tb_section
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_section.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+              and  tb_section.name = #{name}
+            </if>
+            <if test="code!=null and code!=''">
+              and  tb_section.code = #{code}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_section.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+              and  tb_section.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+              and  tb_section.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+              and  tb_section.sort = #{sort}
+            </if>
+                and  tb_section.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.section.entity.SectionEntity">
+        select
+              tb_section.id,
+              tb_section.name,
+              tb_section.code,
+              tb_section.create_date,
+              tb_section.update_date,
+              tb_section.update_by,
+              tb_section.sort,
+              tb_section.del_flag
+        from tb_section
+        where id = #{id}
+            and  tb_section.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.section.entity.SectionEntity">
+        select
+              tb_section.id,
+              tb_section.name,
+              tb_section.code,
+              tb_section.create_date,
+              tb_section.update_date,
+              tb_section.update_by,
+              tb_section.sort,
+              tb_section.del_flag
+        from tb_section
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_section.id = #{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and  tb_section.name = #{name}
+            </if>
+            <if test="code!=null and code!=''">
+                and  tb_section.code = #{code}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_section.create_date = #{createDate}
+            </if>
+            <if test="updateDate!=null and updateDate!=''">
+                and  tb_section.update_date = #{updateDate}
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                and  tb_section.update_by = #{updateBy}
+            </if>
+            <if test="sort!=null and sort!=''">
+                and  tb_section.sort = #{sort}
+            </if>
+            and  tb_section.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_section
+            set del_flag = 1
+            where id = #{id}
+      </update>
+</mapper>

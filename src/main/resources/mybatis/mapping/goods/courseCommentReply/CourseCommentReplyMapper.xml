@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sparke.modules.goods.courseCommentReply.mapper.CourseCommentReplyMapper">
+    <insert id="insert">
+        INSERT INTO tb_user_comment_reply
+        (
+            id,
+            comment_id,
+            user_id,
+            target_user_id,
+            content,
+            create_date,
+            del_flag
+        )
+        VALUES
+        (
+               #{id},
+               #{commentId},
+               #{userId},
+               #{targetUserId},
+               #{content},
+               #{createDate},
+               #{delFlag}
+        )
+    </insert>
+    <update id="update">
+        update tb_user_comment_reply
+        set
+                id = #{id}
+                <if test="commentId!=null">
+                   ,comment_id = #{commentId}
+                </if>
+                <if test="userId!=null">
+                   ,user_id = #{userId}
+                </if>
+                <if test="targetUserId!=null">
+                   ,target_user_id = #{targetUserId}
+                </if>
+                <if test="content!=null">
+                   ,content = #{content}
+                </if>
+                <if test="createDate!=null">
+                   ,create_date = #{createDate}
+                </if>
+                <if test="delFlag!=null">
+                   ,del_flag = #{delFlag}
+                </if>
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="cn.sparke.modules.goods.courseCommentReply.entity.CourseCommentReplyEntity">
+        select
+              tb_user_comment_reply.id,
+              tb_user_comment_reply.comment_id,
+              tb_user_comment_reply.user_id,
+              tb_user_comment_reply.target_user_id,
+              tb_user_comment_reply.content,
+              tb_user_comment_reply.create_date,
+              tb_user_comment_reply.del_flag
+         from tb_user_comment_reply
+        where 1=1
+            <if test="id!=null and id!=''">
+              and  tb_user_comment_reply.id = #{id}
+            </if>
+            <if test="commentId!=null and commentId!=''">
+              and  tb_user_comment_reply.comment_id = #{commentId}
+            </if>
+            <if test="userId!=null and userId!=''">
+              and  tb_user_comment_reply.user_id = #{userId}
+            </if>
+            <if test="targetUserId!=null and targetUserId!=''">
+              and  tb_user_comment_reply.target_user_id = #{targetUserId}
+            </if>
+            <if test="content!=null and content!=''">
+              and  tb_user_comment_reply.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+              and  tb_user_comment_reply.create_date = #{createDate}
+            </if>
+                and  tb_user_comment_reply.del_flag = 0
+    </select>
+
+
+    <select id="getById" resultType="cn.sparke.modules.goods.courseCommentReply.entity.CourseCommentReplyEntity">
+        select
+              tb_user_comment_reply.id,
+              tb_user_comment_reply.comment_id,
+              tb_user_comment_reply.user_id,
+              tb_user_comment_reply.target_user_id,
+              tb_user_comment_reply.content,
+              tb_user_comment_reply.create_date,
+              tb_user_comment_reply.del_flag
+        from tb_user_comment_reply
+        where id = #{id}
+            and  tb_user_comment_reply.del_flag = 0
+    </select>
+
+    <select id="get" resultType="cn.sparke.modules.goods.courseCommentReply.entity.CourseCommentReplyEntity">
+        select
+              tb_user_comment_reply.id,
+              tb_user_comment_reply.comment_id,
+              tb_user_comment_reply.user_id,
+              tb_user_comment_reply.target_user_id,
+              tb_user_comment_reply.content,
+              tb_user_comment_reply.create_date,
+              tb_user_comment_reply.del_flag
+        from tb_user_comment_reply
+        where 1=1
+            <if test="id!=null and id!=''">
+                and  tb_user_comment_reply.id = #{id}
+            </if>
+            <if test="commentId!=null and commentId!=''">
+                and  tb_user_comment_reply.comment_id = #{commentId}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and  tb_user_comment_reply.user_id = #{userId}
+            </if>
+            <if test="targetUserId!=null and targetUserId!=''">
+                and  tb_user_comment_reply.target_user_id = #{targetUserId}
+            </if>
+            <if test="content!=null and content!=''">
+                and  tb_user_comment_reply.content = #{content}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and  tb_user_comment_reply.create_date = #{createDate}
+            </if>
+            and  tb_user_comment_reply.del_flag = 0
+         limit 1
+     </select>
+
+      <update id="deleteById">
+            update tb_user_comment_reply
+            set del_flag = 1
+            where id = #{id}
+      </update>
+
+    <select id="getByCommentId" resultType="cn.sparke.modules.goods.courseCommentReply.entity.CourseCommentReplyEntity">
+        SELECT
+            tucr.id,
+            tucr.comment_id AS commentId,
+            tucr.user_id AS userId,
+            tucr.content AS content
+        FROM
+            tb_user_comment tuc,
+            tb_user_comment_reply tucr
+        WHERE
+            tuc.id = tucr.comment_id
+            AND comment_id = #{commentId}
+            AND tucr.user_id = 'f2b7d7d6568d5c800156a1558217315a'
+            AND tuc.content_type = 1
+    </select>
+</mapper>
